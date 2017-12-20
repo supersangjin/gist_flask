@@ -10,13 +10,15 @@
       <tr>
         <th>Title</th>
         <th>Context</th>
+        <th>Author</th>
       </tr>
     </thead>
     <tbody>
       {% for article in articles %}
       <tr>
-        <td>{{ article.article_title }}</td>
+        <td><a href="{{ url_for('articles.article_details', article_id=article.id) }}">{{ article.article_title }}</a></td>
         <td>{{ article.article_context }}</td>
+        <td>{{ article.user_id }}</td>
       </tr>
       {% endfor %}
     </tbody>

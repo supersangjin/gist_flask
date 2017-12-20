@@ -1,5 +1,5 @@
 from flask import render_template, Blueprint, request, redirect, url_for, flash
-from app.models import Article
+from app.models import Article, User
 from app import db
 from flask_login import login_required
 from .forms import WriteArticleForm
@@ -24,13 +24,23 @@ def write_article():
     form = WriteArticleForm(request.form)
     if request.method == 'POST':
         if form.validate_on_submit():
-            new_article = Article(form.article_title.data, form.article_context.data)
+            new_article = Article(form.article_title.data, form.article_context.data, user.id)
             db.session.add(new_article)
             db.session.commit()
             flash('New Article, {}, added!'.format(new_article.article_title), 'success')
             return redirect(url_for('articles.index'))
 
     return render_template('write_article.html', form=form)
+
+
+@articles_blueprint.route('/article/<article_id>')
+def article_details(article_id):
+    article_with_user = db.session.query(Article, User).join(User).filter(Article.id == article_id).first()
+    if article_with_user is not None:
+        return render_template('article_detail.html', article=article_with_user)
+    else:
+        flash('Error! Article does not exist.', 'error')
+    return redirect(url_for('articles.index'))
 
 
 # helper functions

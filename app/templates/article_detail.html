@@ -1,0 +1,23 @@
+{% extends "layout.html" %}
+{% block content %}
+
+<div class="user-profile">
+  <div class="page-header">
+    <h2>{{ article.Article.article_title }}</h2>
+  </div>
+
+  <div class="row">
+    <div class="panel">
+      <div class="panel-heading">Context</div>
+      <div class="panel-body">{{ article.Article.article_context }}</div>
+    </div>
+
+    <div class="panel">
+      <div class="panel-heading">User</div>
+      <div class="panel-body">{{ article.User.email }}</div>
+    </div>
+
+  </div>
+</div>
+
+{% endblock %}
