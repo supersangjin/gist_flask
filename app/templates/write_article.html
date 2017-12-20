@@ -1,0 +1,21 @@
+{% extends "layout.html" %}
+{% from "_form_macros.html" import render_field %}
+
+{% block content %}
+
+<div class="write-article">
+  <div class="page-header">
+    <h2>Write Article</h2>
+  </div>
+  <form action="{{ url_for('articles.write_article') }}" method="post">
+    {{ form.csrf_token }}
+    <dl>
+      {{ render_field(form.article_title, placeholder="Enter Article Title") }}
+        <br>
+      {{ render_field(form.article_context, placeholder="Enter Article Context") }}
+    </dl>
+    <button class="btn btn-sm btn-success" type="submit">Submit</button>
+  </form>
+</div>
+
+{% endblock %}

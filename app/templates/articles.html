@@ -1,0 +1,26 @@
+{% extends "layout.html" %}
+{% block content %}
+
+<div class="page-header">
+  <h2>Articles</h2>
+</div>
+<div class="row">
+  <table class="table table-striped" id="owned_stock_table">
+    <thead>
+      <tr>
+        <th>Title</th>
+        <th>Context</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for article in articles %}
+      <tr>
+        <td>{{ article.article_title }}</td>
+        <td>{{ article.article_context }}</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+
+{% endblock %}
