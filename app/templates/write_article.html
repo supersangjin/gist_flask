@@ -9,13 +9,17 @@
   </div>
   <form action="{{ url_for('articles.write_article') }}" method="post">
     {{ form.csrf_token }}
-    <dl>
-      {{ render_field(form.article_title, placeholder="Enter Article Title") }}
-        <br>
-      {{ render_field(form.article_context, placeholder="Enter Article Context") }}
-    </dl>
-    <button class="btn btn-sm btn-success" type="submit">Submit</button>
+    <div class="form-group " style="padding-top:10px">
+      <input class="form-control" id="post_title" name="article_title" type="text" value="Title">
+    </div>
+    <div class="form-group ">
+      <input class="form-control" id="markdown" name="article_context" type="textarea" value="">
+    </div>
+    <div>
+      <input class='btn btn-default' id='submit' name='submit' type='submit' value='Save'>
+    </div>
   </form>
+  {{ simplemde.load_id('markdown') }}
 </div>
 
 {% endblock %}

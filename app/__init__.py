@@ -3,6 +3,8 @@ from flask_sqlalchemy import SQLAlchemy
 from flask_login import LoginManager
 from flask_bcrypt import Bcrypt
 from flask_mail import Mail
+from flask_simplemde import SimpleMDE
+from flaskext.markdown import Markdown
 
 # config
 app = Flask(__name__, instance_relative_config=True)
@@ -21,6 +23,12 @@ mail = Mail(app)
 login_manager = LoginManager()
 login_manager.init_app(app)
 login_manager.login_view = "users.login"
+
+# markdown editor
+SimpleMDE(app)
+
+# markdown interpreter
+Markdown(app)
 
 from app.models import User
 
