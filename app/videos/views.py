@@ -1,6 +1,6 @@
 import os
 from app import db
-from instance.config import ALLOWED_EXTENSIONS, TOP_LEVEL_DIR
+from instance.config import ALLOWED_EXTENSIONS, UPLOAD_FOLDER
 from flask import request, redirect, url_for, flash, Blueprint, render_template
 from werkzeug.utils import secure_filename
 from flask_login import login_required, current_user
@@ -43,7 +43,7 @@ def upload_video():
                                   filename=filename)
                 db.session.add(new_video)
                 db.session.commit()
-                file.save(filename)
+                file.save(os.path.join(UPLOAD_FOLDER, filename))
                 flash('New Video, {}, uploaded!'.format(new_video.video_title), 'success')
                 video_with_user = db.session.query(Video, User).join(User).filter(Video.id == new_video.id).first()
                 return render_template('video_detail.html', video=video_with_user)
@@ -54,9 +54,7 @@ def upload_video():
 def video_details(video_id):
     video_with_user = db.session.query(Video, User).join(User).filter(Video.id == video_id).first()
     if video_with_user is not None:
-        url = "/Users/Sangjin/workspace/gist_flask" + "/" + video_with_user.Video.video_filename
-        print(url)
-        return render_template('video_detail.html', video=video_with_user, url=url)
+        return render_template('video_detail.html', video=video_with_user)
     else:
         flash('Error! Video does not exist.', 'error')
     return redirect(url_for('videos.index'))

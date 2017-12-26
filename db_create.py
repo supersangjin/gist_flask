@@ -1,5 +1,5 @@
 from app import db
-from app.models import Article, User
+from app.models import Article, User, Video
 
 # drop all of the existing database tables
 db.drop_all()
@@ -33,5 +33,22 @@ article2 = Article('Markdown Guide', "## Lists\n\nUnordered lists can be started
 
 db.session.add(article1)
 db.session.add(article2)
+
 # commit the changes
 db.session.commit()
+
+
+# insert video data
+video1 = Video('Big Bunny 1', '2MB', '2mb.mp4', admin_user.id)
+video2 = Video('Big Bunny 2', '5MB', '5mb.mp4', admin_user.id)
+video3 = Video('Big Bunny 3', '10MB', '10mb.mp4', admin_user.id)
+
+db.session.add(video1)
+db.session.add(video2)
+db.session.add(video3)
+
+# commit the changes
+db.session.commit()
+
+
+

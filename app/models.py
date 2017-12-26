@@ -96,10 +96,9 @@ class Video(db.Model):
     video_title = db.Column(db.String, nullable=False)
     video_description = db.Column(db.String, nullable=False)
     video_filename = db.Column(db.String, default=None, nullable=True)
-    video_url = db.Column(db.String, default=None, nullable=True)
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
 
-    def __init__(self, title, description, user_id, filename=None):
+    def __init__(self, title, description, filename, user_id):
         self.video_title = title
         self.video_description = description
         self.video_filename = filename
