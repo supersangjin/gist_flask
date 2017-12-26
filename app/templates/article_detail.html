@@ -1,21 +1,28 @@
 {% extends "layout.html" %}
 {% block content %}
 
-<div class="user-profile">
-  <div class="page-header">
-    <h2>{{ article.Article.article_title }}</h2>
-  </div>
+<style>
+  .markdown-body {
+    box-sizing: border-box;
+    min-width: 200px;
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 45px;
+}
 
-  <div class="row">
+  @media (max-width: 767px) {
+      .markdown-body {
+          padding: 15px;
+      }
+  }
+</style>
 
-    {{ article.Article.article_context | markdown}}
-
-    <div class="panel">
-      <div class="panel-heading">User</div>
-      <div class="panel-body">{{ article.User.email }}</div>
-    </div>
-
-  </div>
+<div class="page-header" style="margin-top: 50px;">
+  <h3 style="display:inline;">{{ article.Article.article_title }}</h3>
+  <p style="display:inline;">&nbsp;&nbsp;by {{ article.User.email }}</p>
 </div>
+<article class="markdown-body">
+	{{ article.Article.article_context|markdown }}
+</article>
 
 {% endblock %}

@@ -1,28 +1,15 @@
 {% extends "layout.html" %}
 {% block content %}
 
-<div class="page-header">
-  <h2>Articles</h2>
-</div>
-<div class="row">
-  <table class="table table-striped" id="owned_stock_table">
-    <thead>
-      <tr>
-        <th>Title</th>
-        <th>Context</th>
-        <th>Author</th>
-      </tr>
-    </thead>
-    <tbody>
-      {% for article in articles %}
-      <tr>
-        <td><a href="{{ url_for('articles.article_details', article_id=article.id) }}">{{ article.article_title }}</a></td>
-        <td>{{ article.article_context | markdown }}</td>
-        <td>{{ article.user_id }}</td>
-      </tr>
-      {% endfor %}
-    </tbody>
-  </table>
+<div class="row" style="margin-top: 50px;">
+  {% for article in articles %}
+    <h4 style="width:100%">{{ article.article_title }}</h4>
+    <a class="articles" href="{{ url_for('articles.article_details', article_id=article.id) }}" style="width:100%">
+      <div class="markdown-body border" style="width:100%; margin-top: 10px; margin-bottom:30px; padding: 30px;">
+        {{ article.article_context | truncate | markdown }}
+      </div>
+    </a>
+  {% endfor %}
 </div>
 
 {% endblock %}

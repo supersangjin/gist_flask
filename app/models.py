@@ -20,6 +20,7 @@ class User(db.Model):
     current_logged_in = db.Column(db.DateTime, nullable=True)
     role = db.Column(db.String, default='user')
     articles = db.relationship('Article', backref='user', lazy='dynamic')
+    videos = db.relationship('Video', backref='user', lazy='dynamic')
 
     def __init__(self, email, plaintext_password, email_confirmation_sent_on=None, role='user'):
         self.role = role
@@ -71,7 +72,6 @@ class User(db.Model):
         return '<User {0}>'.format(self.name)
 
 
-
 class Article(db.Model):
     __tablename__ = "articles"
 
@@ -86,4 +86,24 @@ class Article(db.Model):
         self.user_id = user_id
 
     def __repr__(self):
-        return '<title {}'.format(self.name)
+        return '<id: {}, title: {}, user_id: {}>'.format(self.id, self.article_title, self.user_id)
+
+
+class Video(db.Model):
+    __tablename__ = "videos"
+
+    id = db.Column(db.Integer, primary_key=True)
+    video_title = db.Column(db.String, nullable=False)
+    video_description = db.Column(db.String, nullable=False)
+    video_filename = db.Column(db.String, default=None, nullable=True)
+    video_url = db.Column(db.String, default=None, nullable=True)
+    user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
+
+    def __init__(self, title, description, user_id, filename=None):
+        self.video_title = title
+        self.video_description = description
+        self.video_filename = filename
+        self.user_id = user_id
+
+    def __repr__(self):
+        return '<id: {}, title: {}, user_id: {}>'.format(self.id, self.video_title, self.user_id)

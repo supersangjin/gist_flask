@@ -1,0 +1,15 @@
+{% extends "layout.html" %}
+{% block content %}
+
+<div class="row" style="margin-top: 50px;">
+  {% for video in videos %}
+    <h4 style="width:100%">{{ video.video_title }}</h4>
+    <a class="articles" href="{{ url_for('videos.video_details', video_id=video.id) }}" style="width:100%">
+      <div style="width:100%; margin-top: 10px; margin-bottom:30px; padding: 30px;">
+        {{ video.video_description }}
+      </div>
+    </a>
+  {% endfor %}
+</div>
+
+{% endblock %}

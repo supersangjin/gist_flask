@@ -1,25 +1,29 @@
 {% extends "layout.html" %}
-{% from "_form_macros.html" import render_field %}
+<!--{% from "_form_macros.html" import render_field %}-->
 
 {% block content %}
 
-<div class="write-article">
-  <div class="page-header">
-    <h2>Write Article</h2>
-  </div>
-  <form action="{{ url_for('articles.write_article') }}" method="post">
+<div class="editor-wrapper markdown-body">
+  <form action="{{ url_for('articles.write_article') }}" id="formMd" method="post">
     {{ form.csrf_token }}
-    <div class="form-group " style="padding-top:10px">
-      <input class="form-control" id="post_title" name="article_title" type="text" value="Title">
+    <div class="form-group">
+      <input class="title" type="text" name="article_title" id="title" placeholder="Title" />
     </div>
-    <div class="form-group ">
-      <input class="form-control" id="markdown" name="article_context" type="textarea" value="">
-    </div>
-    <div>
-      <input class='btn btn-default' id='submit' name='submit' type='submit' value='Save'>
-    </div>
+    <textarea name="article_context" id="context" placeholder="Content here ...."></textarea>
+      {{ simplemde.load }}
+    <button class="btn btn-sm btn-success" name="submit" type="submit">Submit</button>
   </form>
-  {{ simplemde.load_id('markdown') }}
 </div>
+
+<script>
+  document.getElementById("formMd").onsubmit = function () {
+    if (!document.getElementById("title").value) {
+        return false;
+    }
+    if (!document.getElementById("context").value) {
+        return false;
+    }
+}
+</script>
 
 {% endblock %}

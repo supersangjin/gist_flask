@@ -28,8 +28,8 @@ def write_article():
             db.session.add(new_article)
             db.session.commit()
             flash('New Article, {}, added!'.format(new_article.article_title), 'success')
-            return redirect(url_for('articles.index'))
-
+            article_with_user = db.session.query(Article, User).join(User).filter(Article.id == new_article.id).first()
+            return render_template('article_detail.html', article=article_with_user)
     return render_template('write_article.html', form=form)
 
 
