@@ -22,7 +22,7 @@ $ pip install -r requirements.txt
 
 ## Database
 
-* **install PostgreSQL**
+* **Install PostgreSQL**
 1. Download the application from http://postgresapp.com
 2. Once the application downloads, move the downloaded file to your applications folder
 3. In order to use the command-line tools
@@ -33,7 +33,7 @@ $ export PATH=$PATH:/Applications/Postgres.app/Contents/Versions/latest/bin
 5. Press Start
 
 
-* **usage**
+* **Usage**
 ``` bash
 $ psql
 ```
