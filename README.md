@@ -1,9 +1,9 @@
-## Gist_Flask
+# Gist_Flask
 
 Web application for gist based on Flask framework 
 
 
-### Virtualenv
+## Virtualenv
 
 ``` bash
 $ pip install virtualenv
@@ -13,16 +13,16 @@ $ source venv/bin/activate
 ```
 
 
-### Requirements
+## Requirements
 
 ``` bash
 $ pip install -r requirements.txt
 ```
 
 
-### Database
+## Database
 
-> install PostgreSQL
+* **Install PostgreSQL**
 1. Download the application from http://postgresapp.com
 2. Once the application downloads, move the downloaded file to your applications folder
 3. In order to use the command-line tools
@@ -33,7 +33,7 @@ $ export PATH=$PATH:/Applications/Postgres.app/Contents/Versions/latest/bin
 5. Press Start
 
 
-> usage
+* **Usage**
 ``` bash
 $ psql
 ```
@@ -58,7 +58,7 @@ $ \q
 Quit
 ```
 
-### Start Server
+## Start Server
 ``` bash
 $ python run.py
 Running on http://127.0.0.1:5000/
