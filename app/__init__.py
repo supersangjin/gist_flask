@@ -43,10 +43,12 @@ def load_user(user_id):
 from app.users.views import users_blueprint
 from app.articles.views import articles_blueprint
 from app.videos.views import videos_blueprint
+from app.forums.views import forums_blueprint
 
 app.register_blueprint(users_blueprint)
 app.register_blueprint(articles_blueprint)
 app.register_blueprint(videos_blueprint)
+app.register_blueprint(forums_blueprint)
 
 
 # error handling

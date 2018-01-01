@@ -43,6 +43,9 @@
           <li class="nav-item">
               <a class="nav-link" href="{{ url_for('videos.index') }}">Videos</a>
           </li>
+          <li class="nav-item">
+              <a class="nav-link" href="{{ url_for('forums.index') }}">Forums</a>
+          </li>
           {% if current_user.is_authenticated %}
             <li class="nav-item">
               <a class="nav-link" href="{{ url_for('articles.write_article') }}">Write Article</a>
@@ -50,10 +53,13 @@
             <li class="nav-item">
               <a class="nav-link" href="{{ url_for('videos.upload_video') }}">Upload Video</a>
             </li>
+            <li class="nav-item">
+              <a class="nav-link" href="{{ url_for('forums.write_question') }}">Write Question</a>
+            </li>
           {% endif %}
         </ul>
         <ul class="navbar-nav ml-auto my-2 my-lg-0">
-                    {% if current_user.is_authenticated and current_user.role == "admin" %}
+          {% if current_user.is_authenticated and current_user.role == "admin" %}
             <li class="nav-item">
               <a class="nav-link" href="{{ url_for('users.admin_view_users') }}">Admin Page</a>
             </li>
