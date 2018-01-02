@@ -1,15 +1,13 @@
-{% extends "layout.html" %}
-<!--{% from "_form_macros.html" import render_field %}-->
-
+{% extends "common/layout.html" %}
 {% block content %}
 
 <div class="editor-wrapper markdown-body">
-  <form action="{{ url_for('articles.write_article') }}" id="formMd" method="post">
+  <form action="{{ url_for('forums.write_question') }}" id="formMd" method="post">
     {{ form.csrf_token }}
     <div class="form-group">
-      <input class="title" type="text" name="article_title" id="title" placeholder="Title" />
+      <input class="title" type="text" name="question_title" id="title" placeholder="Title" />
     </div>
-    <textarea name="article_context" id="context" placeholder="Content here ...."></textarea>
+    <textarea name="question_context" id="context" placeholder="Content here ...."></textarea>
       {{ simplemde.load }}
     <button class="btn btn-sm btn-success" name="submit" type="submit">Submit</button>
   </form>

@@ -3,9 +3,9 @@ from app.models import Article, User
 from app import db
 from flask_login import login_required
 
-searchs_blueprint = Blueprint('searchs', __name__)
+search_blueprint = Blueprint('search', __name__)
 
-@searchs_blueprint.route('/search')
+@search_blueprint.route('/search')
 def search_results():
   query = request.args.get('query')
   results = Article.query.all()

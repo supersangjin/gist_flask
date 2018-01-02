@@ -11,7 +11,7 @@ articles_blueprint = Blueprint('articles', __name__)
 @articles_blueprint.route('/article')
 def index():
     all_articles = Article.query.all()
-    return render_template('articles.html', articles=all_articles)
+    return render_template('articles/articles.html', articles=all_articles)
 
 
 @articles_blueprint.route('/article/add', methods=['GET', 'POST'])
@@ -29,15 +29,15 @@ def write_article():
             db.session.commit()
             flash('New Article, {}, added!'.format(new_article.article_title), 'success')
             article_with_user = db.session.query(Article, User).join(User).filter(Article.id == new_article.id).first()
-            return render_template('article_detail.html', article=article_with_user)
-    return render_template('write_article.html', form=form)
+            return render_template('articles/article_detail.html', article=article_with_user)
+    return render_template('articles/write_article.html', form=form)
 
 
 @articles_blueprint.route('/article/<article_id>')
 def article_details(article_id):
     article_with_user = db.session.query(Article, User).join(User).filter(Article.id == article_id).first()
     if article_with_user is not None:
-        return render_template('article_detail.html', article=article_with_user)
+        return render_template('articles/article_detail.html', article=article_with_user)
     else:
         flash('Error! Article does not exist.', 'error')
     return redirect(url_for('articles.index'))

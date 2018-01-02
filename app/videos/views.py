@@ -14,7 +14,7 @@ videos_blueprint = Blueprint('videos', __name__)
 @videos_blueprint.route('/video')
 def index():
     all_videos = Video.query.all()
-    return render_template('videos.html', videos=all_videos)
+    return render_template('videos/videos.html', videos=all_videos)
 
 
 @videos_blueprint.route('/video/add', methods=['GET', 'POST'])
@@ -47,14 +47,14 @@ def upload_video():
                 flash('New Video, {}, uploaded!'.format(new_video.video_title), 'success')
                 video_with_user = db.session.query(Video, User).join(User).filter(Video.id == new_video.id).first()
                 return render_template('video_detail.html', video=video_with_user)
-    return render_template('upload_video.html', form=form)
+    return render_template('videos/upload_video.html', form=form)
 
 
 @videos_blueprint.route('/video/<video_id>')
 def video_details(video_id):
     video_with_user = db.session.query(Video, User).join(User).filter(Video.id == video_id).first()
     if video_with_user is not None:
-        return render_template('video_detail.html', video=video_with_user)
+        return render_template('videos/video_detail.html', video=video_with_user)
     else:
         flash('Error! Video does not exist.', 'error')
     return redirect(url_for('videos.index'))

@@ -11,7 +11,7 @@ forums_blueprint = Blueprint('forums', __name__)
 @forums_blueprint.route('/forum')
 def index():
     all_questions = Question.query.all() # TODO: partial request
-    return render_template('forum/forums.html', questions=all_questions)
+    return render_template('forums/forums.html', questions=all_questions)
 
 
 @forums_blueprint.route('/forum/add', methods=['GET', 'POST'])
@@ -30,7 +30,7 @@ def write_question():
             flash('New Question, {}, added!'.format(new_question.question_title), 'success')
             question_with_user = db.session.query(Question, User).join(User).filter(Question.id == new_question.id).first()
             return render_template('forum/question_detail.html', question=question_with_user)
-    return render_template('forum/write_question.html', form=form)
+    return render_template('forums/write_question.html', form=form)
 
 
 @forums_blueprint.route('/forum/<question_id>')
@@ -45,7 +45,7 @@ def question_details(question_id):
     question_with_user = db.session.query(Question, User).join(User).filter(Question.id == question_id).first()
     answer_with_question = db.session.query(Answer, User).join(User).filter(Answer.question_id == question_id).all()
     if question_with_user is not None:
-        return render_template('forum/question_detail.html', question=question_with_user, answers=answer_with_question)
+        return render_template('forums/question_detail.html', question=question_with_user, answers=answer_with_question)
     else:
         flash('Error! Question does not exist.', 'error')
     return redirect(url_for('forums.index'))
@@ -73,7 +73,7 @@ def write_answer(question_id):
             flash('New Answer, {}, added!'.format(new_answer.id), 'success')
             question_with_user = db.session.query(Question, User).join(User).filter(Question.id == question_id).first()
             return render_template('forum/question_detail.html', question=question_with_user)
-    return render_template('forum/write_answer.html', question_id=question_id, form=form)
+    return render_template('forums/write_answer.html', question_id=question_id, form=form)
 
 
 # helper functions
