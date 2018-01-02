@@ -57,6 +57,12 @@
               <a class="nav-link" href="{{ url_for('forums.write_question') }}">Write Question</a>
             </li>
           {% endif %}
+
+          <!-- 일단 article title만 -->
+          <form action="search">
+            <input type="text" name="query" placeholder="Search">
+          </form>
+
         </ul>
         <ul class="navbar-nav ml-auto my-2 my-lg-0">
           {% if current_user.is_authenticated and current_user.role == "admin" %}

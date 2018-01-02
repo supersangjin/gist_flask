@@ -4,6 +4,7 @@
 <div class="row" style="margin-top: 50px;">
   {% for question in questions %}
     <h4 style="width:100%">{{ question.question_title }}</h4>
+    <h6 style="width:100%">{{ question.question_length }} answers</h6>
     <a class="articles" href="{{ url_for('forums.question_details', question_id=question.id) }}" style="width:100%">
       <div class="markdown-body border" style="width:100%; margin-top: 10px; margin-bottom:30px; padding: 30px;">
         {{ question.question_context | truncate | markdown }}

@@ -7,14 +7,14 @@ from flask_login import current_user
 
 articles_blueprint = Blueprint('articles', __name__)
 
-
 @articles_blueprint.route('/')
+@articles_blueprint.route('/article')
 def index():
     all_articles = Article.query.all()
     return render_template('articles.html', articles=all_articles)
 
 
-@articles_blueprint.route('/add', methods=['GET', 'POST'])
+@articles_blueprint.route('/article/add', methods=['GET', 'POST'])
 @login_required
 def write_article():
     user = current_user
