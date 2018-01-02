@@ -53,16 +53,12 @@ db.session.commit()
 # insert forum data
 question1 = Question('Build agent ID via TFS sdk', 'I am using the TFS2018 api and I need to get the build agent id for different team projects. How can I get the list of agent queue ids using the TFS sdk?', admin_user.id)
 
-db.session.add(question1)
-
-# commit the changes
-db.session.commit()
-
 answer1 = Answer('Using a transaction', question1.id, admin_user.id)
 answer2 = Answer('Your question is difficult to follow, but I\'ll try: It looks like you are using php to dump values in your form via PHP before you load the values later with your include statement.', question1.id, admin_user.id)
 
-db.session.add(answer1)
-db.session.add(answer2)
+question1.answers = [answer1, answer2]
+
+db.session.add(question1)
 
 # commit the changes
 db.session.commit()

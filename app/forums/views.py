@@ -35,8 +35,14 @@ def write_question():
 
 @forums_blueprint.route('/forum/<question_id>')
 def question_details(question_id):
+
+    try:
+        question = Question.query.filter(Question.id == question_id).one()
+    except:
+        flash('Error! Question does not exist.', 'error')
+        return redirect(url_for('forums.index'))
+
     question_with_user = db.session.query(Question, User).join(User).filter(Question.id == question_id).first()
-    #answer_with_question = Answer.query.filter_by(question_id = question_id).all()
     answer_with_question = db.session.query(Answer, User).join(User).filter(Answer.question_id == question_id).all()
     if question_with_user is not None:
         return render_template('forum/question_detail.html', question=question_with_user, answers=answer_with_question)
@@ -49,13 +55,20 @@ def question_details(question_id):
 def write_answer(question_id):
     user = current_user
     if not user.email_confirmed:
-        flash('Your email address must be confirmed to write questions.', 'error')
+        flash('Your email address must be confirmed to write answers.', 'error')
         return redirect(url_for('forums.index'))
+
+    try:
+        question = Question.query.filter(Question.id == question_id).one()
+    except:
+        flash('Error! Question does not exist.', 'error')
+        return redirect(url_for('forums.index'))
+
     form = WriteAnswerForm(request.form)
     if request.method == 'POST':
         if form.validate_on_submit():
             new_answer = Answer(form.answer_context.data, question_id, user.id)
-            db.session.add(new_answer)
+            question.answers.append(new_answer)
             db.session.commit()
             flash('New Answer, {}, added!'.format(new_answer.id), 'success')
             question_with_user = db.session.query(Question, User).join(User).filter(Question.id == question_id).first()
