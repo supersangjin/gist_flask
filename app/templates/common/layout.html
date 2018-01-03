@@ -22,18 +22,20 @@
   <link href="http://vjs.zencdn.net/6.4.0/video-js.css" rel="stylesheet">
   <!-- If you'd like to support IE8 -->
   <script src="http://vjs.zencdn.net/ie8/1.1.2/videojs-ie8.min.js"></script>
-  
+
   <!-- custom style -->
   <link rel="stylesheet" href="{{ url_for('static', filename='css/main?version=13.css') }}">
   <!--<link rel="stylesheet" href="{{ url_for('static', filename='css/mdb.min.css') }}">-->
 
+  <!-- Font Awesome for vector icon -->
+  <link href="https://use.fontawesome.com/releases/v5.0.2/css/all.css" rel="stylesheet">
 
 <style type="text/css"> /*TODO: custom style css file로 옮길것*/
-  
-  @import url('https://fonts.googleapis.com/css?family=Lobster');
 
-  .font-lobster {
-    font-family: 'Lobster', cursive;
+  @import url(https://fonts.googleapis.com/css?family=Roboto:400,100,100italic,300,300italic,400italic,500,500italic,700,700italic,900,900italic);
+
+    * {
+    font-family: "Roboto", Arial, sans-serif;
   }
 
 .thumb-post img {
@@ -113,13 +115,13 @@ body {
         <li class="nav-item">
           <a class="nav-link" href="{{ url_for('forums.index') }}">Forums</a>
         </li>
-        </ul>
+      </ul>
 
-        <!-- 일단 article title만 -->
+      <!-- 일단 article title만 -->
 
-        <form class="form-inline my-2 my-lg-0" action="search" style="text-align:center;">
+      <form class="form-inline my-2 my-lg-0" action="search" style="text-align:center;">
         <input class="form-control mr-sm-2" type="search" name="query" placeholder="Explore GIST" aria-label="Search" style="width:300px;">
-        </form>
+      </form>
 
       <ul class="navbar-nav ml-auto my-2 my-lg-0">
         {% if current_user.is_authenticated %}

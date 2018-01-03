@@ -1,6 +1,36 @@
 {% extends "common/layout.html" %}
 {% block content %}
 
+<style type="text/css">
+	.btn-category {
+		width: 10vw;
+		height: 10vw;
+	}
+
+	.white-background {
+		background-color:#ffffff;
+		border:0px solid transparent;
+	}
+</style>
+
+<div class="btn-group-lg text-center" role="group" aria-label="Basic example" style="width: 100%;">
+  <button type="button" class="btn btn-light btn-category white-background">
+  	<i class="fas fa-book fa-3x"></i></br>Fiction
+  </button>
+  <button type="button" class="btn btn-light btn-category white-background">
+  	<i class="fas fa-bookmark fa-3x"></i></br>Non Fiction
+  </button>
+  <button type="button" class="btn btn-light btn-category white-background">
+  	<i class="fas fa-flask fa-3x"></i></br>Science
+  </button>
+  <button type="button" class="btn btn-light btn-category white-background">
+  	<i class="fas fa-history fa-3x"></i></br>History
+  </button>
+  <button type="button" class="btn btn-light btn-category white-background">
+  	<i class="fas fa-heart fa-3x"></i></br>Art
+  </button>
+</div>
+
 <h3 class="text-center" style="width:100%; padding: 3%;"> MOST POPULAR ARTICLES </h3>
 <div class="card-deck" style="margin-top: 10px;">
   {% for article in articles %}
