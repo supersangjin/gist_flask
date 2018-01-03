@@ -7,10 +7,12 @@ from flask_login import current_user
 
 articles_blueprint = Blueprint('articles', __name__)
 
+ARTICLE_LIMIT = 3
+
 @articles_blueprint.route('/')
 @articles_blueprint.route('/article')
 def index():
-    all_articles = Article.query.all()
+    all_articles = Article.query.limit(ARTICLE_LIMIT).all()
     return render_template('articles/articles.html', articles=all_articles)
 
 

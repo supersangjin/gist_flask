@@ -1,0 +1,15 @@
+{% extends "common/layout.html" %}
+{% block content %}
+
+<div class="row" style="margin-top: 50px;">
+  {% for article in articles %}
+    <h4 style="width:100%">{{ article.article_title }}</h4>
+    <a class="articles" href="{{ url_for('articles.article_details', article_id=article.id) }}" style="width:100%">
+      <div class="markdown-body border" style="width:100%; margin-top: 10px; margin-bottom:30px; padding: 30px;">
+        {{ article.article_context | truncate | markdown }}
+      </div>
+    </a>
+  {% endfor %}
+</div>
+
+{% endblock %}

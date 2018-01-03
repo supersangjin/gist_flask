@@ -40,13 +40,13 @@ from app.users.views import users_blueprint
 from app.articles.views import articles_blueprint
 from app.videos.views import videos_blueprint
 from app.forums.views import forums_blueprint
-from app.search.views import search_blueprint
+from app.utils.views import utils_blueprint
 
 app.register_blueprint(users_blueprint)
 app.register_blueprint(articles_blueprint)
 app.register_blueprint(videos_blueprint)
 app.register_blueprint(forums_blueprint)
-app.register_blueprint(search_blueprint)
+app.register_blueprint(utils_blueprint)
 
 # error handling
 @app.errorhandler(404)

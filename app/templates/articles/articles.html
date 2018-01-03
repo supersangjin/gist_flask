@@ -1,14 +1,39 @@
 {% extends "common/layout.html" %}
 {% block content %}
 
-<div class="row" style="margin-top: 50px;">
+<h3 class="text-center" style="width:100%; padding: 3%;"> MOST POPULAR ARTICLES </h3>
+<div class="card-deck" style="margin-top: 10px;">
   {% for article in articles %}
-    <h4 style="width:100%">{{ article.article_title }}</h4>
-    <a class="articles" href="{{ url_for('articles.article_details', article_id=article.id) }}" style="width:100%">
-      <div class="markdown-body border" style="width:100%; margin-top: 10px; margin-bottom:30px; padding: 30px;">
-        {{ article.article_context | truncate | markdown }}
-      </div>
-    </a>
+  	<div class="card">
+  		<a href="{{ url_for('articles.article_details', article_id=article.id) }}">
+  		<div class="view hm-zoom">
+			<img class="card-img-top" src="static/image/1498037751.png" alt="Card image cap" class="img-fluid">
+		</div>
+		</a>
+		<div class="card-body">
+			<p class="card-text">Category or book name</p>
+			<h5 class="card-title">{{ article.article_title }}</h5>
+			<p class="card-text text-right"><small class="text-muted">By author name</small></p>
+		</div>
+	</div>
+  {% endfor %}
+</div>
+
+<h3 class="text-center" style="width:100%; padding: 3%;">NEW</h3>
+<div class="card-deck" style="margin-top: 10px;">
+  {% for article in articles %}
+  	<div class="card">
+  		<a href="{{ url_for('articles.article_details', article_id=article.id) }}">
+  		<div class="view hm-zoom">
+			<img class="card-img-top" src="static/image/1497928636.jpg" alt="Card image cap" class="img-fluid">
+		</div>
+		</a>
+		<div class="card-body">
+			<p class="card-text">Category or book name</p>
+			<h5 class="card-title">{{ article.article_title }}</h5>
+			<p class="card-text text-right"><small class="text-muted">By author name</small></p>
+		</div>
+	</div>
   {% endfor %}
 </div>
 

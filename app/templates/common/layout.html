@@ -1,123 +1,206 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="Gist">
-    <meta name="author" content="Gist Team">
-    <title>Gist</title>
-    <!-- styles -->
-    <!-- bootstrap4 css -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css" integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb" crossorigin="anonymous">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Gist">
+  <meta name="author" content="Gist Team">
+  <title>Gist</title>
+  <!-- styles -->
+  <!-- bootstrap4 css -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css" integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb" crossorigin="anonymous">
 
-    <!-- github markdown css -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/github-markdown-css/2.9.0/github-markdown.css">
+  <!-- github markdown css -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/github-markdown-css/2.9.0/github-markdown.css">
 
-    <!-- markdown editor -->
-    {{ simplemde.css }}
-    {{ simplemde.js }}
+  <!-- markdown editor -->
+  {{ simplemde.css }}
+  {{ simplemde.js }}
 
-    <!-- video.js -->
-    <link href="http://vjs.zencdn.net/6.4.0/video-js.css" rel="stylesheet">
-    <!-- If you'd like to support IE8 -->
-    <script src="http://vjs.zencdn.net/ie8/1.1.2/videojs-ie8.min.js"></script>
+  <!-- video.js -->
+  <link href="http://vjs.zencdn.net/6.4.0/video-js.css" rel="stylesheet">
+  <!-- If you'd like to support IE8 -->
+  <script src="http://vjs.zencdn.net/ie8/1.1.2/videojs-ie8.min.js"></script>
 
-    <!-- custom style -->
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/main?version=13.css') }}">
-  </head>
+  <!-- custom style -->
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/main?version=13.css') }}">
+  <!--<link rel="stylesheet" href="{{ url_for('static', filename='css/mdb.min.css') }}">-->
 
-  <body>
-    <!-- Static navbar -->
-    <nav class="navbar navbar-expand-lg navbar-light bg-light">
-      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo03" aria-controls="navbarTogglerDemo03" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-      <a class="navbar-brand" href="{{ url_for('articles.index') }}">Gist</a>
 
-      <div class="collapse navbar-collapse" id="navbarTogglerDemo03">
-        <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
-          <li class="nav-item">
-              <a class="nav-link" href="{{ url_for('articles.index') }}">Articles</a>
-          </li>
-          <li class="nav-item">
-              <a class="nav-link" href="{{ url_for('videos.index') }}">Videos</a>
-          </li>
-          <li class="nav-item">
-              <a class="nav-link" href="{{ url_for('forums.index') }}">Forums</a>
-          </li>
-          {% if current_user.is_authenticated %}
-            <li class="nav-item">
-              <a class="nav-link" href="{{ url_for('articles.write_article') }}">Write Article</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="{{ url_for('videos.upload_video') }}">Upload Video</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="{{ url_for('forums.write_question') }}">Write Question</a>
-            </li>
-          {% endif %}
+<style type="text/css"> /*TODO: custom style css file로 옮길것*/
+  
+  @import url('https://fonts.googleapis.com/css?family=Lobster');
 
-          <!-- 일단 article title만 -->
+  .font-lobster {
+    font-family: 'Lobster', cursive;
+  }
+
+.thumb-post img {
+  object-fit: cover; /* Do not scale the image */
+  object-position: center; /* Center the image within the element */
+  width: 100%;
+  margin-bottom: 1rem;
+}
+
+.card-img-top {
+    width: 100%;
+    height: 20vw;
+    object-fit: cover;
+  }
+
+.view {
+  overflow: hidden;
+  position: relative;
+  cursor: default; }
+  .view .mask {
+    background-attachment: fixed; }
+  .view .mask,
+  .view .full-bg-img {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    overflow: hidden;
+    top: 0;
+    left: 0; }
+  .view img, .view video {
+    display: block;
+    position: relative; }
+
+.hm-zoom img,
+.hm-zoom video,
+.overlay img,
+.overlay video {
+  -webkit-transition: all 0.2s linear;
+  transition: all 0.2s linear; }
+
+.hm-zoom:hover .mask,
+.overlay:hover .mask {
+  opacity: 1; }
+
+.hm-zoom:hover img {
+  -webkit-transform: scale(1.1);
+  -ms-transform: scale(1.1);
+  transform: scale(1.1); }
+
+body {
+  margin-top: 70px;
+}
+
+}
+
+</style>
+
+
+
+
+</head>
+
+<body>
+  <!-- Static navbar -->
+  <nav class="navbar fixed-top navbar-expand-lg navbar-light bg-light">
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo03" aria-controls="navbarTogglerDemo03" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <a class="navbar-brand" href="{{ url_for('articles.index') }}">Gist</a>
+
+    <div class="collapse navbar-collapse" id="navbarTogglerDemo03">
+      <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
+        <li class="nav-item">
+          <a class="nav-link" href="{{ url_for('articles.index') }}">Articles</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="{{ url_for('videos.index') }}">Videos</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="{{ url_for('forums.index') }}">Forums</a>
+        </li>
+
+        <!-- 일단 article title만 -->
+          <!--
           <form action="search">
             <input type="text" name="query" placeholder="Search">
           </form>
+        -->
 
-        </ul>
-        <ul class="navbar-nav ml-auto my-2 my-lg-0">
-          {% if current_user.is_authenticated and current_user.role == "admin" %}
-            <li class="nav-item">
-              <a class="nav-link" href="{{ url_for('users.admin_view_users') }}">Admin Page</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="{{ url_for('users.logout') }}">Log Out</a>
-            </li>
-          {% elif current_user.is_authenticated %}
-            <li class="nav-item">
-              <a class="nav-link" href="{{ url_for('users.user_profile') }}">{{current_user.email}}</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="{{ url_for('users.logout') }}">Log Out</a>
-            </li>
-          {% else %}
-            <li class="nav-item">
-              <a class="nav-link" href="{{ url_for('users.login') }}">Log In</a>
-            </li>
-          {% endif %}
-        </ul>
-      </div>
-    </nav>
+        <form class="form-inline my-2 my-lg-0" action="search">
+        <input class="form-control mr-sm-2" type="search" name="query" placeholder="Explore GIST" aria-label="Search">
+          <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+        </form>
 
-    <div class="container">
-      <div class="content" style="margin: 20px;">
-        <!-- flash messages -->
-        {% for error_message in get_flashed_messages(category_filter=["error"]) %}
-            <div class="alert alert-danger alert-dismissible">{{ error_message }}</div>
-        {% endfor %}
+      </ul>
+      <ul class="navbar-nav ml-auto my-2 my-lg-0">
+        {% if current_user.is_authenticated %}
 
-        {% for success_message in get_flashed_messages(category_filter=["success"]) %}
-            <div class="alert alert-success alert-dismissible">{{ success_message }}</div>
-        {% endfor %}
+        {% if current_user.role == "admin" %}
+        <li class="nav-item">
+          <a class="nav-link" href="{{ url_for('users.admin_view_users') }}">Admin Page</a>
+        </li>
+        {% else %}
+        <li class="nav-item">
+          <a class="nav-link" href="{{ url_for('users.user_profile') }}">{{current_user.email}}</a>
+        </li>
+        {% endif %}
 
-        {% for info_message in get_flashed_messages(category_filter=["info"]) %}
-            <div class="alert alert-info alert-dismissible">{{ info_message }}</div>
-        {% endfor %}
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            Write New
+          </a>
+          <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+            <a class="dropdown-item" href="{{ url_for('articles.write_article') }}">Article</a>
+            <a class="dropdown-item" href="{{ url_for('videos.upload_video') }}">Video</a>
+            <div class="dropdown-divider"></div>
+            <a class="dropdown-item" href="{{ url_for('forums.write_question') }}">Question</a>
+          </div>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="{{ url_for('users.logout') }}">Log Out</a>
+        </li>
 
-        <!-- child template -->
-        {% block content %}
-        {% endblock %}
+        {% else %}
+        <li class="nav-item">
+          <a class="nav-link" href="{{ url_for('users.login') }}">Log In</a>
+        </li>
+        {% endif %}
 
-      </div>
-      <div class="footer">
-        <hr>
-        <p>Gist Team - 2018</p>
-      </div>
-    </div><!-- /.container -->
+      </ul>
+    </div>
+  </nav>
 
-    <!-- scripts -->
-    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js" integrity="sha384-vFJXuSJphROIrBnz7yo7oB41mKfc8JzQZiCq4NCceLEaO4IHwicKwpJf9c9IpFgh" crossorigin="anonymous"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js" integrity="sha384-alpBpkh1PFOepccYVYDB4do5UnbKysX5WZXm3XxPqe5iKTfUKjNkCk9SaVuEZflJ" crossorigin="anonymous"></script>
-    <script src="http://vjs.zencdn.net/6.4.0/video.js"></script>
-  </body>
+  <div class="container">
+    <div class="content" style="margin: 20px;">
+      <!-- flash messages -->
+      {% for error_message in get_flashed_messages(category_filter=["error"]) %}
+      <div class="alert alert-danger alert-dismissible">{{ error_message }}</div>
+      {% endfor %}
+
+      {% for success_message in get_flashed_messages(category_filter=["success"]) %}
+      <div class="alert alert-success alert-dismissible">{{ success_message }}</div>
+      {% endfor %}
+
+      {% for info_message in get_flashed_messages(category_filter=["info"]) %}
+      <div class="alert alert-info alert-dismissible">{{ info_message }}</div>
+      {% endfor %}
+
+      <!-- child template -->
+      {% block content %}
+      {% endblock %}
+
+    </div>
+    <div class="footer">
+      <hr>
+      <p>Gist Team - 2018</p>
+    </div>
+  </div><!-- /.container -->
+
+
+
+  <!-- scripts -->
+  <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js" integrity="sha384-vFJXuSJphROIrBnz7yo7oB41mKfc8JzQZiCq4NCceLEaO4IHwicKwpJf9c9IpFgh" crossorigin="anonymous"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js" integrity="sha384-alpBpkh1PFOepccYVYDB4do5UnbKysX5WZXm3XxPqe5iKTfUKjNkCk9SaVuEZflJ" crossorigin="anonymous"></script>
+  <script src="http://vjs.zencdn.net/6.4.0/video.js"></script>
+
+
+</body>
 </html>

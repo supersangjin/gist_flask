@@ -11,6 +11,10 @@ db.create_all()
 admin_user = User(email='gistkaist@gmail.com', plaintext_password='kaistgist', role='admin')
 db.session.add(admin_user)
 
+sample_user = User(email='sample@gmail.com', plaintext_password='sample', role='user')
+sample_user.email_confirmed = True
+db.session.add(sample_user)
+
 # commit the changes
 db.session.commit()
 
@@ -30,9 +34,12 @@ article1 = Article('Welcome to Gist', "For those of us who love to read, not hav
                    , admin_user.id)
 article2 = Article('Markdown Guide', "## Lists\n\nUnordered lists can be started using the toolbar or by typing `* `, `- `, or `+ `. Ordered lists can be started by typing `1. `.\n\n#### Unordered\n* Lists are a piece of cake\n* They even auto continue as you type\n* A double enter will end them\n* Tabs and shift-tabs work too\n\n#### Ordered\n1. Numbered lists...\n2. ...work too!\n\n## What about images?\n![Yes](https://i.imgur.com/sZlktY7.png)"
                    , admin_user.id)
+article3 = Article('I Love Pintos', "Pintos is beautiful ^^"
+                   , sample_user.id)
 
 db.session.add(article1)
 db.session.add(article2)
+db.session.add(article3)
 
 # commit the changes
 db.session.commit()
