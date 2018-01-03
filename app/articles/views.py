@@ -7,7 +7,7 @@ from flask_login import current_user
 
 articles_blueprint = Blueprint('articles', __name__)
 
-ARTICLE_LIMIT = 3
+ARTICLE_LIMIT = 4
 
 @articles_blueprint.route('/')
 @articles_blueprint.route('/article')
