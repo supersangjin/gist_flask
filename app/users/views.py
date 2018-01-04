@@ -27,7 +27,7 @@ def register():
                 login_user(new_user)
                 send_confirmation_email(new_user.email)
                 flash('Thanks for registering!  Please check your email to confirm your email address.', 'success')
-                return redirect(url_for('articles.index'))
+                return redirect(url_for('utils.index'))
             except IntegrityError:
                 db.session.rollback()
                 flash('Email ({}) already exists.'.format(form.email.data), 'error')
@@ -48,7 +48,7 @@ def login():
                 db.session.commit()
                 login_user(user)
                 flash('Thanks for logging in, {}'.format(current_user.email))
-                return redirect(url_for('articles.index'))
+                return redirect(url_for('utils.index'))
             else:
                 flash('Incorrect login credentials.', 'error')
     return render_template('users/login.html', form=form)
@@ -88,7 +88,7 @@ def confirm_email(token):
         login_user(user)
         flash('Thank you for confirming your email address!', 'success')
 
-    return redirect(url_for('articles.index'))
+    return redirect(url_for('utils.index'))
 
 
 @users_blueprint.route('/reset', methods=["GET", "POST"])

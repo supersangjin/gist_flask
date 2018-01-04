@@ -37,6 +37,7 @@
 
     * {
     font-family: "Roboto", Arial, sans-serif;
+    font-weight: 300;
   }
 
 .thumb-post img {
@@ -86,10 +87,25 @@
   -ms-transform: scale(1.1);
   transform: scale(1.1); }
 
+.pagination-page-info {
+    padding: .6em;
+    padding-left: 0;
+    width: 40em;
+    margin: .5em;
+    margin-left: 0;
+    font-size: 12px;
+}
+.pagination-page-info b {
+    color: black;
+    background: #6aa6ed;
+    padding-left: 2px;
+    padding: .1em .25em;
+    font-size: 150%;
+}
+
 body {
   margin-top: 70px;
 }
-
 </style>
 
 
@@ -99,68 +115,72 @@ body {
 
 <body>
   <!-- Static navbar -->
+  
   <nav class="navbar fixed-top navbar-expand-lg navbar-light bg-light">
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo03" aria-controls="navbarTogglerDemo03" aria-expanded="false" aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon"></span>
-    </button>
-    <a class="navbar-brand" href="{{ url_for('articles.index') }}">Gist</a>
+    <div class="container">
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo03" aria-controls="navbarTogglerDemo03" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <a class="navbar-brand" href="{{ url_for('utils.index') }}">Gist</a>
 
-    <div class="collapse navbar-collapse" id="navbarTogglerDemo03">
-      <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
-        <li class="nav-item">
-          <a class="nav-link" href="{{ url_for('articles.index') }}">Articles</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="{{ url_for('videos.index') }}">Videos</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="{{ url_for('forums.index') }}">Forums</a>
-        </li>
-      </ul>
+      <div class="collapse navbar-collapse" id="navbarTogglerDemo03">
+        <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
+          <li class="nav-item">
+            <a class="nav-link" href="{{ url_for('articles.index') }}">Articles</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{{ url_for('videos.index') }}">Videos</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{{ url_for('forums.index') }}">Forums</a>
+          </li>
+        </ul>
 
-      <!-- 일단 article title만 -->
+        <!-- 일단 article title만 -->
 
-      <form class="form-inline my-2 my-lg-0" action="search" style="text-align:center;">
-        <input class="form-control mr-sm-2" type="search" name="query" placeholder="Explore GIST" aria-label="Search" style="width:300px;">
-      </form>
+        <form class="form-inline my-2 my-lg-0" action="{{ url_for('utils.search') }}" style="text-align:center;">
+          <input class="form-control mr-sm-2" type="text" name="query" placeholder="Explore GIST" aria-label="Search" style="width:300px;">
+        </form>
 
-      <ul class="navbar-nav ml-auto my-2 my-lg-0">
-        {% if current_user.is_authenticated %}
+        <ul class="navbar-nav ml-auto my-2 my-lg-0">
+          {% if current_user.is_authenticated %}
 
-        {% if current_user.role == "admin" %}
-        <li class="nav-item">
-          <a class="nav-link" href="{{ url_for('users.admin_view_users') }}">Admin Page</a>
-        </li>
-        {% else %}
-        <li class="nav-item">
-          <a class="nav-link" href="{{ url_for('users.user_profile') }}">{{current_user.email}}</a>
-        </li>
-        {% endif %}
+          {% if current_user.role == "admin" %}
+          <li class="nav-item">
+            <a class="nav-link" href="{{ url_for('users.admin_view_users') }}">Admin Page</a>
+          </li>
+          {% else %}
+          <li class="nav-item">
+            <a class="nav-link" href="{{ url_for('users.user_profile') }}">{{current_user.email}}</a>
+          </li>
+          {% endif %}
 
-        <li class="nav-item dropdown">
-          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-            Write New
-          </a>
-          <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-            <a class="dropdown-item" href="{{ url_for('articles.write_article') }}">Article</a>
-            <a class="dropdown-item" href="{{ url_for('videos.upload_video') }}">Video</a>
-            <div class="dropdown-divider"></div>
-            <a class="dropdown-item" href="{{ url_for('forums.write_question') }}">Question</a>
-          </div>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="{{ url_for('users.logout') }}">Log Out</a>
-        </li>
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              Write New
+            </a>
+            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+              <a class="dropdown-item" href="{{ url_for('articles.write_article') }}">Article</a>
+              <a class="dropdown-item" href="{{ url_for('videos.upload_video') }}">Video</a>
+              <div class="dropdown-divider"></div>
+              <a class="dropdown-item" href="{{ url_for('forums.write_question') }}">Question</a>
+            </div>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{{ url_for('users.logout') }}">Log out</a>
+          </li>
 
-        {% else %}
-        <li class="nav-item">
-          <a class="nav-link" href="{{ url_for('users.login') }}">Log In</a>
-        </li>
-        {% endif %}
+          {% else %}
+          <li class="nav-item">
+            <a class="nav-link" href="{{ url_for('users.login') }}">Log In</a>
+          </li>
+          {% endif %}
 
-      </ul>
+        </ul>
+      </div>
     </div>
   </nav>
+
 
   <div class="container">
     <div class="content" style="margin: 20px;">
