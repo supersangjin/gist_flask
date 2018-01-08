@@ -1,4 +1,4 @@
-from flask import render_template, request, redirect, url_for, flash
+from flask import render_template, request, redirect, url_for, flash, session
 from app.models import Article, User
 from app import db
 from flask_login import login_required
@@ -6,7 +6,6 @@ from .forms import WriteArticleForm, EditArticleForm
 from flask_login import current_user
 from flask_paginate import Pagination, get_page_parameter
 from . import articles_blueprint
-
 
 ARTICLE_LIMIT = 4
 PER_PAGE = 4
@@ -52,7 +51,7 @@ def write_article():
 def edit_article(article_id):
     user = current_user
     if not user.email_confirmed:
-        flash('Your email address must be confirmed to edit articles.', 'error') # 글 작성 후 이메일 주소 바꿨을 수도 있으니까
+        flash('Your email address must be confirmed to edit articles.', 'error')  # 글 작성 후 이메일 주소 바꿨을 수도 있으니까
         return redirect(url_for('articles.index'))
     article = db.session.query(Article).filter(Article.id == article_id).first()
     if user.id != article.user_id:
@@ -75,7 +74,7 @@ def edit_article(article_id):
 def delete_article(article_id):
     user = current_user
     if not user.email_confirmed:
-        flash('Your email address must be confirmed to delete articles.', 'error') # 글 작성 후 이메일 주소 바꿨을 수도 있으니까
+        flash('Your email address must be confirmed to delete articles.', 'error')  # 글 작성 후 이메일 주소 바꿨을 수도 있으니까
         return redirect(url_for('articles.index'))
     article = db.session.query(Article).filter(Article.id == article_id).first()
     if user.id != article.user_id:
@@ -91,8 +90,11 @@ def delete_article(article_id):
 def article_details(article_id):
     article_with_user = db.session.query(Article, User).join(User).filter(Article.id == article_id).first()
     if article_with_user is not None:
-        article_with_user.Article.article_hit += 1
-        db.session.commit()
+        visited = session.get('article' + article_id, '')
+        if visited == '':  # 이번 세션동안 방문한적 없음
+            session['article' + article_id] = "visited"
+            article_with_user.Article.article_hit += 1
+            db.session.commit()
         return render_template('articles/article_detail.html', article=article_with_user)
     else:
         flash('Error! Article does not exist.', 'error')
