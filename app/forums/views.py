@@ -1,11 +1,10 @@
-from flask import render_template, Blueprint, request, redirect, url_for, flash
+from flask import render_template, request, redirect, url_for, flash
 from app.models import Question, Answer, User
 from app import db
 from flask_login import login_required
 from .forms import *
 from flask_login import current_user
-
-forums_blueprint = Blueprint('forums', __name__)
+from . import forums_blueprint
 
 
 @forums_blueprint.route('/forum')

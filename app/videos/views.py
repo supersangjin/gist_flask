@@ -1,14 +1,12 @@
 import os
 from app import db
 from instance.config import ALLOWED_EXTENSIONS, UPLOAD_FOLDER
-from flask import request, redirect, url_for, flash, Blueprint, render_template
+from flask import request, redirect, url_for, flash, render_template
 from werkzeug.utils import secure_filename
 from flask_login import login_required, current_user
 from app.models import Video, User
 from .forms import UploadVideoForm
-
-
-videos_blueprint = Blueprint('videos', __name__)
+from . import videos_blueprint
 
 
 @videos_blueprint.route('/video')

@@ -1,11 +1,10 @@
 from flask import render_template, Blueprint, request, redirect, url_for, flash
 from app.models import Article, User
+from . import utils_blueprint
 from app import db
 from flask_login import login_required
 
 ARTICLE_LIMIT = 4
-
-utils_blueprint = Blueprint('utils', __name__)
 
 @utils_blueprint.route('/')
 def index():

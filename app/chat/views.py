@@ -1,4 +1,4 @@
-from flask import render_template, Blueprint, request, redirect, url_for, flash, session
+from flask import render_template, request, redirect, url_for, flash, session
 from .forms import *
 from flask_login import current_user
 from . import chat_blueprint

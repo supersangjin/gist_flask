@@ -1,17 +1,14 @@
-from flask import render_template, Blueprint, request, redirect, url_for, flash, abort
+from flask import render_template, request, redirect, url_for, flash, abort
 from sqlalchemy.exc import IntegrityError
 from flask_login import login_user, current_user, logout_user, login_required
 from flask_mail import Message
 from itsdangerous import URLSafeTimedSerializer
 from threading import Thread
 from datetime import datetime
-
 from .forms import RegisterForm, LoginForm, EmailForm, PasswordForm
 from app import db, mail, app
 from app.models import User
-
-
-users_blueprint = Blueprint('users', __name__)
+from . import users_blueprint
 
 
 @users_blueprint.route('/register', methods=['GET', 'POST'])

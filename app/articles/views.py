@@ -1,12 +1,12 @@
-from flask import render_template, Blueprint, request, redirect, url_for, flash
+from flask import render_template, request, redirect, url_for, flash
 from app.models import Article, User
 from app import db
 from flask_login import login_required
 from .forms import WriteArticleForm
 from flask_login import current_user
 from flask_paginate import Pagination, get_page_parameter
+from . import articles_blueprint
 
-articles_blueprint = Blueprint('articles', __name__)
 
 ARTICLE_LIMIT = 4
 PER_PAGE = 2
