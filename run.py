@@ -1,7 +1,5 @@
 from app import app
-from flask_socketio import SocketIO
-
-socketio = SocketIO(app)
+from app import socketio
 
 if __name__ == "__main__":
     socketio.run(app)
