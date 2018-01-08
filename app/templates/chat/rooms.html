@@ -6,7 +6,6 @@
 <form action="{{ url_for('chat.index') }}" method="post">
     {{ form.csrf_token }}
     <dl>
-        {{ render_field(form.name, placeholder="Name") }}
         {{ render_field(form.room, placeholder="Room") }}
     </dl>
      <button class="btn btn-sm btn-success" type="submit">Enter Room</button>

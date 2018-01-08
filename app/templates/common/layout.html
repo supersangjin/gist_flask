@@ -24,7 +24,7 @@
   <script src="http://vjs.zencdn.net/ie8/1.1.2/videojs-ie8.min.js"></script>
 
   <!-- custom style -->
-  <link rel="stylesheet" href="{{ url_for('static', filename='css/main?version=13.css') }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/main?version=14.css') }}">
   <!--<link rel="stylesheet" href="{{ url_for('static', filename='css/mdb.min.css') }}">-->
 
   <!-- Font Awesome for vector icon -->
@@ -104,7 +104,7 @@
 }
 
 body {
-  margin-top: 70px;
+  margin-top: 110px;
 }
 </style>
 
@@ -154,7 +154,7 @@ body {
           </li>
           {% else %}
           <li class="nav-item">
-            <a class="nav-link" href="{{ url_for('users.user_profile') }}">{{current_user.email}}</a>
+            <a class="nav-link" href="{{ url_for('users.user_profile') }}">{{current_user.username}}</a>
           </li>
           {% endif %}
 

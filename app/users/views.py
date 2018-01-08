@@ -16,18 +16,14 @@ def register():
     form = RegisterForm(request.form)
     if request.method == 'POST':
         if form.validate_on_submit():
-            try:
-                new_user = User(form.email.data, form.password.data)
-                new_user.authenticated = True
-                db.session.add(new_user)
-                db.session.commit()
-                login_user(new_user)
-                send_confirmation_email(new_user.email)
-                flash('Thanks for registering!  Please check your email to confirm your email address.', 'success')
-                return redirect(url_for('utils.index'))
-            except IntegrityError:
-                db.session.rollback()
-                flash('Email ({}) already exists.'.format(form.email.data), 'error')
+            new_user = User(form.username.data, form.email.data, form.password.data)
+            new_user.authenticated = True
+            db.session.add(new_user)
+            db.session.commit()
+            login_user(new_user)
+            send_confirmation_email(new_user.email)
+            flash('Thanks for registering!  Please check your email to confirm your email address.', 'success')
+            return redirect(url_for('utils.index'))
     return render_template('users/register.html', form=form)
 
 

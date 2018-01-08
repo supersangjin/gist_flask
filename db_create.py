@@ -8,10 +8,10 @@ db.drop_all()
 db.create_all()
 
 # admin
-admin_user = User(email='gistkaist@gmail.com', plaintext_password='kaistgist', role='admin')
+admin_user = User(username="admin", email='gistkaist@gmail.com', plaintext_password='kaistgist', role='admin')
 db.session.add(admin_user)
 
-sample_user = User(email='sample@gmail.com', plaintext_password='sample', role='user')
+sample_user = User(username="sample_user", email='sample@gmail.com', plaintext_password='sample', role='user')
 sample_user.email_confirmed = True
 db.session.add(sample_user)
 

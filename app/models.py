@@ -13,6 +13,7 @@ class User(db.Model):
     __tablename__ = 'users'
 
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    username = db.Column(db.String, unique=True, nullable=False)
     email = db.Column(db.String, unique=True, nullable=False)
     _password = db.Column(db.Binary(60), nullable=False)
     authenticated = db.Column(db.Boolean, default=False)
@@ -26,8 +27,9 @@ class User(db.Model):
     articles = db.relationship('Article', backref='user', lazy='dynamic')
     videos = db.relationship('Video', backref='user', lazy='dynamic')
 
-    def __init__(self, email, plaintext_password, email_confirmation_sent_on=None, role='user'):
+    def __init__(self, username, email, plaintext_password, email_confirmation_sent_on=None, role='user'):
         self.role = role
+        self.username = username
         self.email = email
         self.password = plaintext_password
         self.authenticated = False
@@ -83,11 +85,13 @@ class Article(db.Model):
     article_title = db.Column(db.String, nullable=False)
     article_context = db.Column(db.String, nullable=False)
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
+    article_hit = db.Column(db.Integer)
 
     def __init__(self, title, context, user_id):
         self.article_title = title
         self.article_context = context
         self.user_id = user_id
+        self.article_hit = 1
 
     def __repr__(self):
         return '<id: {}, title: {}, user_id: {}>'.format(self.id, self.article_title, self.user_id)

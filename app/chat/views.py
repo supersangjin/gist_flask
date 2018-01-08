@@ -9,11 +9,10 @@ def index():
     """Login form to enter a room."""
     form = ChatForm()
     if form.validate_on_submit():
-        session['name'] = form.name.data
+        session['name'] = current_user.username
         session['room'] = form.room.data
         return redirect(url_for('.chat'))
     elif request.method == 'GET':
-        form.name.data = session.get('name', '')
         form.room.data = session.get('room', '')
     return render_template('chat/rooms.html', form=form)
 

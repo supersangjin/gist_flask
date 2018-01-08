@@ -9,7 +9,7 @@ from . import articles_blueprint
 
 
 ARTICLE_LIMIT = 4
-PER_PAGE = 2
+PER_PAGE = 4
 """
 @articles_blueprint.route('/')
 def root():
@@ -49,6 +49,8 @@ def write_article():
 def article_details(article_id):
     article_with_user = db.session.query(Article, User).join(User).filter(Article.id == article_id).first()
     if article_with_user is not None:
+        article_with_user.Article.article_hit += 1
+        db.session.commit()
         return render_template('articles/article_detail.html', article=article_with_user)
     else:
         flash('Error! Article does not exist.', 'error')
