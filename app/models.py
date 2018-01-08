@@ -9,7 +9,6 @@ from sqlalchemy import event
 
 
 class User(db.Model):
-
     __tablename__ = 'users'
 
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
@@ -86,12 +85,14 @@ class Article(db.Model):
     article_context = db.Column(db.String, nullable=False)
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
     article_hit = db.Column(db.Integer)
+    article_like = db.Column(db.Integer)
 
     def __init__(self, title, context, user_id):
         self.article_title = title
         self.article_context = context
         self.user_id = user_id
         self.article_hit = 1
+        self.article_like = 0
 
     def __repr__(self):
         return '<id: {}, title: {}, user_id: {}>'.format(self.id, self.article_title, self.user_id)
@@ -115,6 +116,7 @@ class Video(db.Model):
     def __repr__(self):
         return '<id: {}, title: {}, user_id: {}>'.format(self.id, self.video_title, self.user_id)
 
+
 class Question(db.Model):
     __tablename__ = "questions"
 
@@ -125,16 +127,17 @@ class Question(db.Model):
 
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
 
-    answers = db.relationship('Answer', backref = 'questions', cascade = 'all, delete', order_by = 'Answer.id')
+    answers = db.relationship('Answer', backref='questions', cascade='all, delete', order_by='Answer.id')
 
     def __init__(self, title, context, user_id):
         self.question_title = title
         self.question_context = context
         self.question_length = 0
         self.user_id = user_id
-        
+
     def __repr__(self):
         return '<id: {}, title: {}, user_id: {}>'.format(self.id, self.question_title, self.user_id)
+
 
 class Answer(db.Model):
     __tablename__ = "answers"
@@ -144,7 +147,7 @@ class Answer(db.Model):
 
     question_id = db.Column(db.Integer, db.ForeignKey('questions.id'))
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
-    
+
     def __init__(self, context, question_id, user_id):
         self.answer_context = context
         self.question_id = question_id
@@ -153,8 +156,10 @@ class Answer(db.Model):
     def __repr__(self):
         return '<id: {}, question_id: {}, user_id: {}>'.format(self.id, self.question_id, self.user_id)
 
+
 def question_answers_append(question, answer, initiator):
     """Update some question values when `Question.answers.append` is called."""
     question.question_length += 1
+
 
 event.listen(Question.answers, 'append', question_answers_append)
