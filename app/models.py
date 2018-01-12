@@ -84,6 +84,7 @@ class Article(db.Model):
     article_title = db.Column(db.String, nullable=False)
     article_context = db.Column(db.String, nullable=False)
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
+    article_creDate = db.Column(db.DateTime, nullable=True)
     article_hit = db.Column(db.Integer)
     article_like = db.Column(db.Integer)
 
@@ -91,11 +92,33 @@ class Article(db.Model):
         self.article_title = title
         self.article_context = context
         self.user_id = user_id
+        self.article_creDate = datetime.now()
         self.article_hit = 1
         self.article_like = 0
 
     def __repr__(self):
         return '<id: {}, title: {}, user_id: {}>'.format(self.id, self.article_title, self.user_id)
+
+
+class Comment(db.Model):
+    __tablename__ = "comments"
+
+    id = db.Column(db.Integer, primary_key=True)
+    comment_context = db.Column(db.String, nullable=False)
+    comment_like = db.Column(db.Integer)
+    comment_creDate = db.Column(db.DateTime, nullable=True)
+    user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
+    article_id = db.Column(db.Integer, db.ForeignKey('articles.id'))
+
+    def __init__(self, context, article_id, user_id):
+        self.comment_context = context
+        self.comment_like = 0
+        self.comment_creDate = datetime.now()
+        self.user_id = user_id
+        self.article_id = article_id
+
+    def __repr__(self):
+        return '<id: {}, context: {}, user_id: {}, article_id: {}>'.format(self.id, self.comment_context, self.user_id, self.article_id)
 
 
 class Video(db.Model):

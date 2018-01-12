@@ -1,11 +1,12 @@
-from flask import render_template, request, redirect, url_for, flash, session
-from app.models import Article, User
+from flask import render_template, request, redirect, url_for, flash, session, jsonify
+from app.models import Article, User, Comment
 from app import db
 from flask_login import login_required
 from .forms import WriteArticleForm, EditArticleForm
 from flask_login import current_user
 from flask_paginate import Pagination, get_page_parameter
 from . import articles_blueprint
+import jsonpickle
 
 ARTICLE_LIMIT = 4
 PER_PAGE = 4
@@ -21,6 +22,8 @@ def root():
 @articles_blueprint.route('/article/<int:page>')
 def index(page):
     all_articles = Article.query.limit(ARTICLE_LIMIT).all()
+
+    # TODO article 정렬 .. 조회수, 추천수, 생성 날짜 기준
 
     articles = Article.query.paginate(per_page=PER_PAGE, page=page)
 
@@ -46,7 +49,7 @@ def write_article():
     return render_template('articles/write_article.html', form=form)
 
 
-@articles_blueprint.route('/article/edit/<article_id>', methods=['GET', 'POST'])
+@articles_blueprint.route('/article/<article_id>/edit', methods=['GET', 'POST'])
 @login_required
 def edit_article(article_id):
     user = current_user
@@ -69,7 +72,7 @@ def edit_article(article_id):
     return render_template('articles/edit_article.html', form=form, article=article)
 
 
-@articles_blueprint.route('/article/delete/<article_id>', methods=['GET', 'POST'])
+@articles_blueprint.route('/article/<article_id>/delete', methods=['GET', 'POST'])
 @login_required
 def delete_article(article_id):
     user = current_user
@@ -86,7 +89,7 @@ def delete_article(article_id):
     return redirect(url_for('articles.index'))
 
 
-@articles_blueprint.route('/article/detail/<article_id>')
+@articles_blueprint.route('/article/<article_id>/detail')
 def article_details(article_id):
     article_with_user = db.session.query(Article, User).join(User).filter(Article.id == article_id).first()
     if article_with_user is not None:
@@ -99,6 +102,34 @@ def article_details(article_id):
     else:
         flash('Error! Article does not exist.', 'error')
     return redirect(url_for('articles.index'))
+
+
+@articles_blueprint.route('/article/<article_id>/comment/add', methods=['GET', 'POST'])
+def add_comment(article_id):
+    # Comment db 에서 가져오기
+    if request.method == 'POST':
+        data = request.form.to_dict()
+        comment_context = data['comment_context']
+        new_comment = Comment(comment_context, article_id, current_user.id)
+        db.session.add(new_comment)
+        db.session.commit()
+
+    all_comments = db.session.query(Comment).filter(Comment.article_id == article_id)
+
+    result_list = []
+    for comment in all_comments:
+        author = db.session.query(User).filter(User.id == comment.user_id).first()
+        result_list.append(
+            {
+                "id": comment.id,
+                "comment_context": comment.comment_context,
+                "comment_like": comment.comment_like,
+                "comment_creDate": comment.comment_creDate,
+                "author": author.username
+            }
+        )
+    result_list.reverse()
+    return jsonify(result_list)
 
 
 # helper functions

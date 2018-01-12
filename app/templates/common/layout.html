@@ -30,6 +30,16 @@
   <!-- Font Awesome for vector icon -->
   <link href="https://use.fontawesome.com/releases/v5.0.2/css/all.css" rel="stylesheet">
 
+  <!-- react js -->
+  <script src="https://unpkg.com/react@15.3.0/dist/react.js"></script>
+  <script src="https://unpkg.com/react-dom@15.3.0/dist/react-dom.js"></script>
+  <script src="https://unpkg.com/babel-standalone@6.15.0/babel.min.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+  <script src="https://unpkg.com/remarkable@1.7.1/dist/remarkable.min.js"></script>
+
+  <!-- purify html string -->
+  <script type="text/javascript" src="{{ url_for('static', filename='js/purify.min.js') }}"></script>
+
 <style type="text/css"> /*TODO: custom style css file로 옮길것*/
 
   @import url('https://fonts.googleapis.com/css?family=Montserrat:300,400|Nunito:400,700,900|Roboto:400,100,100italic,300,300italic,400italic,500,500italic,700,700italic,900,900italic');
@@ -107,9 +117,6 @@ body {
   margin-top: 110px;
 }
 </style>
-
-
-
 
 </head>
 
@@ -214,7 +221,7 @@ body {
 
 
   <!-- scripts -->
-  <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js" integrity="sha384-vFJXuSJphROIrBnz7yo7oB41mKfc8JzQZiCq4NCceLEaO4IHwicKwpJf9c9IpFgh" crossorigin="anonymous"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js" integrity="sha384-alpBpkh1PFOepccYVYDB4do5UnbKysX5WZXm3XxPqe5iKTfUKjNkCk9SaVuEZflJ" crossorigin="anonymous"></script>
   <script src="http://vjs.zencdn.net/6.4.0/video.js"></script>

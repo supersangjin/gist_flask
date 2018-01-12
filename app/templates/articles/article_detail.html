@@ -8,6 +8,7 @@
     max-width: 1000px;
     margin: 0 auto;
     padding: 45px;
+    margin-bottom: 50px;
 }
 
   @media (max-width: 767px) {
@@ -15,6 +16,52 @@
           padding: 15px;
       }
   }
+
+  .comment {
+    max-width: 800px;
+    border-bottom: solid 1px rgba(178, 179, 153, 0.125);
+  }
+
+  .comment p{
+    max-width: 600px;
+    margin: 10px auto;
+    margin-bottom: 50px;
+  }
+
+  .comment img {
+    display: inline-block;
+    height: 40px;
+    border-width: 0;
+    border-radius: 100%;
+    margin: 30px;
+  }
+
+  .comment h4 {
+    display: inline-block;
+    margin: 20px;
+    color: #404040;
+    text-transform: lowercase;
+    text-decoration: none;
+    font-weight: 200;
+  }
+
+  .commentForm {
+    margin-top: 500px;
+    max-width: 900px;
+    margin: 10px auto;
+    margin-bottom: 50px;
+    height: 100px;
+    border: none;
+  }
+
+  textarea {
+    width: 100%;
+    height: 100%;
+    border: solid 1px rgba(178, 179, 153, 0.125);
+  }
+
+
+
 </style>
 
 <div class="page-header" style="margin-top: 50px;">
@@ -30,5 +77,128 @@
         <p><a href="{{ url_for('articles.delete_article', article_id=article.Article.id) }}">delete</a></p>
     {% endif %}
 {% endif %}
+
+
+<div id="content"></div>
+<script type="text/babel">
+    var CommentBox = React.createClass({
+        loadCommentsFromServer: function() {
+            $.ajax({
+                url: this.props.url,
+                dataType: 'json',
+                cache: false,
+                success: function(data) {
+                    this.setState({data: data});
+                }.bind(this),
+                error: function(xhr, status, err) {
+                    console.error(this.props.url, status, err.toString());
+                }.bind(this)
+            });
+        },
+        handleCommentSubmit: function(comment) {
+            $.ajax({
+                url: this.props.url,
+                dataType: 'json',
+                type: 'POST',
+                data: comment,
+                success: function(data) {
+                    this.setState({data: data});
+                }.bind(this)
+            });
+        },
+        getInitialState: function() {
+            return {data: []};
+        },
+        componentDidMount: function() {
+            this.loadCommentsFromServer();
+            setInterval(this.loadCommentsFromServer, this.props.pollInterval);
+        },
+        render: function() {
+            return (
+                <div className="commentBox">
+                    <CommentForm onCommentSubmit={this.handleCommentSubmit} />
+                    <CommentList data={this.state.data}/>
+                </div>
+            );
+        }
+    });
+
+    var CommentList = React.createClass({
+        render: function() {
+            var commentNodes = this.props.data.map(function(comment) {
+                return (
+                    <Comment author={comment.author} key={comment.id}>
+                        {comment.comment_context}
+                    </Comment>
+                );
+            });
+            return (
+                <div className="commentList">
+                    {commentNodes}
+                </div>
+            );
+        }
+    });
+
+    var CommentForm = React.createClass({
+        getInitialState: function() {
+            return {comment_context: ''};
+        },
+        handleTextChange: function(e) {
+            this.setState({comment_context: e.target.value});
+        },
+        handleSubmit: function(e) {
+            e.preventDefault();
+            var text = this.state.comment_context.trim();
+            if (!text) {
+                return;
+            }
+            this.props.onCommentSubmit({comment_context: text});
+            this.setState({comment_context: ''});
+        },
+        render: function() {
+            return (
+                <div className="commentForm">
+                    <form onSubmit={this.handleSubmit}>
+                        <textarea
+                            type="text"
+                            placeholder="Say something..."
+                            value={this.state.comment_context}
+                            onChange={this.handleTextChange}>
+                        </textarea>
+                        <button type="submit" value="Post" className="btn btn-success green">Submit</button>
+                    </form>
+                </div>
+            );
+        }
+    });
+
+    var Comment = React.createClass({
+        rawMarkup: function() {
+            var md = new Remarkable();
+            var rawMarkup = md.render(this.props.children.toString());
+            var cleanRawMarkup = DOMPurify.sanitize(rawMarkup);
+            return { __html: cleanRawMarkup };
+        },
+
+        render: function() {
+            var md = new Remarkable();
+            return (
+                <div className="comment">
+                    <img id="profile-photo" src="https://randomuser.me/api/portraits/men/32.jpg" />
+                    <h4 className="commentAuthor">{this.props.author}</h4>
+                    <time>1 week ago</time>
+                    <like></like>
+                    <p><span dangerouslySetInnerHTML={this.rawMarkup()} /></p>
+                </div>
+            );
+        }
+    });
+
+    ReactDOM.render(
+        <CommentBox url="{{ url_for('articles.add_comment', article_id=article.Article.id) }}" pollInterval={10000} />,
+        document.getElementById('content')
+    );
+</script>
 
 {% endblock %}

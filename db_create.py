@@ -1,5 +1,5 @@
 from app import db
-from app.models import Article, User, Video, Question, Answer
+from app.models import Article, User, Video, Question, Answer, Comment
 
 # drop all of the existing database tables
 db.drop_all()
@@ -71,3 +71,9 @@ db.session.add(question1)
 db.session.commit()
 
 
+# insert comments
+comment1 = Comment("this is one comment", article1.id, admin_user.id)
+
+db.session.add(comment1)
+
+db.session.commit()
