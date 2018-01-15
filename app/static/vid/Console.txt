@@ -1,0 +1,47 @@
+Object = $14
+
+abort: function(a)
+
+always: function()
+
+complete: function()
+
+done: function()
+
+error: function()
+
+fail: function()
+
+getAllResponseHeaders: function()
+
+getResponseHeader: function(a)
+
+overrideMimeType: function(a)
+
+pipe: function()
+
+progress: function()
+
+promise: function(a)
+
+readyState: 4
+
+responseText: ""
+
+responseXML: null
+
+setRequestHeader: function(a,b)
+
+state: function()
+
+status: 200
+
+statusCode: function(a)
+
+statusText: "OK"
+
+success: function()
+
+then: function()
+
+Object 견본

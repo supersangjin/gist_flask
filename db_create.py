@@ -15,7 +15,7 @@ sample_user = User(username="sample_user", email='sample@gmail.com', plaintext_p
 sample_user.email_confirmed = True
 db.session.add(sample_user)
 
-# commit the changes
+# Commit
 db.session.commit()
 
 # insert article data
@@ -32,7 +32,12 @@ article1 = Article('Welcome to Gist', "For those of us who love to read, not hav
                                       "capture the book fully, then join your friends and other people on the website "
                                       "that are interested in the book and make a summary of the book. "
                    , admin_user.id)
-article2 = Article('Markdown Guide', "## Lists\n\nUnordered lists can be started using the toolbar or by typing `* `, `- `, or `+ `. Ordered lists can be started by typing `1. `.\n\n#### Unordered\n* Lists are a piece of cake\n* They even auto continue as you type\n* A double enter will end them\n* Tabs and shift-tabs work too\n\n#### Ordered\n1. Numbered lists...\n2. ...work too!\n\n## What about images?\n![Yes](https://i.imgur.com/sZlktY7.png)"
+article2 = Article('Markdown Guide',
+                   "## Lists\n\nUnordered lists can be started using the toolbar or by typing `* `, `- `, or `+ `. "
+                   "Ordered lists can be started by typing `1. `.\n\n#### Unordered\n* Lists are a piece of cake\n* "
+                   "They even auto continue as you type\n* A double enter will end them\n* Tabs and shift-tabs work "
+                   "too\n\n#### Ordered\n1. Numbered lists...\n2. ...work too!\n\n## What about images?\n![Yes]("
+                   "https://i.imgur.com/sZlktY7.png) "
                    , admin_user.id)
 article3 = Article('I Love Pintos', "Pintos is beautiful ^^"
                    , sample_user.id)
@@ -40,10 +45,6 @@ article3 = Article('I Love Pintos', "Pintos is beautiful ^^"
 db.session.add(article1)
 db.session.add(article2)
 db.session.add(article3)
-
-# commit the changes
-db.session.commit()
-
 
 # insert video data
 video1 = Video('Big Bunny 1', '2MB', '2mb.mp4', admin_user.id)
@@ -54,26 +55,34 @@ db.session.add(video1)
 db.session.add(video2)
 db.session.add(video3)
 
-# commit the changes
+# Commit
 db.session.commit()
 
 # insert forum data
-question1 = Question('Build agent ID via TFS sdk', 'I am using the TFS2018 api and I need to get the build agent id for different team projects. How can I get the list of agent queue ids using the TFS sdk?', admin_user.id)
+question1 = Question('Build agent ID via TFS sdk',
+                     'I am using the TFS2018 api and I need to get the build agent id for different team projects. '
+                     'How can I get the list of agent queue ids using the TFS sdk?',
+                     admin_user.id)
 
 answer1 = Answer('Using a transaction', question1.id, admin_user.id)
-answer2 = Answer('Your question is difficult to follow, but I\'ll try: It looks like you are using php to dump values in your form via PHP before you load the values later with your include statement.', question1.id, admin_user.id)
+answer2 = Answer(
+    'Your question is difficult to follow, but I\'ll try: It looks like you are using php to dump values in your form '
+    'via PHP before you load the values later with your include statement.',
+    question1.id, admin_user.id)
 
 question1.answers = [answer1, answer2]
 
 db.session.add(question1)
 
-# commit the changes
-db.session.commit()
-
-
 # insert comments
-comment1 = Comment("this is one comment", article1.id, admin_user.id)
+comment1 = Comment("this is one comment", admin_user.id)
+comment1.set_article_id(article1.id)
+
+comment2 = Comment("this is a **second** comment", sample_user.id)
+comment2.set_video_id(video1.id)
 
 db.session.add(comment1)
+db.session.add(comment2)
 
+# Commit
 db.session.commit()

@@ -109,13 +109,19 @@ class Comment(db.Model):
     comment_creDate = db.Column(db.DateTime, nullable=True)
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
     article_id = db.Column(db.Integer, db.ForeignKey('articles.id'))
+    video_id = db.Column(db.Integer, db.ForeignKey('videos.id'))
 
-    def __init__(self, context, article_id, user_id):
+    def __init__(self, context, user_id):
         self.comment_context = context
         self.comment_like = 0
         self.comment_creDate = datetime.now()
         self.user_id = user_id
+
+    def set_article_id(self, article_id):
         self.article_id = article_id
+
+    def set_video_id(self, video_id):
+        self.video_id = video_id
 
     def __repr__(self):
         return '<id: {}, context: {}, user_id: {}, article_id: {}>'.format(self.id, self.comment_context, self.user_id, self.article_id)

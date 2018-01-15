@@ -106,16 +106,14 @@ def article_details(article_id):
 
 @articles_blueprint.route('/article/<article_id>/comment/add', methods=['GET', 'POST'])
 def add_comment(article_id):
-    # Comment db 에서 가져오기
     if request.method == 'POST':
         data = request.form.to_dict()
         comment_context = data['comment_context']
-        new_comment = Comment(comment_context, article_id, current_user.id)
+        new_comment = Comment(comment_context, current_user.id)
+        new_comment.set_article_id(article_id)
         db.session.add(new_comment)
         db.session.commit()
-
     all_comments = db.session.query(Comment).filter(Comment.article_id == article_id)
-
     result_list = []
     for comment in all_comments:
         author = db.session.query(User).filter(User.id == comment.user_id).first()
