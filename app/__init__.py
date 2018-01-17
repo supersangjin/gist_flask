@@ -47,6 +47,7 @@ from app.videos.views import videos_blueprint
 from app.forums.views import forums_blueprint
 from app.utils.views import utils_blueprint
 from app.chat.views import chat_blueprint
+from app.pdfs.views import pdfs_blueprint
 
 app.register_blueprint(users_blueprint)
 app.register_blueprint(articles_blueprint)
@@ -54,6 +55,7 @@ app.register_blueprint(videos_blueprint)
 app.register_blueprint(forums_blueprint)
 app.register_blueprint(utils_blueprint)
 app.register_blueprint(chat_blueprint)
+app.register_blueprint(pdfs_blueprint)
 
 # error handling
 @app.errorhandler(404)

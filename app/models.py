@@ -110,6 +110,7 @@ class Comment(db.Model):
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
     article_id = db.Column(db.Integer, db.ForeignKey('articles.id'))
     video_id = db.Column(db.Integer, db.ForeignKey('videos.id'))
+    pdf_id = db.Column(db.Integer, db.ForeignKey('pdfs.id'))
 
     def __init__(self, context, user_id):
         self.comment_context = context
@@ -122,6 +123,9 @@ class Comment(db.Model):
 
     def set_video_id(self, video_id):
         self.video_id = video_id
+
+    def set_pdf_id(self, pdf_id):
+        self.pdf_id = pdf_id
 
     def __repr__(self):
         return '<id: {}, context: {}, user_id: {}, article_id: {}>'.format(self.id, self.comment_context, self.user_id, self.article_id)
@@ -184,6 +188,29 @@ class Answer(db.Model):
 
     def __repr__(self):
         return '<id: {}, question_id: {}, user_id: {}>'.format(self.id, self.question_id, self.user_id)
+
+
+class Pdf(db.Model):
+    __tablename__ = "pdfs"
+
+    id = db.Column(db.Integer, primary_key=True)
+    pdf_title = db.Column(db.String, nullable=False)
+    pdf_filename = db.Column(db.String, default=None, nullable=True)
+    user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
+    pdf_creDate = db.Column(db.DateTime, nullable=True)
+    pdf_hit = db.Column(db.Integer)
+    pdf_like = db.Column(db.Integer)
+
+    def __init__(self, title, filename, user_id):
+        self.pdf_title = title
+        self.pdf_filename = filename
+        self.user_id = user_id
+        self.pdf_creDate = datetime.now()
+        self.pdf_hit = 1
+        self.pdf_like = 0
+
+    def __repr__(self):
+        return '<id: {}, title: {}, user_id: {}>'.format(self.id, self.pdf_title, self.user_id)
 
 
 def question_answers_append(question, answer, initiator):

@@ -1,0 +1,16 @@
+{% extends "common/layout.html" %}
+{% block content %}
+
+<div class="row" style="margin-top: 50px;">
+  {% for pdf in pdfs %}
+    <a class="articles" href="{{ url_for('pdfs.pdf_details', pdf_id=pdf.id) }}" style="width:100%">
+      <div style="width:100%; margin-top: 10px; margin-bottom:100px;">
+        <h4 style="width:100%">{{ pdf.pdf_title }}</h4>
+      </div>
+    </a>
+  {% endfor %}
+</div>
+
+{% endblock %}
+
+<!--TODO 비디오 preview. 사진 한장 캡쳐해서 preview. Video 쪽은 Youtube 랑 똑같이 만들면 될듯-->

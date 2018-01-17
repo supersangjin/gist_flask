@@ -113,17 +113,35 @@
     font-size: 150%;
 }
 
-body {
-  margin-top: 110px;
+.navbar-nav li a {
+    line-height: 4.5vw;
+    height: 4.5vw;
+    padding-top: 0;
 }
+
+.navbar-center {
+    display: inline-block;
+    float: none;
+}
+
+.navbar-search {
+  outline: none;
+  box-shadow:none !important;
+  border:1px solid #ccc !important;
+  border-left: 0 !important;
+
+  min-height: 35px;
+  height: 3.2vw;
+  width: 4vw;
+}
+
 </style>
 
 </head>
 
-<body>
+<body style="background-color: whitesmoke;">
   <!-- Static navbar -->
-  
-  <nav class="navbar fixed-top navbar-expand-lg navbar-light bg-light">
+  <nav class="navbar fixed-top navbar-expand-lg navbar-light bg-white">
     <div class="container">
       <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo03" aria-controls="navbarTogglerDemo03" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
@@ -131,28 +149,39 @@ body {
       <a class="navbar-brand" href="{{ url_for('utils.index') }}">Gist</a>
 
       <div class="collapse navbar-collapse" id="navbarTogglerDemo03">
+
+        <!-- LEFT MENU -->
+
         <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
-          <li class="nav-item">
-            <a class="nav-link" href="{{ url_for('articles.index') }}">Articles</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="{{ url_for('videos.index') }}">Videos</a>
-          </li>
+        <!--
           <li class="nav-item">
             <a class="nav-link" href="{{ url_for('forums.index') }}">Forums</a>
           </li>
           <li class="nav-item">
             <a class="nav-link" href="{{ url_for('chat.index') }}">Chat</a>
           </li>
+        -->
         </ul>
 
         <!-- 일단 article title만 -->
-
         <form class="form-inline my-2 my-lg-0" action="{{ url_for('utils.search') }}" style="text-align:center;">
-          <input class="form-control mr-sm-2" type="text" name="query" placeholder="Explore GIST" aria-label="Search" style="width:300px;">
+          <div class="input-group">
+            <div class="input-group-addon" style="border-right: 0; background-color: white;">
+              <i class="fa fa-search" aria-hidden="true"></i>
+            </div>
+            <input class="navbar-search form-control mr sm-2" name="query" type="text" placeholder="Explore GIST" aria-label="Search" style="border-left: 0; margin-right: 1vw"/>
+          </div>
+          
+          <!-- <button class="btn btn-outline-success my-2 my-sm-0" type="submit">GO</button> -->
+
         </form>
 
         <ul class="navbar-nav ml-auto my-2 my-lg-0">
+
+          <li class="nav-item">
+            <a class="nav-link" href="{{ url_for('forums.index') }}">Forum</a>
+          </li>
+
           {% if current_user.is_authenticated %}
 
           {% if current_user.role == "admin" %}
@@ -172,18 +201,23 @@ body {
             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
               <a class="dropdown-item" href="{{ url_for('articles.write_article') }}">Article</a>
               <a class="dropdown-item" href="{{ url_for('videos.upload_video') }}">Video</a>
+              <a class="dropdown-item" href="{{ url_for('pdfs.upload_pdf') }}">Pdf</a>
               <div class="dropdown-divider"></div>
               <a class="dropdown-item" href="{{ url_for('forums.write_question') }}">Question</a>
             </div>
           </li>
+
           <li class="nav-item">
             <a class="nav-link" href="{{ url_for('users.logout') }}">Log out</a>
           </li>
+        
 
           {% else %}
+          
           <li class="nav-item">
             <a class="nav-link" href="{{ url_for('users.login') }}">Log In</a>
           </li>
+
           {% endif %}
 
         </ul>
@@ -192,7 +226,7 @@ body {
   </nav>
 
   <div class="container">
-    <div class="content" style="margin: 20px;">
+    <div class="content" style="margin: 20px; margin-top: 100px;">
       <!-- flash messages -->
       {% for error_message in get_flashed_messages(category_filter=["error"]) %}
       <div class="alert alert-danger alert-dismissible">{{ error_message }}</div>
@@ -210,13 +244,18 @@ body {
       {% block content %}
       {% endblock %}
 
+      <br/>
+      임시 링크
+      <a href="{{ url_for('articles.index') }}">Articles</a>
+      <a href="{{ url_for('videos.index') }}">Videos</a>
+      <a href="{{ url_for('pdfs.index') }}">Pdfs</a>
+
     </div>
     <div class="footer">
       <hr>
       <p>Gist Team - 2018</p>
     </div>
   </div><!-- /.container -->
-
 
   <!-- scripts -->
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
