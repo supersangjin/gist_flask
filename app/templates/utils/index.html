@@ -7,15 +7,6 @@
 @import url('https://fonts.googleapis.com/css?family=Open+Sans:400,700,800');
 @import url('https://fonts.googleapis.com/css?family=Montserrat:400,700,800');
 
-
-.btn-category {
-	width: 10vw;
-	height: 10vw;
-	/*	font-family: 'Nunito', sans-serif;
-		font-weight: 700;
-		*/
-}
-
 .white-background {
 	background-color:#ffffff;
 	border:0px solid transparent;
@@ -25,6 +16,7 @@
 	background-color: white;
 	color: black;
 	border: 0;
+   	
    	font-size: 4pt;
    	font-family: 'Open Sans', sans-serif;
    	font-weight: 700;
@@ -41,17 +33,67 @@
 	/* font-size: 2vw; */
 }
 
+.card-img-top {
+    width: 100%;
+    height: 20vw;
+    object-fit: cover;
+  }
+
+/* Set width to make card deck cards 100% width */
+
+@media (max-width: 10000px) {
+	.card-img-top {
+		height: 300px;
+	}
+}
+
+@media (max-width: 1200px) {
+	.card-img-top {
+		height: 250px;
+	}
+}
+
+@media (max-width: 992px) { 
+	.card-deck {
+	    display: block;
+	    width: 100%;
+	    margin-bottom: .75rem;
+	    table-layout: fixed;
+	    border-spacing: 1.25rem 0;
+	}
+	.card-deck .card {
+	    display: block;
+	    margin-bottom: 1rem;
+	    margin-top: 1rem;
+	    vertical-align: top;
+		width: 100%;
+	}
+	.card-img-top {
+		height: 350px;
+	}
+
+	.btn-topic {
+		font-size: 1px;
+	}
+
+	.btn-topic .fas {
+		font-size: 4vw;
+		padding-top: 1.5vw;
+		padding-bottom: 5vw;
+	}
+}
+
 </style>
 
 <div class="row" style="margin: 0px !important;">
   <div class="col-md-12" style="background-color: white;">
-  	<div style="text-align: center; font-family: 'Open Sans', sans-serif; font-weight: 700; font-size: 30px; margin-top: 1vw; margin-bottom: 1vw">
+  	<div style="text-align: center; font-family: 'Open Sans', sans-serif; font-weight: 700; font-size: 30px; margin-top: 2vw; margin-bottom: 2vw">
   		TOPICS
   	</div>
   	<hr style="width: 3vw; border: 1px solid; border-color: lightgray; ">
-  	<div class="btn-group-lg text-center" style="margin-top: 1vw; margin-bottom: 1vw;">
+  	<div class="btn-group-lg btn-category text-center" style="margin-top: 1vw; margin-bottom: 1vw;">
 	  <button type="button" class="btn btn-light btn-topic">
-	  	<i class="fa fa-book fa-2x" style="margin-bottom: 10px;"></i></br>FICTION
+	  	<i class="fas fa-book fa-2x" style="margin-bottom: 10px;"></i></br>FICTION
 	  </button>
 	  <button type="button" class="btn btn-light btn-topic">
 	  	<i class="fas fa-bookmark fa-2x" style="margin-bottom: 10px;"></i></br>MEMOIR
@@ -91,16 +133,20 @@
 </div>
 
 <div class="card-deck" style="margin-top: 2vw;">
-  {% for article in articles %}
+  {% for video in videos %}
   	<div class="card" style="border: 0;">
-  		<a href="{{ url_for('articles.article_details', article_id=article.id) }}">
+  		<a href="{{ url_for('videos.video_details', video_id=video.id) }}">
   		<div class="view hm-zoom">
-			<img class="card-img-top" src="static/image/1497928636.jpg" alt="Card image cap" class="img-fluid">
+			<video class="card-img-top" alt="Card image cap" class="img-fluid">
+  				<source src="{{ url_for('static', filename='vid/' + video.video_filename) }}" type='video/mp4'>
+  				</source>
+
+  			</video>
 		</div>
 		</a>
 		<div class="card-body">
 			<p class="card-text">Category or book name</p>
-			<h5 class="card-title">{{ article.article_title }}</h5>
+			<h5 class="card-title">{{ video.video_title }}</h5>
 			<p class="card-text text-right"><small class="text-muted">By author name</small></p>
 		</div>
 	</div>
