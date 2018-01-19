@@ -106,7 +106,7 @@ class Comment(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     comment_context = db.Column(db.String, nullable=False)
     comment_like = db.Column(db.Integer)
-    comment_creDate = db.Column(db.DateTime, nullable=True)
+    comment_creDate = db.Column(db.DateTime, nullable=False)
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
     article_id = db.Column(db.Integer, db.ForeignKey('articles.id'))
     video_id = db.Column(db.Integer, db.ForeignKey('videos.id'))
@@ -129,6 +129,23 @@ class Comment(db.Model):
 
     def __repr__(self):
         return '<id: {}, context: {}, user_id: {}, article_id: {}>'.format(self.id, self.comment_context, self.user_id, self.article_id)
+
+
+class Chat(db.Model):
+    __tablename__ = "chat"
+
+    id = db.Column(db.Integer, primary_key=True)
+    chat_context = db.Column(db.String, nullable=False)
+    chat_creDate = db.Column(db.DateTime, nullable=False)
+    user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
+
+    def __init__(self, context, user_id):
+        self.chat_context = context
+        self.chat_creDate = datetime.now()
+        self.user_id = user_id
+
+    def __repr__(self):
+        return '<id: {}, context: {}, user_id: {}>'.format(self.id, self.chat_context, self.user_id)
 
 
 class Video(db.Model):

@@ -1,5 +1,5 @@
 from app import db
-from app.models import Article, User, Video, Question, Answer, Comment
+from app.models import Article, User, Video, Question, Answer, Comment, Chat
 
 # drop all of the existing database tables
 db.drop_all()
@@ -83,6 +83,15 @@ comment2.set_video_id(video1.id)
 
 db.session.add(comment1)
 db.session.add(comment2)
+
+# insert chat
+chat1 = Chat("My name is Sangjin", admin_user.id)
+chat2 = Chat("Hello. Nice to meet you", sample_user.id)
+chat3 = Chat("Pintos is beautiful", admin_user.id)
+
+db.session.add(chat1)
+db.session.add(chat2)
+db.session.add(chat3)
 
 # Commit
 db.session.commit()
