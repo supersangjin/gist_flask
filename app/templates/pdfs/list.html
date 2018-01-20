@@ -1,14 +1,234 @@
 {% extends "common/layout.html" %}
 {% block content %}
 
-<div class="row" style="margin-top: 50px;">
-  {% for pdf in pdfs %}
-    <a class="articles" href="{{ url_for('pdfs.pdf_details', pdf_id=pdf.id) }}" style="width:100%">
-      <div style="width:100%; margin-top: 10px; margin-bottom:100px;">
-        <h4 style="width:100%">{{ pdf.pdf_title }}</h4>
-      </div>
-    </a>
-  {% endfor %}
+<style type="text/css">
+	
+.pdf-divider {
+	border: 1.5px solid;
+	width: 20px;
+
+}
+
+.pdf-element-title {
+	font-weight: bold;
+	font-size: 13pt;
+	color: black !important;
+}
+
+.pdf-element-category {
+	font-weight: bold;
+	font-size: 10pt;
+	color: gray;
+	text-transform: uppercase;
+}
+
+.pdf-panel {
+	height: auto;
+	background-color: white;
+	padding-bottom: 1.3rem;
+}
+
+.pdf-panel a {
+	text-decoration: none !important;
+}
+
+.pdf-element-author {
+	margin-top: 0.3rem;
+	display: inline-block;
+	float: right;
+}
+
+.pdf-element-author-thumbnail {
+	width: 16px;
+	height: 16px;
+	border-radius: 50%;
+	margin-right: 0.5rem;
+}
+
+.pdf-element-author-name {
+  color: black !important;
+  text-decoration: none !important;
+  font-size: 10pt;
+  color: gray !important;
+}
+
+.pdf-element-date {
+  font-size: 8pt;
+}
+
+.pdf-subtitle {
+	margin-top: 1.75rem;
+	margin-bottom: 1.75rem;
+}
+
+
+</style>
+
+<script type="text/javascript">
+
+	var cover_ratio = 1.4;
+
+	$(document).ready(function(){
+		var pw = $('.pdf-panel-img').width();
+		$('.pdf-panel-img').css({'height':cover_ratio*pw+'px'});
+    });
+    $( window ).resize(function() {
+  		var pw = $('.pdf-panel-img').width();
+		$('.pdf-panel-img').css({'height':cover_ratio*pw+'px'});
+	});
+</script>
+
+
+<h3>Articles</h3>
+
+Read a summary of a book
+
+<hr class="pdf-divider" align="left"/>
+
+<div class="pdf-subtitle">
+<h5>Most Popular Articles</h5>
+</div>
+
+<div id="carouselPopularPdf" class="carousel slide" data-ride="carousel">
+	<div class="carousel-inner">
+		<div class="carousel-item active">
+			<div class="row">
+				{% for pdf in pdfs[:4] %}
+				<div class="col-sm-3">
+					<a href="{{ url_for('pdfs.pdf_details', pdf_id=pdf.Pdf.id) }}">
+					<div class="pdf-panel">
+						<center>
+							<img class="pdf-panel-img" align="middle" src="{{ url_for('static', filename='image/pdf/' + pdf.Pdf.pdf_thumbnail)}}" style="width: 100%; border: none; object-fit: cover;"> 
+						</center>
+						<div class="pdf panel-footer" style="padding: 1rem;">
+							<div class="pdf-element-category">
+								> {{ pdf.Category.category_name }}
+							</div>
+							<div class="pdf-element-title">
+								{{ pdf.Pdf.pdf_title }}
+							</div>
+							<div class="pdf-element-author">
+								<img class="pdf-element-author-thumbnail" src="{{ url_for('static', filename='image/user/' + pdf.User.thumbnail) }}" >
+								<a href="{{ url_for('users.user_profile', user_id = pdf.User.id) }}" class="pdf-element-author-name">	{{ pdf.User.username }} </a> <br/>
+							</div>
+						</div>
+					</div>
+					</a>
+				</div>
+				{% endfor %}
+			</div>
+		</div>
+		<div class="carousel-item">
+			<div class="row">
+				{% for pdf in pdfs[4:] %}
+				<div class="col-sm-3">
+					<a href="{{ url_for('pdfs.pdf_details', pdf_id=pdf.Pdf.id) }}">
+					<div class="pdf-panel">
+						<center>
+							<img class="pdf-panel-img" align="middle" src="{{ url_for('static', filename='image/pdf/' + pdf.Pdf.pdf_thumbnail) }}" style="width: 100%; border: none; object-fit: cover;"> 
+						</center>
+						<div class="pdf panel-footer" style="padding: 1rem;">
+							<div class="pdf-element-category">
+								> {{ pdf.Category.category_name }}
+							</div>
+							<div class="pdf-element-title">
+								{{ pdf.Pdf.pdf_title }}
+							</div>
+							<div class="pdf-element-author">
+								<img class="pdf-element-author-thumbnail" src="{{ url_for('static', filename='image/user/' + pdf.User.thumbnail) }}" >
+								<a href="{{ url_for('users.user_profile', user_id = pdf.User.id) }}" class="pdf-element-author-name">	{{ pdf.User.username }} </a> <br/>
+							</div>
+						</div>
+					</div>
+					</a>
+				</div>
+				{% endfor %}
+			</div>
+
+		</div>
+	</div>
+	<a class="carousel-control-prev" href="#carouselPopularPdf" role="button" data-slide="prev">
+		<span class="carousel-control-prev-icon" aria-hidden="true"></span>
+		<span class="sr-only">Previous</span>
+	</a>
+	<a class="carousel-control-next" href="#carouselPopularPdf" role="button" data-slide="next">
+		<span class="carousel-control-next-icon" aria-hidden="true"></span>
+		<span class="sr-only">Next</span>
+	</a>
+</div>
+
+<hr/>
+
+<div class="pdf-subtitle">
+<h5>Trending Articles</h5>
+</div>
+
+<div id="carouselTrendingPdf" class="carousel slide" data-ride="carousel">
+	<div class="carousel-inner">
+		<div class="carousel-item active">
+			<div class="row">
+				{% for pdf in pdfs[:4] %}
+				<div class="col-sm-3">
+					<a href="{{ url_for('pdfs.pdf_details', pdf_id=pdf.Pdf.id) }}">
+					<div class="pdf-panel">
+						<center>
+							<img class="pdf-panel-img" align="middle" src="{{ url_for('static', filename='image/pdf/' + pdf.Pdf.pdf_thumbnail) }}" style="width: 100%; border: none; object-fit: cover;"> 
+						</center>
+						<div class="pdf panel-footer" style="padding: 1rem;">
+							<div class="pdf-element-category">
+								> {{ pdf.Category.category_name }}
+							</div>
+							<div class="pdf-element-title">
+								{{ pdf.Pdf.pdf_title }}
+							</div>
+							<div class="pdf-element-author">
+								<img class="pdf-element-author-thumbnail" src="{{ url_for('static', filename='image/user/' + pdf.User.thumbnail) }}" >
+								<a href="{{ url_for('users.user_profile', user_id = pdf.User.id) }}" class="pdf-element-author-name">	{{ pdf.User.username }} </a> <br/>
+							</div>
+						</div>
+					</div>
+					</a>
+				</div>
+				{% endfor %}
+			</div>
+		</div>
+		<div class="carousel-item">
+			<div class="row">
+				{% for pdf in pdfs[4:] %}
+				<div class="col-sm-3">
+					<a href="{{ url_for('pdfs.pdf_details', pdf_id=pdf.Pdf.id) }}">
+					<div class="pdf-panel">
+						<center>
+							<img class="pdf-panel-img" align="middle" src="{{ url_for('static', filename='image/pdf/' + pdf.Pdf.pdf_thumbnail) }}" style="width: 100%; border: none; object-fit: cover;"> 
+						</center>
+						<div class="pdf panel-footer" style="padding: 1rem;">
+							<div class="pdf-element-category">
+								> {{ pdf.Category.category_name }}
+							</div>
+							<div class="pdf-element-title">
+								{{ pdf.Pdf.pdf_title }}
+							</div>
+							<div class="pdf-element-author">
+								<img class="pdf-element-author-thumbnail" src="{{ url_for('static', filename='image/user/' + pdf.User.thumbnail) }}" >
+								<a href="{{ url_for('users.user_profile', user_id = pdf.User.id) }}" class="pdf-element-author-name">	{{ pdf.User.username }} </a> <br/>
+							</div>
+						</div>
+					</div>
+					</a>
+				</div>
+				{% endfor %}
+			</div>
+
+		</div>
+	</div>
+	<a class="carousel-control-prev" href="#carouselTrendingPdf" role="button" data-slide="prev">
+		<span class="carousel-control-prev-icon" aria-hidden="true"></span>
+		<span class="sr-only">Previous</span>
+	</a>
+	<a class="carousel-control-next" href="#carouselTrendingPdf" role="button" data-slide="next">
+		<span class="carousel-control-next-icon" aria-hidden="true"></span>
+		<span class="sr-only">Next</span>
+	</a>
 </div>
 
 {% endblock %}

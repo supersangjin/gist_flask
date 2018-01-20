@@ -11,7 +11,7 @@ from . import pdfs_blueprint
 
 @pdfs_blueprint.route('/pdf')
 def index():
-    all_pdfs = Pdf.query.all()
+    all_pdfs = db.session.query(Pdf, User, Category, Book).join(User, Category, Book).all()
     return render_template('pdfs/list.html', pdfs=all_pdfs)
 
 
