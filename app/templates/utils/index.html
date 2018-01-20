@@ -60,6 +60,7 @@
 	    margin-bottom: .75rem;
 	    table-layout: fixed;
 	    border-spacing: 1.25rem 0;
+	    align-items: center;
 	}
 	.card-deck .card {
 	    display: block;
@@ -83,6 +84,18 @@
 	}
 }
 
+@media (max-width: 768px) {
+	.card-deck .card {
+		width: 100%;
+	}
+}
+
+@media (max-width: 544px) { /* mobile */
+	.card-img-top {
+		height: 60vw;
+	}
+}
+
 </style>
 
 <div class="row" style="margin: 0px !important;">
@@ -92,21 +105,11 @@
   	</div>
   	<hr style="width: 3vw; border: 1px solid; border-color: lightgray; ">
   	<div class="btn-group-lg btn-category text-center" style="margin-top: 1vw; margin-bottom: 1vw;">
+	  {% for category in categorys %}
 	  <button type="button" class="btn btn-light btn-topic">
-	  	<i class="fas fa-book fa-2x" style="margin-bottom: 10px;"></i></br>FICTION
+	  	<i class="fas fa-{{category.category_icon}} fa-2x" style="margin-bottom: 10px;"></i></br>{{ category.category_name }}
 	  </button>
-	  <button type="button" class="btn btn-light btn-topic">
-	  	<i class="fas fa-bookmark fa-2x" style="margin-bottom: 10px;"></i></br>MEMOIR
-	  </button>
-	  <button type="button" class="btn btn-light btn-topic">
-	  	<i class="fas fa-flask fa-2x" style="margin-bottom: 10px;"></i></br>SCIENCE
-	  </button>
-	  <button type="button" class="btn btn-light btn-topic">
-	  	<i class="fas fa-history fa-2x" style="margin-bottom: 10px;"></i></br>HISTORY
-	  </button>
-	  <button type="button" class="btn btn-light btn-topic">
-	  	<i class="fas fa-heart fa-2x" style="margin-bottom: 10px;"></i></br>ART
-	  </button>
+	  {% endfor %}
 	</div>
   </div>
 </div>
@@ -116,17 +119,17 @@
 </div>
 
 <div class="card-deck" style="margin-top: 2vw;">
-  {% for article in articles %}
+  {% for pdf in pdfs %}
   	<div class="card" style="border: 0;">
-  		<a href="{{ url_for('articles.article_details', article_id=article.id) }}">
+  		<a href="{{ url_for('pdfs.pdf_details', pdf_id=pdf.Pdf.id) }}">
   		<div class="view hm-zoom">
-			<img class="card-img-top" src="static/image/1497928636.jpg" alt="Card image cap" class="img-fluid">
+			<img class="card-img-top" src="static/image/{{ pdf.Pdf.pdf_thumbnail }}" alt="Card image cap" class="img-fluid">
 		</div>
 		</a>
 		<div class="card-body">
-			<p class="card-text card-text-topic">Category or book name</p>
-			<h5 class="card-title card-text-title">{{ article.article_title }}</h5>
-			<p class="card-text text-right"><small class="text-muted">By author name</small></p>
+			<p class="card-text card-text-topic">{{ pdf.Category.category_name }}</p>
+			<h5 class="card-title card-text-title">{{ pdf.Pdf.pdf_title }}</h5>
+			<p class="card-text text-right"><small class="text-muted">By {{ pdf.User.username }}</small></p>
 		</div>
 	</div>
   {% endfor %}
@@ -135,19 +138,19 @@
 <div class="card-deck" style="margin-top: 2vw;">
   {% for video in videos %}
   	<div class="card" style="border: 0;">
-  		<a href="{{ url_for('videos.video_details', video_id=video.id) }}">
+  		<a href="{{ url_for('videos.video_details', video_id=video.Video.id) }}">
   		<div class="view hm-zoom">
 			<video class="card-img-top" alt="Card image cap" class="img-fluid">
-  				<source src="{{ url_for('static', filename='vid/' + video.video_filename) }}" type='video/mp4'>
+  				<source src="{{ url_for('static', filename='vid/' + video.Video.video_filename) }}" type='video/mp4'>
   				</source>
 
   			</video>
 		</div>
 		</a>
 		<div class="card-body">
-			<p class="card-text">Category or book name</p>
-			<h5 class="card-title">{{ video.video_title }}</h5>
-			<p class="card-text text-right"><small class="text-muted">By author name</small></p>
+			<p class="card-text">{{ video.Category.category_name }}</p>
+			<h5 class="card-title">{{ video.Video.video_title }}</h5>
+			<p class="card-text text-right"><small class="text-muted">By {{ video.User.username }}</small></p>
 		</div>
 	</div>
   {% endfor %}

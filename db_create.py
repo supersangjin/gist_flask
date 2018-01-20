@@ -1,5 +1,5 @@
 from app import db
-from app.models import Article, User, Video, Question, Answer, Comment
+from app.models import *
 
 # drop all of the existing database tables
 db.drop_all()
@@ -7,13 +7,25 @@ db.drop_all()
 # create the database and the database table
 db.create_all()
 
-# admin
+# insert admin
 admin_user = User(username="admin", email='gistkaist@gmail.com', plaintext_password='kaistgist', role='admin')
-db.session.add(admin_user)
-
 sample_user = User(username="sample_user", email='sample@gmail.com', plaintext_password='sample', role='user')
 sample_user.email_confirmed = True
+sample_user.set_thumbnail("user-sample.jpeg")
+
+db.session.add(admin_user)
 db.session.add(sample_user)
+
+# Commit
+db.session.commit()
+
+# insert category data
+CATEGORY_NAME = ['fiction', 'memoir', 'science', 'history', 'art']
+CATEGORY_ICON = ['book', 'bookmark', 'flask', 'history', 'heart']
+CATEGORY_NUM = len(CATEGORY_NAME)
+
+for idx in range(CATEGORY_NUM) :
+  db.session.add(Category(CATEGORY_NAME[idx], CATEGORY_ICON[idx]))
 
 # Commit
 db.session.commit()
@@ -47,9 +59,9 @@ db.session.add(article2)
 db.session.add(article3)
 
 # insert video data
-video1 = Video('Big Bunny 1', '2MB', '2mb.mp4', admin_user.id)
-video2 = Video('Big Bunny 2', '5MB', '5mb.mp4', admin_user.id)
-video3 = Video('Big Bunny 3', '10MB', '10mb.mp4', admin_user.id)
+video1 = Video('Big Bunny 1', '2MB', '2mb.mp4', admin_user.id, 1)
+video2 = Video('Big Bunny 2', '5MB', '5mb.mp4', admin_user.id, 2)
+video3 = Video('Big Bunny 3', '10MB', '10mb.mp4', admin_user.id, 3)
 
 db.session.add(video1)
 db.session.add(video2)
@@ -74,15 +86,31 @@ question1.answers = [answer1, answer2]
 
 db.session.add(question1)
 
+# insert pdfs
+
+pdf1 = Pdf('Hello Operating System', 'The process of the CS330 course is covered.', 'cs330.pdf', '1497796384.jpg', admin_user.id, 1)
+pdf2 = Pdf('I hate Inipay', 'Fucking Inipay', 'INIpay.pdf', '1497928636.jpg', sample_user.id, 2)
+pdf3 = Pdf('Cool resume', 'Resume of Sangjin', 'Resume.pdf', '1498037751.png', admin_user.id, 3)
+
+db.session.add(pdf1)
+db.session.add(pdf2)
+db.session.add(pdf3)
+
+# Commit
+db.session.commit()
+
 # insert comments
 comment1 = Comment("this is one comment", admin_user.id)
-comment1.set_article_id(article1.id)
+comment1.set_pdf_id(pdf1.id)
+comment2 = Comment("this is second comment", sample_user.id)
+comment2.set_pdf_id(pdf1.id)
 
-comment2 = Comment("this is a **second** comment", sample_user.id)
-comment2.set_video_id(video1.id)
+comment3 = Comment("this is a **second** comment", sample_user.id)
+comment3.set_video_id(video1.id)
 
 db.session.add(comment1)
 db.session.add(comment2)
+db.session.add(comment3)
 
 # Commit
 db.session.commit()

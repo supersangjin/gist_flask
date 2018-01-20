@@ -1,5 +1,5 @@
 from flask import render_template, Blueprint, request, redirect, url_for, flash
-from app.models import Article, User, Video
+from app.models import Article, User, Video, Category, Pdf
 from . import utils_blueprint
 from app import db
 from flask_login import login_required
@@ -8,10 +8,15 @@ ARTICLE_LIMIT = 4
 
 @utils_blueprint.route('/')
 def index():
-	articles = Article.query.limit(ARTICLE_LIMIT).all()
-	videos = Video.query.limit(ARTICLE_LIMIT).all()
-
-	return render_template('utils/index.html', articles=articles, videos=videos)
+	categorys = Category.query.all()
+	videos_join = db.session.query(Video, User, Category).join(User, Category).limit(ARTICLE_LIMIT)
+	pdfs_join = db.session.query(Pdf, User, Category).join(User, Category).limit(ARTICLE_LIMIT)
+	
+	if videos_join is not None and pdfs_join is not None :
+		return render_template('utils/index.html', pdfs=pdfs_join, videos=videos_join, categorys=categorys)
+	else :
+		flash('Error! Video does not exist.', 'error') # TODO: error handling
+	return redirect(url_for('utils.index'))
 
 @utils_blueprint.route('/search')
 def search():

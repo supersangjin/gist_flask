@@ -15,6 +15,7 @@ class User(db.Model):
     username = db.Column(db.String, unique=True, nullable=False)
     email = db.Column(db.String, unique=True, nullable=False)
     _password = db.Column(db.Binary(60), nullable=False)
+    thumbnail = db.Column(db.String, default=None, nullable=True)
     authenticated = db.Column(db.Boolean, default=False)
     email_confirmation_sent_on = db.Column(db.DateTime, nullable=True)
     email_confirmed = db.Column(db.Boolean, nullable=True, default=False)
@@ -38,6 +39,7 @@ class User(db.Model):
         self.registered_on = datetime.now()
         self.last_logged_in = None
         self.current_logged_in = datetime.now()
+        self.thumbnail = "user-default.png"
         if self.role == "admin":
             self.email_confirmed = True
 
@@ -72,6 +74,9 @@ class User(db.Model):
         """Return the email address to satisfy Flask-Login's requirements."""
         """Requires use of Python 3"""
         return str(self.id)
+
+    def set_thumbnail(self, thumbnail):
+        self.thumbnail = thumbnail
 
     def __repr__(self):
         return '<User {0}>'.format(self.name)
@@ -139,15 +144,17 @@ class Video(db.Model):
     video_description = db.Column(db.String, nullable=False)
     video_filename = db.Column(db.String, default=None, nullable=True)
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
+    category_id = db.Column(db.Integer, db.ForeignKey('categorys.id'))
 
-    def __init__(self, title, description, filename, user_id):
+    def __init__(self, title, description, filename, user_id, category_id):
         self.video_title = title
         self.video_description = description
         self.video_filename = filename
         self.user_id = user_id
+        self.category_id = category_id
 
     def __repr__(self):
-        return '<id: {}, title: {}, user_id: {}>'.format(self.id, self.video_title, self.user_id)
+        return '<id: {}, title: {}, user_id: {}, category_id: {}>'.format(self.id, self.video_title, self.user_id, self.category_id)
 
 
 class Question(db.Model):
@@ -195,22 +202,47 @@ class Pdf(db.Model):
 
     id = db.Column(db.Integer, primary_key=True)
     pdf_title = db.Column(db.String, nullable=False)
+    pdf_description = db.Column(db.String, nullable=False)
     pdf_filename = db.Column(db.String, default=None, nullable=True)
+    pdf_thumbnail = db.Column(db.String, default=None, nullable=True)
+    
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
+    category_id = db.Column(db.Integer, db.ForeignKey('categorys.id'))
+
     pdf_creDate = db.Column(db.DateTime, nullable=True)
     pdf_hit = db.Column(db.Integer)
     pdf_like = db.Column(db.Integer)
-
-    def __init__(self, title, filename, user_id):
+    
+    def __init__(self, title, description, filename, thumbnail, user_id, category_id):
         self.pdf_title = title
+        self.pdf_description = description
         self.pdf_filename = filename
+        self.pdf_thumbnail = thumbnail
         self.user_id = user_id
+        self.category_id = category_id
         self.pdf_creDate = datetime.now()
         self.pdf_hit = 1
         self.pdf_like = 0
 
     def __repr__(self):
-        return '<id: {}, title: {}, user_id: {}>'.format(self.id, self.pdf_title, self.user_id)
+        return '<id: {}, title: {}, user_id: {}, category_id: {}>'.format(self.id, self.pdf_title, self.user_id, self.category_id)
+
+class Category(db.Model):
+    __tablename__ = "categorys"
+
+    id = db.Column(db.Integer, primary_key=True)
+    category_name = db.Column(db.String, nullable=False)
+    category_icon = db.Column(db.String, nullable=False)
+
+    # articles = db.relationship('Article', backref='category', lazy='dynamic')
+    # videos = db.relationship('Video', backref='category', lazy='dynamic')
+
+    def __init__(self, name, icon):
+        self.category_name = name
+        self.category_icon = icon
+
+    def __repr__(self):
+        return '<id: {}, name: {}>'.format(self.id, self.category_name)
 
 
 def question_answers_append(question, answer, initiator):
