@@ -9,7 +9,7 @@ from . import articles_blueprint
 import jsonpickle
 
 ARTICLE_LIMIT = 4
-PER_PAGE = 4
+PER_PAGE = 3
 """
 @articles_blueprint.route('/')
 def root():
@@ -23,11 +23,9 @@ def root():
 def index(page):
     all_articles = Article.query.limit(ARTICLE_LIMIT).all()
 
-    # TODO article 정렬 .. 조회수, 추천수, 생성 날짜 기준
+    article_with_user = db.session.query(Article, User).join(User).paginate(per_page=PER_PAGE, page=page)
 
-    articles = Article.query.paginate(per_page=PER_PAGE, page=page)
-
-    return render_template('articles/articles.html', articles=articles)
+    return render_template('articles/articles.html', articles=article_with_user)
 
 
 @articles_blueprint.route('/article/add', methods=['GET', 'POST'])

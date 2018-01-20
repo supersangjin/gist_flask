@@ -199,11 +199,10 @@
               <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
                 <a class="dropdown-item disabled" style="color: gray;">Write New</a>
                 <div class="dropdown-divider"></div>
-                <a class="dropdown-item" href="{{ url_for('articles.write_article') }}">Article</a>
                 <a class="dropdown-item" href="{{ url_for('videos.upload_video') }}">Video</a>
                 <a class="dropdown-item" href="{{ url_for('pdfs.upload_pdf') }}">Pdf</a>
                 <div class="dropdown-divider"></div>
-                <a class="dropdown-item" href="{{ url_for('forums.write_question') }}">Question</a>
+                <a class="dropdown-item" href="{{ url_for('articles.write_article') }}">Question in forum</a>
               </div>
           </li>
 
@@ -266,10 +265,9 @@
 
       <br/>
       임시 링크
-      <a href="{{ url_for('articles.index') }}">Articles</a>
+      <a href="{{ url_for('articles.index') }}">Forums</a>
       <a href="{{ url_for('videos.index') }}">Videos</a>
       <a href="{{ url_for('pdfs.index') }}">Pdfs</a>
-      <a href="{{ url_for('forums.index') }}">Forum</a>
 
     </div>
     <div class="footer">

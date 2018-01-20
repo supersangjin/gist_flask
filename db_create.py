@@ -63,10 +63,13 @@ article2 = Article('Markdown Guide',
                    , admin_user.id, 2)
 article3 = Article('I Love Pintos', "Pintos is beautiful ^^"
                    , sample_user.id, 3)
+article4 = Article('Yo Soy Sujin', "I learned Spanish"
+                   , sample_user.id, 2)
 
 db.session.add(article1)
 db.session.add(article2)
 db.session.add(article3)
+db.session.add(article4)
 
 # insert video data
 video1 = Video('Big Bunny 1', '2MB', '2mb.mp4', admin_user.id, 1, book1.id)
