@@ -93,11 +93,16 @@
   </div>
   <div class="col-sm-8">
     <a href="{{ url_for('articles.article_details', article_id=article.Article.id) }}" style="color: black; text-decoration: none !important">
-    <div class="forum-post-title">
-      {{ article.Article.article_title }}
-    </div>
+      <div class="forum-post-title">
+        {{ article.Article.article_title }}
+      </div>
+      <!--
+      <div class="forum-post-context">
+        {{ article.Article.article_context[:230] }}
+      </div>
+      -->
     </a>
-    <div class="forum-post-author" style="margin:1vw; margin-bottom: 3vw; margin-left: 50%">
+    <div class="forum-post-author" style="margin:1vw; margin-bottom: 3vw; margin-left: 60%">
       <img class="forum-post-author-thumbnail" src="{{ url_for('static', filename='image/user/' + article.User.thumbnail) }}">
       <div>
         <a href="{{ url_for('users.user_profile', user_id = article.User.id) }}" class="forum-post-author-name">  {{ article.User.username }} </a> <br/>

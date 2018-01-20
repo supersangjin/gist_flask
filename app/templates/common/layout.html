@@ -141,6 +141,19 @@
   transition: 0.5s; /* 0.5 second transition effect to slide in the sidenav */
 }
 
+.sidebar-type-btn {
+  background-color: white;
+  color: gray;
+  font-size: 9pt;
+  width: 80px !important;
+  height: 80px !important;
+  text-align: center;
+  border: whitesmoke solid 1px;
+}
+.sidebar-type-btn i {
+  font-size: 20pt;
+}
+
 </style>
 
 </head>
@@ -158,19 +171,9 @@
       <a class="navbar-brand" href="{{ url_for('utils.index') }}">Gist</a>
 
       <div class="collapse navbar-collapse" id="navbarTogglerDemo03">
+        <ul class="navbar-nav mr-auto mt-2 mt-lg-0"></ul>
 
-        <!-- LEFT MENU -->
-
-        <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
-        <!--
-          <li class="nav-item">
-            <a class="nav-link" href="{{ url_for('forums.index') }}">Forums</a>
-          </li>
-
-        -->
-        </ul>
-
-        <!-- 일단 article title만 -->
+        <!-- Search Bar (highly basic) -->
         <form class="form-inline my-2 my-lg-0" action="{{ url_for('utils.search') }}" style="text-align:center;">
           <div class="input-group">
             <div class="input-group-addon" style="border-right: 0; background-color: white;">
@@ -178,68 +181,87 @@
             </div>
             <input class="navbar-search form-control mr sm-2" name="query" type="text" placeholder="Explore GIST" aria-label="Search" style="border-left: 0; margin-right: 1vw"/>
           </div>
-          
-          <!-- <button class="btn btn-outline-success my-2 my-sm-0" type="submit">GO</button> -->
-
         </form>
 
+        <!-- Right account-related menu -->
         <ul class="navbar-nav ml-auto my-2 my-lg-0">
-
           {% if current_user.is_authenticated %}
 
-          {% if current_user.role == "admin" %}
-          <li class="nav-item">
-            <a class="nav-link" href="{{ url_for('users.admin_view_users') }}">Admin Page</a>
-          </li>
-          {% else %}
-
-          <li class="nav-item dropdown">
-            <a class="nav-link" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-              <i class="fas fa-edit fa" style="font-size: 22pt; margin-top: 1px"></i>
-              <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
-                <a class="dropdown-item disabled" style="color: gray;">Write New</a>
-                <div class="dropdown-divider"></div>
-                <a class="dropdown-item" href="{{ url_for('videos.upload_video') }}">Video</a>
-                <a class="dropdown-item" href="{{ url_for('pdfs.upload_pdf') }}">Pdf</a>
-                <div class="dropdown-divider"></div>
-                <a class="dropdown-item" href="{{ url_for('articles.write_article') }}">Question in forum</a>
-              </div>
-          </li>
-
-          <li class="nav-item">
-            <a class="nav-link" onclick="openChat()">
-              <i class="fas fa-envelope-open fa" style="font-size: 22pt; margin-top: 1px"></i>
-            </a>
-          </li>
-
-          <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-              <img src="{{ url_for('static', filename='image/user/' + current_user.thumbnail) }}" style="width: 30px; height: 30px; border-radius: 50%"></a>
-            <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
-              <a class="dropdown-item" href="{{ url_for('users.user_profile', user_id = current_user.id) }}">My Profile</a>
-              <a class="dropdown-item" href="{{ url_for('users.account_setting') }}">Account Setting</a>
-              <div class="dropdown-divider"></div>
-              <a class="dropdown-item" href="{{ url_for('users.logout') }}">Sign Out</a>
-            </div>
-          </li>
-
-          {% endif %}
-
-          {% else %}
-          
-          <li class="nav-item">
-            <a class="nav-link" href="{{ url_for('users.login') }}" id=btn-login>Log In</a>
-          </li>
-
-          {% endif %}
-
-        </ul>
-      </div>
-    </div>
-  </nav>
+            {% if current_user.role == "admin" %}
+            <li class="nav-item">
+              <a class="nav-link" href="{{ url_for('users.admin_view_users') }}">Admin Page</a>
+            </li>
+            {% else %}
+            <!-- New writing: article, video, question in forum -->
+            <li class="nav-item dropdown">
+              <a class="nav-link" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <i class="fas fa-edit fa" style="font-size: 22pt; margin-top: 1px"></i>
+                <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
+                  <a class="dropdown-item disabled" style="color: gray;">Write New</a>
+                  <div class="dropdown-divider"></div>
+                  <a class="dropdown-item" href="{{ url_for('pdfs.upload_pdf') }}">Pdf</a>
+                  <a class="dropdown-item" href="{{ url_for('videos.upload_video') }}">Video</a>
+                  <div class="dropdown-divider"></div>
+                  <a class="dropdown-item" href="{{ url_for('articles.write_article') }}">Question in forum</a>
+                </div>
+              </li>
+              <!-- Chat -->
+              <li class="nav-item">
+                <a class="nav-link" onclick="openChat()">
+                  <i class="fas fa-envelope-open fa" style="font-size: 22pt; margin-top: 1px"></i>
+                </a>
+              </li>
+              <!-- Profiles and accounts -->
+              <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                  <img src="{{ url_for('static', filename='image/user/' + current_user.thumbnail) }}" style="width: 30px; height: 30px; border-radius: 50%"></a>
+                  <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
+                    <a class="dropdown-item" href="{{ url_for('users.user_profile', user_id = current_user.id) }}">My Profile</a>
+                    <a class="dropdown-item" href="{{ url_for('users.account_setting') }}">Account Setting</a>
+                    <div class="dropdown-divider"></div>
+                    <a class="dropdown-item" href="{{ url_for('users.logout') }}">Sign Out</a>
+                  </div>
+                </li>
+                {% endif %}
+              {% else %}
+              <li class="nav-item">
+                <a class="nav-link" href="{{ url_for('users.login') }}" id=btn-login>Log In</a>
+              </li>
+              {% endif %}
+            </ul>
+            <!-- Right account-related menu end -->
+          </div>
+        </div>
+      </nav>
+      <!-- Static navbar end -->
 
 
-  <div class="content-header" style="margin-top: 50px;">
+  <style type="text/css">
+
+  </style>
+
+
+  <div class="btn-group-vertical" role="group" aria-label="Basic example" style="top:57px; position: fixed">
+    <button type="button" class="btn btn-secondary sidebar-type-btn"onclick = "location.href = '{{ url_for('utils.index') }}' " >
+      <i class="fa fa-home" aria-hidden="true"></i><br/>
+      Overview
+    </button>
+    <button type="button" class="btn btn-secondary sidebar-type-btn" onclick = "location.href = '{{ url_for('pdfs.index') }}' ">
+      <i class="fa fa-book" aria-hidden="true"></i><br/>
+      Articles
+    </button>
+    <button type="button" class="btn btn-secondary sidebar-type-btn" onclick = "location.href = '{{ url_for('videos.index') }}' ">
+      <i class="fa fa-video" aria-hidden="true"></i><br/>
+      Videos
+    </button>
+    <button type="button" class="btn btn-secondary sidebar-type-btn" onclick = "location.href = '{{ url_for('articles.index') }}' ">
+      <i class="fa fa-comments" aria-hidden="true"></i><br/>
+      Forums
+    </button>
+  </div>
+
+
+  <div class="content-header" style="margin-top: 58px;">
     {% block contentHeader %}
     {% endblock %}
   </div>
@@ -262,12 +284,6 @@
       <!-- child template -->
       {% block content %}
       {% endblock %}
-
-      <br/>
-      임시 링크
-      <a href="{{ url_for('articles.index') }}">Forums</a>
-      <a href="{{ url_for('videos.index') }}">Videos</a>
-      <a href="{{ url_for('pdfs.index') }}">Pdfs</a>
 
     </div>
     <div class="footer">
