@@ -54,6 +54,27 @@
 
 {% block content %}
 
-여기 작성글 보이게
+<div class="row" style="margin-top: 50px;">
+  <h2>Articles</h2>
+  {% for article in articles %}
+    <h4 style="width:100%">{{ article.article_title }}</h4>
+    <p>조회수 : {{ article.article_hit }} &nbsp;</p>
+    <p>추천수 : {{ article.article_like }}</p>
+    <a class="articles" href="{{ url_for('articles.article_details', article_id=article.id) }}" style="width:100%">
+      <div class="markdown-body border" style="width:100%; margin-top: 10px; margin-bottom:30px; padding: 30px;">
+        {{ article.article_context | truncate | markdown }}
+      </div>
+    </a>
+  {% endfor %}
+  <h2>Videos</h2>
+    {% for video in videos %}
+    <a class="articles" href="{{ url_for('videos.video_details', video_id=video.id) }}" style="width:100%">
+      <div style="width:100%; margin-top: 10px; margin-bottom:100px;">
+        <h4 style="width:100%">{{ video.video_title }}</h4>
+        <p>{{ video.video_description }}</p>
+      </div>
+    </a>
+  {% endfor %}
+</div>
 
 {% endblock %}

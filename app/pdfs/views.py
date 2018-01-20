@@ -38,7 +38,7 @@ def upload_pdf():
             if file and allowed_file(file.filename):
                 filename = secure_filename(file.filename)
                 file.save(os.path.join(UPLOAD_FOLDER_PDF, filename))
-                new_pdf = Pdf(title=filename.rsplit('.', 1)[0], filename=filename, user_id=user.id)
+                new_pdf = Pdf(title=filename.rsplit('.', 1)[0], filename=filename, user_id=user.id, category_id=form.pdf_category.data)
                 db.session.add(new_pdf)
                 db.session.commit()
                 flash('New file, {}, uploaded!'.format(new_pdf.pdf_title), 'success')

@@ -12,7 +12,7 @@ from . import videos_blueprint
 @videos_blueprint.route('/video')
 def index():
     all_videos = Video.query.all()
-    return render_template('videos/videos.html', videos=all_videos)
+    return render_template('videos/list.html', videos=all_videos)
 
 
 @videos_blueprint.route('/video/add', methods=['GET', 'POST'])
@@ -38,13 +38,14 @@ def upload_video():
             if file and allowed_file(file.filename):
                 filename = secure_filename(file.filename)
                 new_video = Video(title=form.video_title.data, description=form.video_description.data, user_id=user.id,
-                                  filename=filename)
+                                  filename=filename, category_id=form.video_category.data)
                 db.session.add(new_video)
                 db.session.commit()
                 file.save(os.path.join(UPLOAD_FOLDER, filename))
                 flash('New Video, {}, uploaded!'.format(new_video.video_title), 'success')
-                video_with_user = db.session.query(Video, User).join(User).filter(Video.id == new_video.id).first()
-                return render_template('video_detail.html', video=video_with_user)
+                video_with_user = db.session.query(Video, User, Category).join(User, Category).filter(
+                    Video.id == new_video.id).first()
+                return render_template('videos/video_detail.html', video=video_with_user)
     return render_template('videos/upload_video.html', form=form)
 
 

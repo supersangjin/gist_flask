@@ -92,15 +92,19 @@ class Article(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     article_title = db.Column(db.String, nullable=False)
     article_context = db.Column(db.String, nullable=False)
+
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
+    category_id = db.Column(db.Integer, db.ForeignKey('categories.id'))
+
     article_creDate = db.Column(db.DateTime, nullable=True)
     article_hit = db.Column(db.Integer)
     article_like = db.Column(db.Integer)
 
-    def __init__(self, title, context, user_id):
+    def __init__(self, title, context, user_id, category_id):
         self.article_title = title
         self.article_context = context
         self.user_id = user_id
+        self.category_id = category_id
         self.article_creDate = datetime.now()
         self.article_hit = 1
         self.article_like = 0
@@ -164,9 +168,15 @@ class Video(db.Model):
     video_title = db.Column(db.String, nullable=False)
     video_description = db.Column(db.String, nullable=False)
     video_filename = db.Column(db.String, default=None, nullable=True)
+
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
-    category_id = db.Column(db.Integer, db.ForeignKey('categorys.id'))
+    category_id = db.Column(db.Integer, db.ForeignKey('categories.id'))
+
+    video_creDate = db.Column(db.DateTime, nullable=True)
+    video_hit = db.Column(db.Integer)
+    video_like = db.Column(db.Integer)
     book_id = db.Column(db.Integer, db.ForeignKey('books.id'))
+
 
     def __init__(self, title, description, filename, user_id, category_id, book_id):
         self.video_title = title
@@ -174,6 +184,9 @@ class Video(db.Model):
         self.video_filename = filename
         self.user_id = user_id
         self.category_id = category_id
+        self.video_creDate = datetime.now()
+        self.video_hit = 1
+        self.video_like = 0
         self.book_id = book_id
 
     def __repr__(self):
@@ -230,7 +243,8 @@ class Pdf(db.Model):
     pdf_thumbnail = db.Column(db.String, default=None, nullable=True)
     
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
-    category_id = db.Column(db.Integer, db.ForeignKey('categorys.id'))
+
+    category_id = db.Column(db.Integer, db.ForeignKey('categories.id'))
     book_id = db.Column(db.Integer, db.ForeignKey('books.id'))
 
     pdf_creDate = db.Column(db.DateTime, nullable=True)
@@ -252,15 +266,16 @@ class Pdf(db.Model):
     def __repr__(self):
         return '<id: {}, title: {}, user_id: {}, category_id: {}>'.format(self.id, self.pdf_title, self.user_id, self.category_id)
 
+
 class Category(db.Model):
-    __tablename__ = "categorys"
+    __tablename__ = "categories"
 
     id = db.Column(db.Integer, primary_key=True)
     category_name = db.Column(db.String, nullable=False)
     category_icon = db.Column(db.String, nullable=False)
 
-    # articles = db.relationship('Article', backref='category', lazy='dynamic')
-    # videos = db.relationship('Video', backref='category', lazy='dynamic')
+    articles = db.relationship('Article', backref='category', lazy='dynamic')
+    videos = db.relationship('Video', backref='category', lazy='dynamic')
 
     def __init__(self, name, icon):
         self.category_name = name
