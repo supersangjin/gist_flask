@@ -77,10 +77,10 @@
 <div class="row" style="padding-bottom: 1vw">
 
 <div class="btn-group " role="group" aria-label="Basic example" style="margin: auto;">
-  <button type="button" class="btn forum-sort-btn">NEW</button>
-  <button type="button" class="btn forum-sort-btn">VIEW</button>
-  <button type="button" class="btn forum-sort-btn">ANSWER</button>
-  <button type="button" class="btn forum-sort-btn">VOTE</button>
+  <a href="{{ url_for('articles.index', sort='new') }}"><button type="button" class="btn forum-sort-btn">NEW</button></a>
+  <a href="{{ url_for('articles.index', sort='view') }}"><button type="button" class="btn forum-sort-btn">VIEW</button></a>
+  <a href="{{ url_for('articles.index', sort='answer') }}"><button type="button" class="btn forum-sort-btn">ANSWER</button></a>
+  <a href="{{ url_for('articles.index', sort='vote') }}"><button type="button" class="btn forum-sort-btn">VOTE</button></a>
 </div>
 
 </div>
@@ -106,7 +106,7 @@
       <img class="forum-post-author-thumbnail" src="{{ url_for('static', filename='image/user/' + article.User.thumbnail) }}">
       <div>
         <a href="{{ url_for('users.user_profile', user_id = article.User.id) }}" class="forum-post-author-name">  {{ article.User.username }} </a> <br/>
-      <div class="forum-post-date"> Updated: 14 December 2017 </div>
+      <div class="forum-post-date"> Updated: {{ article.Article.article_creDate }} </div>
       </div>
     </div>
     </div>
@@ -119,7 +119,7 @@
   </div>
   <div class="col-sm-1">
     <div class="forum-post-record">
-      <div class="forum-post-record-number">0</div>
+      <div class="forum-post-record-number">{{ article.Article.article_comment_num }}</div>
       <div class="forum-post-record-name">answers</div>
     </div>
   </div>
@@ -136,7 +136,7 @@
 <div style="text-align:center">
 {% for page in articles.iter_pages(left_edge = 1, right_edge = 1) %}
 	{% if page %}
-		<a href="{{ url_for('articles.index', page=page) }}" display="inline-block">
+		<a href="{{ url_for('articles.index', page=page, sort=sort) }}" display="inline-block">
       <div class="forum-page-btn">
       {{page}}
       </div>

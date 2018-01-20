@@ -53,18 +53,18 @@ article1 = Article('Welcome to Gist', "For those of us who love to read, not hav
                                       "didn't have the time,  and if you can’t find it or you think it does not "
                                       "capture the book fully, then join your friends and other people on the website "
                                       "that are interested in the book and make a summary of the book. "
-                   , admin_user.id, 1)
+                   , admin_user.id)
 article2 = Article('Markdown Guide',
                    "## Lists\n\nUnordered lists can be started using the toolbar or by typing `* `, `- `, or `+ `. "
                    "Ordered lists can be started by typing `1. `.\n\n#### Unordered\n* Lists are a piece of cake\n* "
                    "They even auto continue as you type\n* A double enter will end them\n* Tabs and shift-tabs work "
                    "too\n\n#### Ordered\n1. Numbered lists...\n2. ...work too!\n\n## What about images?\n![Yes]("
                    "https://i.imgur.com/sZlktY7.png) "
-                   , admin_user.id, 2)
+                   , admin_user.id)
 article3 = Article('I Love Pintos', "Pintos is beautiful ^^"
-                   , sample_user.id, 3)
+                   , sample_user.id)
 article4 = Article('Yo Soy Sujin', "I learned Spanish"
-                   , sample_user.id, 2)
+                   , sample_user.id)
 
 db.session.add(article1)
 db.session.add(article2)

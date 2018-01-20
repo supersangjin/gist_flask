@@ -1,7 +1,7 @@
 import os
 from app import db
 from instance.config import ALLOWED_EXTENSIONS_PDF, UPLOAD_FOLDER_PDF
-from flask import request, redirect, url_for, flash, render_template, jsonify
+from flask import request, redirect, url_for, flash, render_template, jsonify, session
 from werkzeug.utils import secure_filename
 from flask_login import login_required, current_user
 from app.models import Pdf, User, Comment, Category, Book
@@ -51,6 +51,11 @@ def upload_pdf():
 def pdf_details(pdf_id):
     pdf_with_user = db.session.query(Pdf, User, Category, Book).join(User, Category, Book).filter(Pdf.id == pdf_id).first()
     if pdf_with_user is not None:
+        visited = session.get('pdf' + pdf_id, '')
+        if visited == '':  # 이번 세션동안 방문한적 없음
+            session['pdf' + pdf_id] = "visited"
+            pdf_with_user.Pdf.pdf_hit += 1
+            db.session.commit()
         return render_template('pdfs/pdf_detail.html', pdf=pdf_with_user)
     else:
         flash('Error! File does not exist.', 'error')

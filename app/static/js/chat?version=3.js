@@ -122,6 +122,6 @@ var url = document.getElementById('url_chat').value;
 var auth = document.getElementById('auth_chat').value;
 
 ReactDOM.render(
-    <CommentBox url={url} auth={auth} pollInterval={10000} />,
+    <CommentBox url={url} auth={auth} pollInterval={100000} />,
     document.getElementById('content_chat')
 );
