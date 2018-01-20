@@ -10,22 +10,24 @@ import jsonpickle
 
 ARTICLE_LIMIT = 4
 PER_PAGE = 3
-"""
-@articles_blueprint.route('/')
-def root():
-    all_articles = Article.query.limit(ARTICLE_LIMIT).all()
-    return render_template('articles/articles.html', articles=all_articles)
-    """
 
 
-@articles_blueprint.route('/article/', defaults={'page': 1})
-@articles_blueprint.route('/article/<int:page>')
-def index(page):
-    all_articles = Article.query.limit(ARTICLE_LIMIT).all()
-
-    article_with_user = db.session.query(Article, User).join(User).paginate(per_page=PER_PAGE, page=page)
-
-    return render_template('articles/articles.html', articles=article_with_user)
+@articles_blueprint.route('/article/<sort>', defaults={'page': 1})
+@articles_blueprint.route('/article/<sort>/<int:page>')
+def index(page, sort):
+    if sort == "new":
+        article_with_user = db.session.query(Article, User).join(User).order_by(
+            Article.article_creDate.desc()).paginate(per_page=PER_PAGE, page=page)
+    elif sort == "view":
+        article_with_user = db.session.query(Article, User).join(User).order_by(Article.article_hit.desc()).paginate(
+            per_page=PER_PAGE, page=page)
+    elif sort == "answer":
+        article_with_user = db.session.query(Article, User).join(User).order_by(
+            Article.article_comment_num.desc()).paginate(per_page=PER_PAGE, page=page)
+    else:  # just go to vote if other case
+        article_with_user = db.session.query(Article, User).join(User).order_by(Article.article_like.desc()).paginate(
+            per_page=PER_PAGE, page=page)
+    return render_template('articles/list.html', articles=article_with_user, sort=sort)
 
 
 @articles_blueprint.route('/article/add', methods=['GET', 'POST'])
@@ -38,7 +40,7 @@ def write_article():
     form = WriteArticleForm(request.form)
     if request.method == 'POST':
         if form.validate_on_submit():
-            new_article = Article(form.article_title.data, form.article_context.data, user.id, form.article_category.data)
+            new_article = Article(form.article_title.data, form.article_context.data, user.id)
             db.session.add(new_article)
             db.session.commit()
             flash('New Article, {}, added!'.format(new_article.article_title), 'success')
@@ -52,7 +54,7 @@ def write_article():
 def edit_article(article_id):
     user = current_user
     if not user.email_confirmed:
-        flash('Your email address must be confirmed to edit articles.', 'error')  # 글 작성 후 이메일 주소 바꿨을 수도 있으니까
+        flash('Your email address must be confirmed to edit articles.', 'error')
         return redirect(url_for('articles.index'))
     article = db.session.query(Article).filter(Article.id == article_id).first()
     if user.id != article.user_id:
@@ -75,7 +77,7 @@ def edit_article(article_id):
 def delete_article(article_id):
     user = current_user
     if not user.email_confirmed:
-        flash('Your email address must be confirmed to delete articles.', 'error')  # 글 작성 후 이메일 주소 바꿨을 수도 있으니까
+        flash('Your email address must be confirmed to delete articles.', 'error')
         return redirect(url_for('articles.index'))
     article = db.session.query(Article).filter(Article.id == article_id).first()
     if user.id != article.user_id:
@@ -107,10 +109,18 @@ def add_comment(article_id):
     if request.method == 'POST':
         data = request.form.to_dict()
         comment_context = data['comment_context']
+
+        # new comment added
         new_comment = Comment(comment_context, current_user.id)
         new_comment.set_article_id(article_id)
+
+        # article comment num += 1
+        article = db.session.query(Article).filter(Article.id == article_id).first()
+        article.add_comment()
+
         db.session.add(new_comment)
         db.session.commit()
+
     all_comments = db.session.query(Comment).filter(Comment.article_id == article_id)
     result_list = []
     for comment in all_comments:
