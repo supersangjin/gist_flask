@@ -40,8 +40,8 @@ var CommentBox = React.createClass({
             } else {
                 return (
                     <div className="commentBox">
-                        <CommentForm onCommentSubmit={this.handleCommentSubmit} />
                         <CommentList data={this.state.data}/>
+                        <CommentForm onCommentSubmit={this.handleCommentSubmit} />
                     </div>
                 );
             }
@@ -52,7 +52,7 @@ var CommentList = React.createClass({
     render: function() {
         var commentNodes = this.props.data.map(function(comment) {
             return (
-                <Comment author={comment.author} key={comment.id} thumbnail={comment.author_thumbnail}>
+                <Comment author={comment.author} key={comment.id}>
                     {comment.comment_context}
                 </Comment>
             );
@@ -109,29 +109,19 @@ var Comment = React.createClass({
     render: function() {
         var md = new Remarkable();
         return (
-                <div className="comment markdown-body border">
-                    <div class="post-author">
-                        <img className="post-author-thumbnail" src={this.props.thumbnail}/>
-                        <div>
-                            <a className="post-author-name" href="https://www.google.com" >{this.props.author}</a>
-                            <br/>
-                            <div className="post-date"> 14 December 2017 </div>
-                        </div>
-                    </div>
-                    <br/>
-                    <div>
-                        <span dangerouslySetInnerHTML={this.rawMarkup()} />
-                    </div>
-                </div>
+            <div className="comment markdown-body border">
+                <p>answered by {this.props.author}</p>
+                <p><span dangerouslySetInnerHTML={this.rawMarkup()} /></p>
+            </div>
         );
     }
 });
 
 
-var url = document.getElementById('url').value;
-var auth = document.getElementById('auth').value;
+var url = document.getElementById('url_chat').value;
+var auth = document.getElementById('auth_chat').value;
 
 ReactDOM.render(
     <CommentBox url={url} auth={auth} pollInterval={10000} />,
-    document.getElementById('content')
+    document.getElementById('content_chat')
 );

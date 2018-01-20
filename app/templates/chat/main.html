@@ -1,5 +1,5 @@
-<div id="content"></div>
+<div id="content_chat"></div>
 
-<input type="hidden" id="url" value="{{ url_for('chat.add_chat') }}" />
-<input type="hidden" id="auth" value="{{ current_user.is_authenticated }}" />
-<script type="text/babel" src="{{ url_for('static', filename='js/chat?version=1.js') }}"></script>
+<input type="hidden" id="url_chat" value="{{ url_for('chat.add_chat') }}" />
+<input type="hidden" id="auth_chat" value="{{ current_user.is_authenticated }}" />
+<script type="text/babel" src="{{ url_for('static', filename='js/chat?version=3.js') }}"></script>
