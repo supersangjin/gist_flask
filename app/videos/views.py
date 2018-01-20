@@ -4,7 +4,7 @@ from instance.config import ALLOWED_EXTENSIONS, UPLOAD_FOLDER
 from flask import request, redirect, url_for, flash, render_template, jsonify
 from werkzeug.utils import secure_filename
 from flask_login import login_required, current_user
-from app.models import Video, User, Comment
+from app.models import Video, User, Comment, Category
 from .forms import UploadVideoForm
 from . import videos_blueprint
 
@@ -50,7 +50,7 @@ def upload_video():
 
 @videos_blueprint.route('/video/<video_id>')
 def video_details(video_id):
-    video_with_user = db.session.query(Video, User).join(User).filter(Video.id == video_id).first()
+    video_with_user = db.session.query(Video, User, Category).join(User, Category).filter(Video.id == video_id).first()
     if video_with_user is not None:
         return render_template('videos/video_detail.html', video=video_with_user)
     else:
@@ -77,7 +77,8 @@ def add_comment(video_id):
                 "comment_context": comment.comment_context,
                 "comment_like": comment.comment_like,
                 "comment_creDate": comment.comment_creDate,
-                "author": author.username
+                "author": author.username,
+                "author_thumbnail": "http://127.0.0.1:5000/static/image/user/" + author.thumbnail
             }
         )
     result_list.reverse()

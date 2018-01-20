@@ -1,60 +1,6 @@
 {% extends "common/layout.html" %}
 {% block content %}
 
-<style type="text/css">
-
-.post-title {
-	text-align: center;
-	font-size: 3rem;
-	font-weight: bold;
-}
-
-.post-author {
-	margin: auto;
-	margin-top: 4vh;
-	margin-bottom: 4vh;
-}
-
-.post-author-thumbnail {
-	width: 45px;
-	height: 45px;
-	border-radius: 50%;
-	float: left;
-	margin-right: 1vw;
-}
-
-.post-author-name {
-	color: black;
-	text-decoration: none !important;
-	font-weight: bold;
-	font-size: 12pt;
-}
-
-.post-date {
-	font-size: 8pt;
-}
-
-.post-description {
-	margin-bottom: 2vw;
-}
-
-.post-comment {
-	margin-left: 10vw;
-	margin-right: 10vw;
-}
-
-.post-file {
-	width: 100%;
-	max-width: 800px;
-	height: 85vh;
-	display: block;
-	margin: auto;
-	margin-top: 4vh;
-	margin-bottom: 4vh;
-}
-
-</style>
-
 <div>
 	<p>
 		<a href="{{ url_for('utils.index') }}">Home</a> >
@@ -78,12 +24,12 @@
 	{{ pdf.Pdf.pdf_description }}
 </div>
 
-<embed class="post-file" src="{{ url_for('static', filename='pdf/' + pdf.Pdf.pdf_filename ) }}#toolbar=0&navpanes=0&scrollbar=0" type="application/pdf" width="100%" height="1000px" />
+<embed class="post-file" src="{{ url_for('static', filename='pdf/' + pdf.Pdf.pdf_filename ) }}" type="application/pdf"/>
 
 <!--comment-->
 <div id="content" style="width: 10px;"></div>
 <input type="hidden" id="url" value="{{ url_for('pdfs.add_comment', pdf_id=pdf.Pdf.id) }}" />
 <input type="hidden" id="auth" value="{{ current_user.is_authenticated }}" />
-<script type="text/babel" src="{{ url_for('static', filename='js/comment?version=18.js') }}"></script>
+<script type="text/babel" src="{{ url_for('static', filename='js/comment?version=19.js') }}"></script>
 
 {% endblock %}

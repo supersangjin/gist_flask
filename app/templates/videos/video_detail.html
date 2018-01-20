@@ -1,9 +1,29 @@
 {% extends "common/layout.html" %}
 {% block content %}
 
-<h1>{{ video.Video.video_title }}</h1>
+<style type="text/css">
 
-<video id="my-video" class="video-js" controls preload="auto" width="640" height="264"  data-setup="{}">
+.video-js {
+	height: calc(80vw * 0.45) !important;
+	width: 80vw;
+	object-fit: contain;
+	margin-bottom: 10vh;
+	display: block;
+  	margin-top: 4vh;
+  	margin-bottom: 10vh;
+}
+
+</style>
+
+
+<div>
+	<p>
+		<a href="{{ url_for('utils.index') }}">Home</a> >
+		<a>{{ video.Category.category_name }}</a>
+	</p>
+</div>
+
+<video autoplay id="my-video" class="video-js" controls preload="auto" data-setup="{}" style="">
     <source src="{{ url_for('static', filename='vid/' + video.Video.video_filename) }}" type='video/mp4'>
     <p class="vjs-no-js">
       To view this video please enable JavaScript, and consider upgrading to a web browser that
@@ -11,11 +31,27 @@
     </p>
 </video>
 
+<div class="post-title">
+	{{ video.Video.video_title }}
+</div>
+
+<div class="post-author">
+	<img class="post-author-thumbnail" src="{{ url_for('static', filename='image/user/' + video.User.thumbnail) }}">
+	<div>
+		<a href="https://www.google.com" class="post-author-name">	{{ video.User.username }} </a> <br/>
+		<div class="post-date"> Updated: 14 December 2017 </div>
+	</div>
+</div>
+
+<div class="post-description">
+	{{ video.Video.video_description }}
+</div>
+
 <!--comment-->
 <div id="content"></div>
 <input type="hidden" id="url" value="{{ url_for('videos.add_comment', video_id=video.Video.id) }}" />
 <input type="hidden" id="auth" value="{{ current_user.is_authenticated }}" />
-<script type="text/babel" src="{{ url_for('static', filename='js/comment?version=15.js') }}"></script>
+<script type="text/babel" src="{{ url_for('static', filename='js/comment?version=19.js') }}"></script>
 
 {% endblock %}
 
