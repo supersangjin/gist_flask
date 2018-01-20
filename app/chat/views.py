@@ -16,6 +16,7 @@ def add_chat():
         db.session.commit()
     all_chats = Chat.query.all()
     result_list = []
+    # TODO limit 두기
     for chat in all_chats:
         author = db.session.query(User).filter(User.id == chat.user_id).first()
         result_list.append(
