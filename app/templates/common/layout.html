@@ -40,21 +40,6 @@
   <!-- purify html string -->
   <script type="text/javascript" src="{{ url_for('static', filename='js/purify.min.js') }}"></script>
 
-  <script type="text/javascript">
-    
-    jQuery(document).ready(function () {
-    $('.content-header').css({
-        'margin-top': (($('.navbar').height()) + 15) + 'px'
-    });
-    $(window).resize(function () {
-        $('.content-header').css({
-            'margin-top': (($('.navbar').height()) + 15) + 'px'
-        });
-    });
-});
-
-  </script>
-
 <style type="text/css"> /*TODO: custom style css file로 옮길것*/
 
   @import url('https://fonts.googleapis.com/css?family=Montserrat:300,400|Nunito:400,700,900|Roboto:400,100,100italic,300,300italic,400italic,500,500italic,700,700italic,900,900italic');
@@ -161,10 +146,9 @@
 </head>
 
 <body style="background-color: whitesmoke;">
-  <div id="chat" class="sidenav">
-    <a href="javascript:void(0)" class="closebtn" onclick="closeChat()" style="font-size: 20px;">&times;</a>
-    {% include 'chat/main.html' %}
-  </div>
+
+  {% include 'chat/main.html' %}
+
   <!-- Static navbar -->
   <nav class="navbar fixed-top navbar-expand-lg navbar-light bg-white">
     <div class="container">
@@ -201,30 +185,33 @@
 
         <ul class="navbar-nav ml-auto my-2 my-lg-0">
 
-          <li class="nav-item">
-            <a class="nav-link" href="{{ url_for('forums.index') }}">Forum</a>
-          </li>
-
           {% if current_user.is_authenticated %}
-
-          <li class="nav-item dropdown">
-            <a class="nav-link" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-              Write New
-            </a>
-            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-              <a class="dropdown-item" href="{{ url_for('articles.write_article') }}">Article</a>
-              <a class="dropdown-item" href="{{ url_for('videos.upload_video') }}">Video</a>
-              <a class="dropdown-item" href="{{ url_for('pdfs.upload_pdf') }}">Pdf</a>
-              <div class="dropdown-divider"></div>
-              <a class="dropdown-item" href="{{ url_for('forums.write_question') }}">Question</a>
-            </div>
-          </li>
 
           {% if current_user.role == "admin" %}
           <li class="nav-item">
             <a class="nav-link" href="{{ url_for('users.admin_view_users') }}">Admin Page</a>
           </li>
           {% else %}
+
+          <li class="nav-item dropdown">
+            <a class="nav-link" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              <i class="fas fa-edit fa" style="font-size: 22pt; margin-top: 1px"></i>
+              <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
+                <a class="dropdown-item disabled" style="color: gray;">Write New</a>
+                <div class="dropdown-divider"></div>
+                <a class="dropdown-item" href="{{ url_for('articles.write_article') }}">Article</a>
+                <a class="dropdown-item" href="{{ url_for('videos.upload_video') }}">Video</a>
+                <a class="dropdown-item" href="{{ url_for('pdfs.upload_pdf') }}">Pdf</a>
+                <div class="dropdown-divider"></div>
+                <a class="dropdown-item" href="{{ url_for('forums.write_question') }}">Question</a>
+              </div>
+          </li>
+
+          <li class="nav-item">
+            <a class="nav-link" onclick="openChat()">
+              <i class="fas fa-envelope-open fa" style="font-size: 22pt; margin-top: 1px"></i>
+            </a>
+          </li>
 
           <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -253,7 +240,7 @@
   </nav>
 
 
-  <div class="content-header">
+  <div class="content-header" style="margin-top: 50px;">
     {% block contentHeader %}
     {% endblock %}
   </div>
@@ -282,7 +269,7 @@
       <a href="{{ url_for('articles.index') }}">Articles</a>
       <a href="{{ url_for('videos.index') }}">Videos</a>
       <a href="{{ url_for('pdfs.index') }}">Pdfs</a>
-      <a onclick="openChat()">chat</a>
+      <a href="{{ url_for('forums.index') }}">Forum</a>
 
     </div>
     <div class="footer">
@@ -303,7 +290,8 @@
     }
     function closeChat() {
       document.getElementById("chat").style.width = "0";
-    }
-  </script>
+    }  </script>
+
+
 </body>
 </html>

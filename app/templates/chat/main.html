@@ -1,5 +1,14 @@
-<div id="content_chat"></div>
+
+  <div id="chat" class="sidenav">
+    <a href="javascript:void(0)" class="closebtn" onclick="closeChat()" style="font-size: 20px;">&times;</a>
+    
+    <div id="content_chat"></div>
 
 <input type="hidden" id="url_chat" value="{{ url_for('chat.add_chat') }}" />
 <input type="hidden" id="auth_chat" value="{{ current_user.is_authenticated }}" />
 <script type="text/babel" src="{{ url_for('static', filename='js/chat?version=3.js') }}"></script>
+  </div>
+
+
+
+
