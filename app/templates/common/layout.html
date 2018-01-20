@@ -129,11 +129,29 @@
   width: 4vw;
 }
 
+.sidenav {
+  height: 100%; /* 100% Full-height */
+  width: 0; /* 0 width - change this with JavaScript */
+  position: fixed; /* Stay in place */
+  z-index: 2000; /* Stay on top */
+  top: 0; /* Stay at the top */
+  bottom: 0;
+  right: 0;
+  overflow-y: scroll;
+  border-left: 1px solid;
+  background-color: white;
+  transition: 0.5s; /* 0.5 second transition effect to slide in the sidenav */
+}
+
 </style>
 
 </head>
 
 <body style="background-color: whitesmoke;">
+  <div id="chat" class="sidenav">
+    <a href="javascript:void(0)" class="closebtn" onclick="closeChat()" style="font-size: 20px;">&times;</a>
+    {% include 'chat/main.html' %}
+  </div>
   <!-- Static navbar -->
   <nav class="navbar fixed-top navbar-expand-lg navbar-light bg-white">
     <div class="container">
@@ -151,9 +169,7 @@
           <li class="nav-item">
             <a class="nav-link" href="{{ url_for('forums.index') }}">Forums</a>
           </li>
-          <li class="nav-item">
-            <a class="nav-link" href="{{ url_for('chat.index') }}">Chat</a>
-          </li>
+
         -->
         </ul>
 
@@ -243,6 +259,7 @@
       <a href="{{ url_for('articles.index') }}">Articles</a>
       <a href="{{ url_for('videos.index') }}">Videos</a>
       <a href="{{ url_for('pdfs.index') }}">Pdfs</a>
+      <a onclick="openChat()">chat</a>
 
     </div>
     <div class="footer">
@@ -256,7 +273,14 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js" integrity="sha384-vFJXuSJphROIrBnz7yo7oB41mKfc8JzQZiCq4NCceLEaO4IHwicKwpJf9c9IpFgh" crossorigin="anonymous"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js" integrity="sha384-alpBpkh1PFOepccYVYDB4do5UnbKysX5WZXm3XxPqe5iKTfUKjNkCk9SaVuEZflJ" crossorigin="anonymous"></script>
   <script src="http://vjs.zencdn.net/6.4.0/video.js"></script>
-
-
+  <script>
+    function openChat() {
+      document.getElementById("chat").style.width = "500px";
+      document.getElementById("chat").scrollTop = 999999999;
+    }
+    function closeChat() {
+      document.getElementById("chat").style.width = "0";
+    }
+  </script>
 </body>
 </html>
