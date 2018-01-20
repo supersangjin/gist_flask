@@ -4,7 +4,7 @@ from instance.config import ALLOWED_EXTENSIONS_PDF, UPLOAD_FOLDER_PDF
 from flask import request, redirect, url_for, flash, render_template, jsonify
 from werkzeug.utils import secure_filename
 from flask_login import login_required, current_user
-from app.models import Pdf, User, Comment, Category
+from app.models import Pdf, User, Comment, Category, Book
 from .forms import UploadPdfForm
 from . import pdfs_blueprint
 
@@ -49,7 +49,7 @@ def upload_pdf():
 
 @pdfs_blueprint.route('/pdf/<pdf_id>')
 def pdf_details(pdf_id):
-    pdf_with_user = db.session.query(Pdf, User, Category).join(User, Category).filter(Pdf.id == pdf_id).first()
+    pdf_with_user = db.session.query(Pdf, User, Category, Book).join(User, Category, Book).filter(Pdf.id == pdf_id).first()
     if pdf_with_user is not None:
         return render_template('pdfs/pdf_detail.html', pdf=pdf_with_user)
     else:

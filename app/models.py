@@ -175,8 +175,10 @@ class Video(db.Model):
     video_creDate = db.Column(db.DateTime, nullable=True)
     video_hit = db.Column(db.Integer)
     video_like = db.Column(db.Integer)
+    book_id = db.Column(db.Integer, db.ForeignKey('books.id'))
 
-    def __init__(self, title, description, filename, user_id, category_id):
+
+    def __init__(self, title, description, filename, user_id, category_id, book_id):
         self.video_title = title
         self.video_description = description
         self.video_filename = filename
@@ -185,6 +187,7 @@ class Video(db.Model):
         self.video_creDate = datetime.now()
         self.video_hit = 1
         self.video_like = 0
+        self.book_id = book_id
 
     def __repr__(self):
         return '<id: {}, title: {}, user_id: {}, category_id: {}>'.format(self.id, self.video_title, self.user_id, self.category_id)
@@ -240,19 +243,22 @@ class Pdf(db.Model):
     pdf_thumbnail = db.Column(db.String, default=None, nullable=True)
     
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
+
     category_id = db.Column(db.Integer, db.ForeignKey('categories.id'))
+    book_id = db.Column(db.Integer, db.ForeignKey('books.id'))
 
     pdf_creDate = db.Column(db.DateTime, nullable=True)
     pdf_hit = db.Column(db.Integer)
     pdf_like = db.Column(db.Integer)
     
-    def __init__(self, title, description, filename, thumbnail, user_id, category_id):
+    def __init__(self, title, description, filename, thumbnail, user_id, category_id, book_id):
         self.pdf_title = title
         self.pdf_description = description
         self.pdf_filename = filename
         self.pdf_thumbnail = thumbnail
         self.user_id = user_id
         self.category_id = category_id
+        self.book_id = book_id
         self.pdf_creDate = datetime.now()
         self.pdf_hit = 1
         self.pdf_like = 0
@@ -278,6 +284,22 @@ class Category(db.Model):
     def __repr__(self):
         return '<id: {}, name: {}>'.format(self.id, self.category_name)
 
+
+class Book(db.Model):
+    __tablename__ = "books"
+
+    id = db.Column(db.Integer, primary_key=True)
+    book_title = db.Column(db.String, nullable=False)
+    book_author = db.Column(db.String, nullable=False)
+    book_cover = db.Column(db.String, default=None, nullable=True)
+
+    def __init__(self, title, author, cover):
+        self.book_title = title
+        self.book_author = author
+        self.book_cover = cover
+
+    def __repr__(self):
+        return '<id: {}, name: {}>'.format(self.id, self.book_title)
 
 def question_answers_append(question, answer, initiator):
     """Update some question values when `Question.answers.append` is called."""
