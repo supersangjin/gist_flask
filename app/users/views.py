@@ -7,7 +7,7 @@ from threading import Thread
 from datetime import datetime
 from .forms import RegisterForm, LoginForm, EmailForm, PasswordForm
 from app import db, mail, app
-from app.models import User
+from app.models import User, Article, Video
 from . import users_blueprint
 
 
@@ -134,8 +134,10 @@ def reset_with_token(token):
 @users_blueprint.route('/user_profile/<user_id>', methods=["GET", "POST"])
 def user_profile(user_id):
     user = User.query.filter_by(id=user_id).first()
-    if user :
-        return render_template('users/user_profile.html', user=user)
+    if user:
+        articles = db.session.query(Article).filter(Article.user_id == user.id)
+        videos = db.session.query(Video).filter(Video.user_id == user.id)
+        return render_template('users/user_profile.html', user=user, articles=articles, videos=videos)
     else:
         flash('User does not exist.', 'error')
         return redirect(url_for('utils.index'))
@@ -208,6 +210,7 @@ def admin_view_users():
         users = User.query.order_by(User.id).all()
         return render_template('users/admin_view_users.html', users=users)
     return redirect(url_for('stocks.watch_list'))
+
 
 
 

@@ -40,7 +40,7 @@ def write_article():
     form = WriteArticleForm(request.form)
     if request.method == 'POST':
         if form.validate_on_submit():
-            new_article = Article(form.article_title.data, form.article_context.data, user.id)
+            new_article = Article(form.article_title.data, form.article_context.data, user.id, form.article_category.data)
             db.session.add(new_article)
             db.session.commit()
             flash('New Article, {}, added!'.format(new_article.article_title), 'success')

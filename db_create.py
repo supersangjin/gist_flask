@@ -24,8 +24,8 @@ CATEGORY_NAME = ['fiction', 'memoir', 'science', 'history', 'art']
 CATEGORY_ICON = ['book', 'bookmark', 'flask', 'history', 'heart']
 CATEGORY_NUM = len(CATEGORY_NAME)
 
-for idx in range(CATEGORY_NUM) :
-  db.session.add(Category(CATEGORY_NAME[idx], CATEGORY_ICON[idx]))
+for idx in range(CATEGORY_NUM):
+    db.session.add(Category(CATEGORY_NAME[idx], CATEGORY_ICON[idx]))
 
 # Commit
 db.session.commit()
@@ -43,16 +43,16 @@ article1 = Article('Welcome to Gist', "For those of us who love to read, not hav
                                       "didn't have the time,  and if you can’t find it or you think it does not "
                                       "capture the book fully, then join your friends and other people on the website "
                                       "that are interested in the book and make a summary of the book. "
-                   , admin_user.id)
+                   , admin_user.id, 1)
 article2 = Article('Markdown Guide',
                    "## Lists\n\nUnordered lists can be started using the toolbar or by typing `* `, `- `, or `+ `. "
                    "Ordered lists can be started by typing `1. `.\n\n#### Unordered\n* Lists are a piece of cake\n* "
                    "They even auto continue as you type\n* A double enter will end them\n* Tabs and shift-tabs work "
                    "too\n\n#### Ordered\n1. Numbered lists...\n2. ...work too!\n\n## What about images?\n![Yes]("
                    "https://i.imgur.com/sZlktY7.png) "
-                   , admin_user.id)
+                   , admin_user.id, 2)
 article3 = Article('I Love Pintos', "Pintos is beautiful ^^"
-                   , sample_user.id)
+                   , sample_user.id, 3)
 
 db.session.add(article1)
 db.session.add(article2)

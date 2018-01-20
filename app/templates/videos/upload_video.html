@@ -9,6 +9,9 @@
         {{ render_field(form.video_title, placeholder="Title") }}
         {{ render_field(form.video_description, placeholder="Description") }}
     </dl>
+    <div class="form-group">
+      {{ render_field(form.video_category, class="form-control", id="category", placeholder="Title") }}
+    </div>
     <input type="file" id="file" name='file'/>
     <p id="p3">Select a MP4 video file that is 50 MB or less<p>
     <button class="btn btn-sm btn-success" type="submit">Upload</button>
