@@ -131,11 +131,19 @@ def reset_with_token(token):
     return render_template('users/reset_password_with_token.html', form=form, token=token)
 
 
-@users_blueprint.route('/user_profile')
-@login_required
-def user_profile():
-    return render_template('users/user_profile.html')
+@users_blueprint.route('/user_profile/<user_id>', methods=["GET", "POST"])
+def user_profile(user_id):
+    user = User.query.filter_by(id=user_id).first()
+    if user :
+        return render_template('users/user_profile.html', user=user)
+    else:
+        flash('User does not exist.', 'error')
+        return redirect(url_for('utils.index'))
 
+@users_blueprint.route('/account_setting')
+@login_required
+def account_setting():
+    return render_template('users/account_setting.html')
 
 @users_blueprint.route('/email_change', methods=["GET", "POST"])
 @login_required
@@ -155,7 +163,7 @@ def user_email_change():
                     db.session.commit()
                     send_confirmation_email(user.email)
                     flash('Email changed!  Please confirm your new email address (link sent to new email).', 'success')
-                    return redirect(url_for('users.user_profile'))
+                    return redirect(url_for('users.account_setting'))
                 else:
                     flash('Sorry, that email already exists!', 'error')
             except IntegrityError:
@@ -174,7 +182,7 @@ def user_password_change():
             db.session.add(user)
             db.session.commit()
             flash('Password has been updated!', 'success')
-            return redirect(url_for('users.user_profile'))
+            return redirect(url_for('users.account_setting'))
 
     return render_template('users/password_change.html', form=form)
 
@@ -188,7 +196,7 @@ def resend_email_confirmation():
     except IntegrityError:
         flash('Error!  Unable to send email to confirm your email address.', 'error')
 
-    return redirect(url_for('users.user_profile'))
+    return redirect(url_for('users.account_setting'))
 
 
 @users_blueprint.route('/admin_view_users')

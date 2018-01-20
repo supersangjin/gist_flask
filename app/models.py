@@ -16,6 +16,7 @@ class User(db.Model):
     email = db.Column(db.String, unique=True, nullable=False)
     _password = db.Column(db.Binary(60), nullable=False)
     thumbnail = db.Column(db.String, default=None, nullable=True)
+    description = db.Column(db.String, default=None, nullable=True)
     authenticated = db.Column(db.Boolean, default=False)
     email_confirmation_sent_on = db.Column(db.DateTime, nullable=True)
     email_confirmed = db.Column(db.Boolean, nullable=True, default=False)
@@ -77,6 +78,9 @@ class User(db.Model):
 
     def set_thumbnail(self, thumbnail):
         self.thumbnail = thumbnail
+
+    def set_description(self, description):
+        self.description = description
 
     def __repr__(self):
         return '<User {0}>'.format(self.name)

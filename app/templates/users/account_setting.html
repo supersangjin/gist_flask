@@ -1,0 +1,110 @@
+{% extends "common/layout.html" %}
+{% from "common/_form_macros.html" import render_field %}
+
+{% block content %}
+
+<style type="text/css">
+
+.user-account-thumbnail {
+	width: 70px;
+	height: 70px;
+	border-radius: 50%;
+	display: block;
+	margin: auto;
+	margin-bottom: 1vw;
+}
+
+.panel-title {
+	margin-top: 4vh;
+}
+
+.panel-line {
+	margin-top: 0;
+	margin-bottom: 4vh;
+	border: 0.8px solid;
+	color: lightgray;
+}
+
+.panel-heading {
+	font-weight: bold;
+}
+
+</style>
+
+
+<div class="row">
+	<div class="col-sm-12">
+	<h2>Account Setting</h2>
+	</div>
+</div>
+
+<div class="row">
+	<div class="col-sm-12">
+	<h4 class="panel-title">General Information</h4>
+	</div>
+</div>
+
+<hr class="panel-line">
+
+<div class="row">
+
+	<div class="col-sm-3" style="text-align: center">
+		<img class="user-account-thumbnail" src="{{ url_for('static', filename='image/user/' + current_user.thumbnail) }}">
+		Upload New Image
+	</div>
+
+	<div class="col-sm-9">
+	  <div class="panel">
+        <div class="panel-heading">Email</div>
+        <div class="panel-body">{{current_user.email}}</div>
+        <br/>
+        <div class="panel-heading">Username</div>
+        <div class="panel-body">{{current_user.username}}</div>
+      </div>
+      <br/>
+      <div class="panel">
+        <div class="panel-body"><a href="{{ url_for('users.user_email_change') }}">Change Email</a></div>
+        <div class="panel-body"><a href="{{ url_for('users.user_password_change') }}">Change Password</a></div>
+        {% if not current_user.email_confirmed %}
+         	<div class="panel-body"><a href="{{ url_for('users.resend_email_confirmation') }}">Resend Email Confirmation</a></div>
+        {% endif %}
+      </div>
+	</div>
+
+</div>
+
+<div class="row">
+	<div class="col-sm-12">
+	<h4 class="panel-title">Statistics</h4>
+	</div>
+</div>
+
+<hr class="panel-line">
+
+<div class="col-sm-12">
+
+Member since: {{ current_user.registered_on.strftime("%A %B %d, %Y") }}
+{% if current_user.last_logged_in != None %}
+<div class="panel-body">Last Logged In: {{ current_user.last_logged_in.strftime("%A %B %d, %Y") }}</div>
+{% else %}
+<div class="panel-body">First time logged in. Welcome!</div>
+{% endif %}
+{% if current_user.email_confirmed %}
+<div class="panel-body">Email confirmed on: {{ current_user.email_confirmed_on.strftime("%A %B %d, %Y") }}</div>
+{% else %}
+<div class="panel-body">Email has not been confirmed!</div>
+{% endif %}
+
+</div>
+
+<hr style="margin-top: 4vh; margin-bottom: 4vh;">
+
+<div class="row">
+	<div class="col-sm-12">
+	Delete your account
+	</div>
+</div>
+
+
+
+{% endblock %}

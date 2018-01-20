@@ -15,7 +15,7 @@
 <div class="post-author">
 	<img class="post-author-thumbnail" src="{{ url_for('static', filename='image/user/' + pdf.User.thumbnail) }}">
 	<div>
-		<a href="https://www.google.com" class="post-author-name">	{{ pdf.User.username }} </a> <br/>
+		<a href="{{ url_for('users.user_profile', user_id = pdf.User.id) }}" class="post-author-name">	{{ pdf.User.username }} </a> <br/>
 		<div class="post-date"> Updated: 14 December 2017 </div>
 	</div>
 </div>
