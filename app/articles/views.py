@@ -11,7 +11,6 @@ import jsonpickle
 ARTICLE_LIMIT = 4
 PER_PAGE = 3
 
-
 @articles_blueprint.route('/article/<sort>', defaults={'page': 1})
 @articles_blueprint.route('/article/<sort>/<int:page>')
 def index(page, sort):

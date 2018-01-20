@@ -1,17 +1,241 @@
 {% extends "common/layout.html" %}
 {% block content %}
 
-<div class="row" style="margin-top: 50px;">
-  {% for video in videos %}
-    <a class="articles" href="{{ url_for('videos.video_details', video_id=video.id) }}" style="width:100%">
-      <div style="width:100%; margin-top: 10px; margin-bottom:100px;">
-        <h4 style="width:100%">{{ video.video_title }}</h4>
-        <p>{{ video.video_description }}</p>
-      </div>
-    </a>
-  {% endfor %}
+<style type="text/css">
+	
+.list-divider {
+	border: 1.5px solid;
+	width: 20px;
+
+}
+
+.list-subtitle {
+	margin-top: 1.75rem;
+	margin-bottom: 1.75rem;
+}
+
+.list-panel {
+	height: auto;
+	background-color: white;
+	padding-bottom: 1.3rem;
+}
+
+.list-panel a {
+	text-decoration: none !important;
+}
+
+.list-panel-img {
+	width: 100%;
+	border: none;
+	object-fit: cover;
+}
+
+.list-panel-title {
+	font-weight: bold;
+	font-size: 13pt;
+	color: black !important;
+}
+
+.list-panel-category {
+	font-weight: bold;
+	font-size: 10pt;
+	color: gray;
+	text-transform: uppercase;
+}
+
+.list-panel-author {
+	margin-top: 0.3rem;
+	display: inline-block;
+	float: right;
+}
+
+.list-panel-author-thumbnail {
+	width: 16px;
+	height: 16px;
+	border-radius: 50%;
+	margin-right: 0.5rem;
+}
+
+.list-panel-author-name {
+  font-size: 10pt;
+  color: gray !important;
+}
+
+.list-panel-date {
+  font-size: 8pt;
+}
+
+.list-panel-footer {
+	padding: 1rem;
+}
+
+</style>
+
+<script type="text/javascript">
+
+	var cover_ratio = 0.7;
+
+	$(document).ready(function(){
+		var pw = $('.list-panel-img').width();
+		$('.list-panel-img').css({'height':cover_ratio*pw+'px'});
+    });
+    $( window ).resize(function() {
+  		var pw = $('.list-panel-img').width();
+		$('.list-panel-img').css({'height':cover_ratio*pw+'px'});
+	});
+</script>
+
+
+<h3>Videos</h3>
+
+Watch a summary of a book
+
+<hr class="list-divider" align="left"/>
+
+<div class="list-subtitle">
+<h5>Most Popular Videos</h5>
+</div>
+
+<div id="carouselPopularVideo" class="carousel slide" data-ride="carousel">
+	<div class="carousel-inner">
+		<div class="carousel-item active">
+			<div class="row">
+				{% for video in videos[:4] %}
+				<div class="col-sm-3">
+					<a href="{{ url_for('videos.video_details', video_id=video.Video.id) }}">
+					<div class="list-panel">
+						<center>
+							<video class="list-panel-img" align="middle" src="{{ url_for('static', filename='vid/' + video.Video.video_filename) }}"></video>
+						</center>
+						<div class="list-panel-footer">
+							<div class="list-panel-category">
+								> {{ video.Category.category_name }}
+							</div>
+							<div class="list-panel-title">
+								{{ video.Video.video_title }}
+							</div>
+							<div class="list-panel-author">
+								<img class="list-panel-author-thumbnail" src="{{ url_for('static', filename='image/user/' + video.User.thumbnail) }}" >
+								<a href="{{ url_for('users.user_profile', user_id = video.User.id) }}" class="list-panel-author-name">	{{ video.User.username }} </a> <br/>
+							</div>
+						</div>
+					</div>
+					</a>
+				</div>
+				{% endfor %}
+			</div>
+		</div>
+		<div class="carousel-item">
+			<div class="row">
+				{% for video in videos[4:] %}
+				<div class="col-sm-3">
+					<a href="{{ url_for('videos.video_details', video_id=video.Video.id) }}">
+					<div class="list-panel">
+						<center>
+							<video class="list-panel-img" align="middle" src="{{ url_for('static', filename='vid/' + video.Video.video_filename) }}"></video>
+						</center>
+						<div class="list-panel-footer">
+							<div class="list-panel-category">
+								> {{ video.Category.category_name }}
+							</div>
+							<div class="list-panel-title">
+								{{ video.Video.video_title }}
+							</div>
+							<div class="list-panel-author">
+								<img class="list-panel-author-thumbnail" src="{{ url_for('static', filename='image/user/' + video.User.thumbnail) }}" >
+								<a href="{{ url_for('users.user_profile', user_id = video.User.id) }}" class="list-panel-author-name">	{{ video.User.username }} </a> <br/>
+							</div>
+						</div>
+					</div>
+					</a>
+				</div>
+				{% endfor %}
+			</div>
+
+		</div>
+	</div>
+	<a class="carousel-control-prev" href="#carouselPopularVideo" role="button" data-slide="prev">
+		<span class="carousel-control-prev-icon" aria-hidden="true"></span>
+		<span class="sr-only">Previous</span>
+	</a>
+	<a class="carousel-control-next" href="#carouselPopularVideo" role="button" data-slide="next">
+		<span class="carousel-control-next-icon" aria-hidden="true"></span>
+		<span class="sr-only">Next</span>
+	</a>
+</div>
+
+<hr/>
+
+<div class="list-subtitle">
+<h5>Trending Videos</h5>
+</div>
+
+<div id="carouselTrendingVideo" class="carousel slide" data-ride="carousel">
+	<div class="carousel-inner">
+		<div class="carousel-item active">
+			<div class="row">
+				{% for video in videos[:4] %}
+				<div class="col-sm-3">
+					<a href="{{ url_for('videos.video_details', video_id=video.Video.id) }}">
+					<div class="list-panel">
+						<center>
+							<video class="list-panel-img" align="middle" src="{{ url_for('static', filename='vid/' + video.Video.video_filename) }}"></video>
+						</center>
+						<div class="list-panel-footer">
+							<div class="list-panel-category">
+								> {{ video.Category.category_name }}
+							</div>
+							<div class="list-panel-title">
+								{{ video.Video.video_title }}
+							</div>
+							<div class="list-panel-author">
+								<img class="list-panel-author-thumbnail" src="{{ url_for('static', filename='image/user/' + video.User.thumbnail) }}" >
+								<a href="{{ url_for('users.user_profile', user_id = video.User.id) }}" class="list-panel-author-name">	{{ video.User.username }} </a> <br/>
+							</div>
+						</div>
+					</div>
+					</a>
+				</div>
+				{% endfor %}
+			</div>
+		</div>
+		<div class="carousel-item">
+			<div class="row">
+				{% for video in videos[4:] %}
+				<div class="col-sm-3">
+					<a href="{{ url_for('videos.video_details', video_id=video.Video.id) }}">
+					<div class="list-panel">
+						<center>
+							<video class="list-panel-img" align="middle" src="{{ url_for('static', filename='vid/' + video.Video.video_filename) }}"></video>
+						</center>
+						<div class="list-panel-footer">
+							<div class="list-panel-category">
+								> {{ video.Category.category_name }}
+							</div>
+							<div class="list-panel-title">
+								{{ video.Video.video_title }}
+							</div>
+							<div class="list-panel-author">
+								<img class="list-panel-author-thumbnail" src="{{ url_for('static', filename='image/user/' + video.User.thumbnail) }}" >
+								<a href="{{ url_for('users.user_profile', user_id = video.User.id) }}" class="list-panel-author-name">	{{ video.User.username }} </a> <br/>
+							</div>
+						</div>
+					</div>
+					</a>
+				</div>
+				{% endfor %}
+			</div>
+
+		</div>
+	</div>
+	<a class="carousel-control-prev" href="#carouselTrendingVideo" role="button" data-slide="prev">
+		<span class="carousel-control-prev-icon" aria-hidden="true"></span>
+		<span class="sr-only">Previous</span>
+	</a>
+	<a class="carousel-control-next" href="#carouselTrendingVideo" role="button" data-slide="next">
+		<span class="carousel-control-next-icon" aria-hidden="true"></span>
+		<span class="sr-only">Next</span>
+	</a>
 </div>
 
 {% endblock %}
-
-<!--TODO 비디오 preview. 사진 한장 캡쳐해서 preview. Video 쪽은 Youtube 랑 똑같이 만들면 될듯-->

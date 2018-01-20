@@ -8,10 +8,11 @@ from app.models import Video, User, Comment, Category, Book
 from .forms import UploadVideoForm
 from . import videos_blueprint
 
+VIDEO_LIMIT = 8
 
 @videos_blueprint.route('/video')
 def index():
-    all_videos = Video.query.all()
+    all_videos = db.session.query(Video, User, Category, Book).join(User, Category, Book).limit(VIDEO_LIMIT)
     return render_template('videos/list.html', videos=all_videos)
 
 
