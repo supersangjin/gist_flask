@@ -15,6 +15,10 @@
     {% endif %}
 {% endif %}
 
+<!--like-->
+<div id="like"></div>
+<script type="text/babel" src="{{ url_for('static', filename='js/like?version=1.js') }}"></script>
+
 <!--comment-->
 <div id="content"></div>
 <input type="hidden" id="url" value="{{ url_for('articles.add_comment', article_id=article.Article.id) }}" />
