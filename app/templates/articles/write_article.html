@@ -19,17 +19,4 @@
   </form>
 </div>
 
-<script>
-  document.getElementById("formMd").onsubmit = function () {
-    if (!document.getElementById("title").value) {
-        alert('Article title missing');
-        return false;
-    }
-    if (!document.getElementById("context").value) {
-        alert('Article context missing');
-        return false;
-    }
-  }
-</script>
-
 {% endblock %}

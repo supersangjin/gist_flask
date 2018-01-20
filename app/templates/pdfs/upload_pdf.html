@@ -2,6 +2,13 @@
 {% from "common/_form_macros.html" import render_field %}
 
 {% block content %}
+
+<style>
+    .search-list{
+        max-height: 200px;
+        overflow-y: scroll;
+    }
+</style>
 <h1>Upload new File</h1>
 <form action="{{ url_for('pdfs.upload_pdf') }}" method="post" enctype=multipart/form-data>
     {{ form.csrf_token }}
@@ -9,8 +16,15 @@
         {{ render_field(form.pdf_title, placeholder="Title") }}
         {{ render_field(form.pdf_description, placeholder="Description") }}
     </dl>
+    <div class="form-group">
+      {{ render_field(form.pdf_category, class="form-control", id="category") }}
+    </div>
     <input type="file" id="file" name='file' accept="application/pdf"/>
     <button class="btn btn-sm btn-success" type="submit">Upload</button>
 </form>
 
+<div id="search"></div>
+<script type="text/babel" src="{{ url_for('static', filename='js/search?version=1.js') }}"></script>
+
 {% endblock %}
+
