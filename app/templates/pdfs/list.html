@@ -3,64 +3,71 @@
 
 <style type="text/css">
 	
-.pdf-divider {
+.list-divider {
 	border: 1.5px solid;
 	width: 20px;
 
 }
 
-.pdf-element-title {
+.list-subtitle {
+	margin-top: 1.75rem;
+	margin-bottom: 1.75rem;
+}
+
+.list-panel {
+	height: auto;
+	background-color: white;
+	padding-bottom: 1.3rem;
+}
+
+.list-panel a {
+	text-decoration: none !important;
+}
+
+.list-panel-img {
+	width: 100%;
+	border: none;
+	object-fit: cover;
+}
+
+.list-panel-title {
 	font-weight: bold;
 	font-size: 13pt;
 	color: black !important;
 }
 
-.pdf-element-category {
+.list-panel-category {
 	font-weight: bold;
 	font-size: 10pt;
 	color: gray;
 	text-transform: uppercase;
 }
 
-.pdf-panel {
-	height: auto;
-	background-color: white;
-	padding-bottom: 1.3rem;
-}
-
-.pdf-panel a {
-	text-decoration: none !important;
-}
-
-.pdf-element-author {
+.list-panel-author {
 	margin-top: 0.3rem;
 	display: inline-block;
 	float: right;
 }
 
-.pdf-element-author-thumbnail {
+.list-panel-author-thumbnail {
 	width: 16px;
 	height: 16px;
 	border-radius: 50%;
 	margin-right: 0.5rem;
 }
 
-.pdf-element-author-name {
-  color: black !important;
-  text-decoration: none !important;
+.list-panel-author-name {
   font-size: 10pt;
   color: gray !important;
 }
 
-.pdf-element-date {
+.list-panel-date {
   font-size: 8pt;
 }
 
-.pdf-subtitle {
-	margin-top: 1.75rem;
-	margin-bottom: 1.75rem;
+.list-panel-footer {
+	padding: 1rem;
 }
-
 
 </style>
 
@@ -69,12 +76,12 @@
 	var cover_ratio = 1.4;
 
 	$(document).ready(function(){
-		var pw = $('.pdf-panel-img').width();
-		$('.pdf-panel-img').css({'height':cover_ratio*pw+'px'});
+		var pw = $('.list-panel-img').width();
+		$('.list-panel-img').css({'height':cover_ratio*pw+'px'});
     });
     $( window ).resize(function() {
-  		var pw = $('.pdf-panel-img').width();
-		$('.pdf-panel-img').css({'height':cover_ratio*pw+'px'});
+  		var pw = $('.list-panel-img').width();
+		$('.list-panel-img').css({'height':cover_ratio*pw+'px'});
 	});
 </script>
 
@@ -83,9 +90,9 @@
 
 Read a summary of a book
 
-<hr class="pdf-divider" align="left"/>
+<hr class="list-divider" align="left"/>
 
-<div class="pdf-subtitle">
+<div class="list-subtitle">
 <h5>Most Popular Articles</h5>
 </div>
 
@@ -96,20 +103,20 @@ Read a summary of a book
 				{% for pdf in pdfs[:4] %}
 				<div class="col-sm-3">
 					<a href="{{ url_for('pdfs.pdf_details', pdf_id=pdf.Pdf.id) }}">
-					<div class="pdf-panel">
+					<div class="list-panel">
 						<center>
-							<img class="pdf-panel-img" align="middle" src="{{ url_for('static', filename='image/pdf/' + pdf.Pdf.pdf_thumbnail)}}" style="width: 100%; border: none; object-fit: cover;"> 
+							<img class="list-panel-img" align="middle" src="{{ url_for('static', filename='image/pdf/' + pdf.Pdf.pdf_thumbnail)}}"> 
 						</center>
-						<div class="pdf panel-footer" style="padding: 1rem;">
-							<div class="pdf-element-category">
+						<div class="list-panel-footer">
+							<div class="list-panel-category">
 								> {{ pdf.Category.category_name }}
 							</div>
-							<div class="pdf-element-title">
+							<div class="list-panel-title">
 								{{ pdf.Pdf.pdf_title }}
 							</div>
-							<div class="pdf-element-author">
-								<img class="pdf-element-author-thumbnail" src="{{ url_for('static', filename='image/user/' + pdf.User.thumbnail) }}" >
-								<a href="{{ url_for('users.user_profile', user_id = pdf.User.id) }}" class="pdf-element-author-name">	{{ pdf.User.username }} </a> <br/>
+							<div class="list-panel-author">
+								<img class="list-panel-author-thumbnail" src="{{ url_for('static', filename='image/user/' + pdf.User.thumbnail) }}" >
+								<a href="{{ url_for('users.user_profile', user_id = pdf.User.id) }}" class="list-panel-author-name">	{{ pdf.User.username }} </a> <br/>
 							</div>
 						</div>
 					</div>
@@ -123,20 +130,20 @@ Read a summary of a book
 				{% for pdf in pdfs[4:] %}
 				<div class="col-sm-3">
 					<a href="{{ url_for('pdfs.pdf_details', pdf_id=pdf.Pdf.id) }}">
-					<div class="pdf-panel">
+					<div class="list-panel">
 						<center>
-							<img class="pdf-panel-img" align="middle" src="{{ url_for('static', filename='image/pdf/' + pdf.Pdf.pdf_thumbnail) }}" style="width: 100%; border: none; object-fit: cover;"> 
+							<img class="list-panel-img" align="middle" src="{{ url_for('static', filename='image/pdf/' + pdf.Pdf.pdf_thumbnail) }}"> 
 						</center>
-						<div class="pdf panel-footer" style="padding: 1rem;">
-							<div class="pdf-element-category">
+						<div class="list-panel-footer">
+							<div class="list-panel-category">
 								> {{ pdf.Category.category_name }}
 							</div>
-							<div class="pdf-element-title">
+							<div class="list-panel-title">
 								{{ pdf.Pdf.pdf_title }}
 							</div>
-							<div class="pdf-element-author">
-								<img class="pdf-element-author-thumbnail" src="{{ url_for('static', filename='image/user/' + pdf.User.thumbnail) }}" >
-								<a href="{{ url_for('users.user_profile', user_id = pdf.User.id) }}" class="pdf-element-author-name">	{{ pdf.User.username }} </a> <br/>
+							<div class="list-panel-author">
+								<img class="list-panel-author-thumbnail" src="{{ url_for('static', filename='image/user/' + pdf.User.thumbnail) }}" >
+								<a href="{{ url_for('users.user_profile', user_id = pdf.User.id) }}" class="list-panel-author-name">	{{ pdf.User.username }} </a> <br/>
 							</div>
 						</div>
 					</div>
@@ -159,7 +166,7 @@ Read a summary of a book
 
 <hr/>
 
-<div class="pdf-subtitle">
+<div class="list-subtitle">
 <h5>Trending Articles</h5>
 </div>
 
@@ -170,20 +177,20 @@ Read a summary of a book
 				{% for pdf in pdfs[:4] %}
 				<div class="col-sm-3">
 					<a href="{{ url_for('pdfs.pdf_details', pdf_id=pdf.Pdf.id) }}">
-					<div class="pdf-panel">
+					<div class="list-panel">
 						<center>
-							<img class="pdf-panel-img" align="middle" src="{{ url_for('static', filename='image/pdf/' + pdf.Pdf.pdf_thumbnail) }}" style="width: 100%; border: none; object-fit: cover;"> 
+							<img class="list-panel-img" align="middle" src="{{ url_for('static', filename='image/pdf/' + pdf.Pdf.pdf_thumbnail) }}"> 
 						</center>
-						<div class="pdf panel-footer" style="padding: 1rem;">
-							<div class="pdf-element-category">
+						<div class="list-panel-footer">
+							<div class="list-panel-category">
 								> {{ pdf.Category.category_name }}
 							</div>
-							<div class="pdf-element-title">
+							<div class="list-panel-title">
 								{{ pdf.Pdf.pdf_title }}
 							</div>
-							<div class="pdf-element-author">
-								<img class="pdf-element-author-thumbnail" src="{{ url_for('static', filename='image/user/' + pdf.User.thumbnail) }}" >
-								<a href="{{ url_for('users.user_profile', user_id = pdf.User.id) }}" class="pdf-element-author-name">	{{ pdf.User.username }} </a> <br/>
+							<div class="list-panel-author">
+								<img class="list-panel-author-thumbnail" src="{{ url_for('static', filename='image/user/' + pdf.User.thumbnail) }}" >
+								<a href="{{ url_for('users.user_profile', user_id = pdf.User.id) }}" class="list-panel-author-name">	{{ pdf.User.username }} </a> <br/>
 							</div>
 						</div>
 					</div>
@@ -197,20 +204,20 @@ Read a summary of a book
 				{% for pdf in pdfs[4:] %}
 				<div class="col-sm-3">
 					<a href="{{ url_for('pdfs.pdf_details', pdf_id=pdf.Pdf.id) }}">
-					<div class="pdf-panel">
+					<div class="list-panel">
 						<center>
-							<img class="pdf-panel-img" align="middle" src="{{ url_for('static', filename='image/pdf/' + pdf.Pdf.pdf_thumbnail) }}" style="width: 100%; border: none; object-fit: cover;"> 
+							<img class="list-panel-img" align="middle" src="{{ url_for('static', filename='image/pdf/' + pdf.Pdf.pdf_thumbnail) }}"> 
 						</center>
-						<div class="pdf panel-footer" style="padding: 1rem;">
-							<div class="pdf-element-category">
+						<div class="list-panel-footer">
+							<div class="list-panel-category">
 								> {{ pdf.Category.category_name }}
 							</div>
-							<div class="pdf-element-title">
+							<div class="list-panel-title">
 								{{ pdf.Pdf.pdf_title }}
 							</div>
-							<div class="pdf-element-author">
-								<img class="pdf-element-author-thumbnail" src="{{ url_for('static', filename='image/user/' + pdf.User.thumbnail) }}" >
-								<a href="{{ url_for('users.user_profile', user_id = pdf.User.id) }}" class="pdf-element-author-name">	{{ pdf.User.username }} </a> <br/>
+							<div class="list-panel-author">
+								<img class="list-panel-author-thumbnail" src="{{ url_for('static', filename='image/user/' + pdf.User.thumbnail) }}" >
+								<a href="{{ url_for('users.user_profile', user_id = pdf.User.id) }}" class="list-panel-author-name">	{{ pdf.User.username }} </a> <br/>
 							</div>
 						</div>
 					</div>
