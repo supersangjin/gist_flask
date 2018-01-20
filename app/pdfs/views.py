@@ -8,10 +8,11 @@ from app.models import Pdf, User, Comment, Category, Book
 from .forms import UploadPdfForm
 from . import pdfs_blueprint
 
+PDF_LIMIT = 4
 
 @pdfs_blueprint.route('/pdf')
 def index():
-    all_pdfs = db.session.query(Pdf, User, Category, Book).join(User, Category, Book).all()
+    all_pdfs = db.session.query(Pdf, User, Category, Book).join(User, Category, Book).limit(PDF_LIMIT)
     return render_template('pdfs/list.html', pdfs=all_pdfs)
 
 
