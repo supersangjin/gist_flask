@@ -207,6 +207,19 @@
 
           {% if current_user.is_authenticated %}
 
+          <li class="nav-item dropdown">
+            <a class="nav-link" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              Write New
+            </a>
+            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+              <a class="dropdown-item" href="{{ url_for('articles.write_article') }}">Article</a>
+              <a class="dropdown-item" href="{{ url_for('videos.upload_video') }}">Video</a>
+              <a class="dropdown-item" href="{{ url_for('pdfs.upload_pdf') }}">Pdf</a>
+              <div class="dropdown-divider"></div>
+              <a class="dropdown-item" href="{{ url_for('forums.write_question') }}">Question</a>
+            </div>
+          </li>
+
           {% if current_user.role == "admin" %}
           <li class="nav-item">
             <a class="nav-link" href="{{ url_for('users.admin_view_users') }}">Admin Page</a>
@@ -226,22 +239,10 @@
 
           {% endif %}
 
-          <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-              Write New
-            </a>
-            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-              <a class="dropdown-item" href="{{ url_for('articles.write_article') }}">Article</a>
-              <a class="dropdown-item" href="{{ url_for('videos.upload_video') }}">Video</a>
-              <a class="dropdown-item" href="{{ url_for('pdfs.upload_pdf') }}">Pdf</a>
-              <div class="dropdown-divider"></div>
-              <a class="dropdown-item" href="{{ url_for('forums.write_question') }}">Question</a>
-            </div>
-          </li>
           {% else %}
           
           <li class="nav-item">
-            <a class="nav-link" href="{{ url_for('users.login') }}">Log In</a>
+            <a class="nav-link" href="{{ url_for('users.login') }}" id=btn-login>Log In</a>
           </li>
 
           {% endif %}

@@ -1,18 +1,54 @@
 {% extends "common/layout.html" %}
-{% block content %}
+{% block contentHeader %}
 
-<div>
-	<p>
+<style type="text/css">
+	/* Split the screen in half */
+.split {
+  height: 100%;
+  position: fixed;
+  z-index: 1;
+  top: 0;
+  bottom: 0;
+  overflow-x: hidden;
+}
+
+/* Control the left side */
+.left {
+  left: 0;
+  width: 350px;
+}
+
+/* Control the right side */
+.right {
+  right: 0;
+  width: calc(100vw - 350px);
+}
+
+/* If you want the content centered horizontally and vertically */
+.centered {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+}
+
+</style>
+
+<div class="split left">
+  <div style="width: 100%; height: 100%; bottom: 0; background-color: whitesmoke; padding: 2vw">
+    <div>
+    <br/><br/>
 		<a href="{{ url_for('utils.index') }}">Home</a> >
-		<a>{{ pdf.Category.category_name }}</a>
-	</p>
-</div>
+			<a>{{ pdf.Category.category_name }}</a>
+	<br/><br/>
+	</div>
 
-<div class="post-title">
-	{{ pdf.Pdf.pdf_title }}
-</div>
+	<div class="post-title" style="font-size: 18pt; text-align: left; margin-bottom: 0">
+		{{ pdf.Pdf.pdf_title }}
+	</div>
 
-<div class="post-author">
+<div class="post-author" style="margin:1vw; margin-bottom: 3vw">
 	<img class="post-author-thumbnail" src="{{ url_for('static', filename='image/user/' + pdf.User.thumbnail) }}">
 	<div>
 		<a href="{{ url_for('users.user_profile', user_id = pdf.User.id) }}" class="post-author-name">	{{ pdf.User.username }} </a> <br/>
@@ -24,12 +60,33 @@
 	{{ pdf.Pdf.pdf_description }}
 </div>
 
-<embed class="post-file" src="{{ url_for('static', filename='pdf/' + pdf.Pdf.pdf_filename ) }}" type="application/pdf"/>
+	<hr/>
+		<div style="display: inline-block;">
+		<img src="{{ url_for('static', filename='image/book/' + pdf.Book.book_cover) }}" style="width: 30%; float: left; margin-right: 1vw">
+		{{ pdf.Book.book_title }}
+		<br/>
+		{{ pdf.Book.book_author }}
+		</div>
 
-<!--comment-->
-<div id="content" style="width: 10px;"></div>
-<input type="hidden" id="url" value="{{ url_for('pdfs.add_comment', pdf_id=pdf.Pdf.id) }}" />
-<input type="hidden" id="auth" value="{{ current_user.is_authenticated }}" />
-<script type="text/babel" src="{{ url_for('static', filename='js/comment?version=21.js') }}"></script>
+	<hr />
 
+	<i class="fas fa-user" style="margin-bottom: 10px;"></i> 6.35k views <br/>
+	<i class="fas fa-comment" style="margin-bottom: 10px;"></i> 0 comment
+
+	</div>
+</div>
+
+
+
+
+
+
+
+
+
+<div class="split right">
+  <div class="centered" style="width: 100%; height: 100%; bottom: 0;">
+    <embed src="{{ url_for('static', filename='pdf/' + pdf.Pdf.pdf_filename ) }}" type="application/pdf" style="width: 100%; height: 100%; bottom: 0;"/>
+  </div>
+</div>
 {% endblock %}

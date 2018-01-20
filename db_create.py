@@ -19,6 +19,16 @@ db.session.add(sample_user)
 # Commit
 db.session.commit()
 
+# insert book
+book1 = Book('Computer Networks', 'Andrew', '1.jpeg')
+book2 = Book('Operating System Concepts', 'Abraham', '2.jpg')
+
+db.session.add(book1)
+db.session.add(book2)
+
+# Commit
+db.session.commit()
+
 # insert category data
 CATEGORY_NAME = ['fiction', 'memoir', 'science', 'history', 'art']
 CATEGORY_ICON = ['book', 'bookmark', 'flask', 'history', 'heart']
@@ -59,9 +69,9 @@ db.session.add(article2)
 db.session.add(article3)
 
 # insert video data
-video1 = Video('Big Bunny 1', '2MB', '2mb.mp4', admin_user.id, 1)
-video2 = Video('Big Bunny 2', '5MB', '5mb.mp4', admin_user.id, 2)
-video3 = Video('Big Bunny 3', '10MB', '10mb.mp4', admin_user.id, 3)
+video1 = Video('Big Bunny 1', '2MB', '2mb.mp4', admin_user.id, 1, book1.id)
+video2 = Video('Big Bunny 2', '5MB', '5mb.mp4', admin_user.id, 2, book1.id)
+video3 = Video('Big Bunny 3', '10MB', '10mb.mp4', admin_user.id, 3, book2.id)
 
 db.session.add(video1)
 db.session.add(video2)
@@ -88,9 +98,9 @@ db.session.add(question1)
 
 # insert pdfs
 
-pdf1 = Pdf('Hello Operating System', 'The process of the CS330 course is covered.', 'cs330.pdf', '1497796384.jpg', admin_user.id, 1)
-pdf2 = Pdf('I hate Inipay', 'Fucking Inipay', 'INIpay.pdf', '1497928636.jpg', sample_user.id, 2)
-pdf3 = Pdf('Cool resume', 'Resume of Sangjin', 'Resume.pdf', '1498037751.png', admin_user.id, 3)
+pdf1 = Pdf('Hello Operating System', 'The process of the CS330 course is covered.', 'cs330.pdf', '1497796384.jpg', admin_user.id, 1, book2.id)
+pdf2 = Pdf('I hate Inipay', 'Fucking Inipay', 'INIpay.pdf', '1497928636.jpg', sample_user.id, 2, book1.id)
+pdf3 = Pdf('Cool resume', 'Resume of Sangjin', 'Resume.pdf', '1498037751.png', admin_user.id, 3, book1.id)
 
 db.session.add(pdf1)
 db.session.add(pdf2)
