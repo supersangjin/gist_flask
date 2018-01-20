@@ -101,13 +101,23 @@ db.session.add(question1)
 
 # insert pdfs
 
-pdf1 = Pdf('Hello Operating System', 'The process of the CS330 course is covered.', 'cs330.pdf', '1497796384.jpg', admin_user.id, 1, book2.id)
-pdf2 = Pdf('I hate Inipay', 'Fucking Inipay', 'INIpay.pdf', '1497928636.jpg', sample_user.id, 2, book1.id)
-pdf3 = Pdf('Cool resume', 'Resume of Sangjin', 'Resume.pdf', '1498037751.png', admin_user.id, 3, book1.id)
+pdf1 = Pdf('Hello Operating System', 'The process of the CS330 course is covered.', 'cs330.pdf', '1.jpg', admin_user.id, 1, book2.id)
+pdf2 = Pdf('I hate Inipay', 'Fucking Inipay', 'INIpay.pdf', '2.jpeg', sample_user.id, 2, book1.id)
+pdf3 = Pdf('Cool resume', 'Resume of Sangjin', 'Resume.pdf', '2.jpeg', admin_user.id, 3, book1.id)
+pdf4 = Pdf('This is sample for PDF', 'Resume of Sangjin', 'Resume.pdf', '2.jpeg', sample_user.id, 3, book1.id)
+pdf5 = Pdf('Sublime text, file, edit, selection, find, view, goto.', 'Resume of Sangjin', 'Resume.pdf', '2.jpeg', admin_user.id, 3, book1.id)
+pdf6 = Pdf('siba daeng-daeng-i', 'Resume of Sangjin', 'Resume.pdf', '1.jpg', sample_user.id, 2, book1.id)
+pdf7 = Pdf('head shoulder knee', 'Resume of Sangjin', 'Resume.pdf', '2.jpeg', admin_user.id, 3, book1.id)
+pdf8 = Pdf('Loreal professional paris', 'Resume of Sangjin', 'Resume.pdf', '2.jpeg', admin_user.id, 1, book1.id)
 
 db.session.add(pdf1)
 db.session.add(pdf2)
 db.session.add(pdf3)
+db.session.add(pdf4)
+db.session.add(pdf5)
+db.session.add(pdf6)
+db.session.add(pdf7)
+db.session.add(pdf8)
 
 # Commit
 db.session.commit()
