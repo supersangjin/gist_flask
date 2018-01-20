@@ -19,6 +19,6 @@
 <div id="content"></div>
 <input type="hidden" id="url" value="{{ url_for('articles.add_comment', article_id=article.Article.id) }}" />
 <input type="hidden" id="auth" value="{{ current_user.is_authenticated }}" />
-<script type="text/babel" src="{{ url_for('static', filename='js/comment?version=15.js') }}"></script>
+<script type="text/babel" src="{{ url_for('static', filename='js/comment?version=21.js') }}"></script>
 
 {% endblock %}
