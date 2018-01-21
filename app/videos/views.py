@@ -12,7 +12,7 @@ VIDEO_LIMIT = 8
 
 @videos_blueprint.route('/video')
 def index():
-    all_videos = db.session.query(Video, User, Book, Category).join(User, Book, Category).limit(VIDEO_LIMIT)
+    all_videos = db.session.query(Video, User, Category, Book).join(User, Book).filter(Category.id == Book.category_id).limit(VIDEO_LIMIT)
     return render_template('videos/list.html', videos=all_videos)
 
 
@@ -52,7 +52,7 @@ def upload_video():
 
 @videos_blueprint.route('/video/<video_id>')
 def video_details(video_id):
-    video_with_user = db.session.query(Video, User, Book, Category).join(User, Book, Category).filter(Video.id == video_id).first()
+    video_with_user = db.session.query(Video, User, Category, Book).join(User, Book).filter(Video.id == video_id, Category.id == Book.category_id).first()
     if video_with_user is not None:
         return render_template('videos/video_detail.html', video=video_with_user)
     else:

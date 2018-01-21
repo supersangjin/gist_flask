@@ -66,9 +66,9 @@
 	<hr/>
 		<div style="display: inline-block;">
 		<img src="{{ url_for('static', filename='image/book/' + pdf.Book.thumbnail) }}" style="width: 30%; float: left; margin-right: 1vw">
-		{{ pdf.Book.book_title }}
+		{{ pdf.Book.title }}
 		<br/>
-		{{ pdf.Book.book_author }}
+		{{ pdf.Book.author }}
 		</div>
 
 	<hr />
@@ -77,12 +77,14 @@
 	<i class="fas fa-comment" style="margin-bottom: 10px;"></i> <a onclick="openComment()">0 comment</a>
 
 	<!--comment-->
+	<div class="comment-post">
 	<div id="content" style="width: 10px;"></div>
 	<input type="hidden" id="url" value="{{ url_for('pdfs.add_comment', pdf_id=pdf.Pdf.id) }}" />
 	<input type="hidden" id="auth" value="{{ current_user.is_authenticated }}" />
 	<script type="text/babel" src="{{ url_for('static', filename='js/comment?version=21.js') }}"></script>
 	</div>
-</div>
+	</div>
+	</div>
 
 
 
