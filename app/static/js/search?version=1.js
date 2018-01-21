@@ -18,8 +18,10 @@ var FilteredList = React.createClass({
             this.setState({items: []});
         }
     },
-    selectBook: function() {
-        this.setState({items: []});
+    selectBook: function(query) {
+        console.log(query)
+        document.getElementById("searchFilterForm").query.value = query;
+        document.getElementById("searchFilterForm").submit();
     },
     getInitialState: function(){
         return {
@@ -32,7 +34,7 @@ var FilteredList = React.createClass({
     render: function(){
         return (
             <div className="filter-list">
-                <form action={this.props.submitUrl} >
+                <form id="searchFilterForm" action={this.props.submitUrl} autoComplete="off" >
                     <fieldset className="form-group">
                         <input type="text" name="query" className="form-control form-control-lg" placeholder="Search Book" onChange={this.filterList}/>
                     </fieldset>
@@ -50,7 +52,7 @@ var List = React.createClass({
             <ul className="list-group search-list">
             {
                 this.props.items.map(function(item) {
-                    return <li className="list-group-item" key={item.id} onClick={self.props.selectBook}>
+                    return <li className="list-group-item" key={item.id} onClick={() => self.props.selectBook(item.title)}>
                                 <img src={item.thumbnail} style={{ width: 'auto', height: '50px' }}/>
                                 {item.title} &nbsp; {item.authors}
                             </li>
