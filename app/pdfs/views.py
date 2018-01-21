@@ -83,6 +83,7 @@ def add_comment(pdf_id):
                 "comment_like": comment.comment_like,
                 "comment_creDate": comment.comment_creDate,
                 "author": author.username,
+                "author_id": author.id,
                 "author_thumbnail": "http://127.0.0.1:5000/static/image/user/" + author.thumbnail
             }
         )

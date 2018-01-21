@@ -52,7 +52,7 @@ var CommentList = React.createClass({
     render: function() {
         var commentNodes = this.props.data.map(function(comment) {
             return (
-                <Comment author={comment.author} key={comment.id} thumbnail={comment.author_thumbnail}>
+                <Comment author={comment.author} key={comment.id} thumbnail={comment.author_thumbnail} author_id={comment.author_id}>
                     {comment.comment_context}
                 </Comment>
             );
@@ -113,8 +113,9 @@ var Comment = React.createClass({
                     <div className="post-author">
                         <img className="post-author-thumbnail" src={this.props.thumbnail}/>
                         <div>
-                            <a className="post-author-name" href="https://www.google.com" >{this.props.author}</a>
+                            <a className="post-author-name" href={'/user_profile/' + this.props.author_id}>{this.props.author}</a>
                             <br/>
+
                             <div className="post-date"> 14 December 2017 </div>
                         </div>
                     </div>
