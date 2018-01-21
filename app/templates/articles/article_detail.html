@@ -1,5 +1,59 @@
 {% extends "common/layout.html" %}
 {% block content %}
+<style>
+.voteContainer {
+  text-align: center;
+  transform: translate(-50%, -50%);
+}
+
+.vote {
+  border: none;
+  background-color: white;
+  width: 40px;
+  height: 20px;
+  -webkit-transform: translateZ(0);
+  transform: translateZ(0);
+}
+.vote:active {
+  outline: none;
+  border: none;
+}
+.vote:focus {
+  outline: 0;
+}
+
+.upArrow {
+  x: 0px;
+  y: 0px;
+}
+.upArrow path {
+  fill: #BBBBBB;
+  fill-rule: evenodd;
+  clip-rule: evenodd;
+  margin: 0;
+}
+
+.downArrow {
+  x: 0px;
+  y: 0px;
+}
+.downArrow path {
+  fill-rule: evenodd;
+  clip-rule: evenodd;
+  fill: #BBBBBB;
+}
+
+#upButton :hover {
+  fill: #6CC576;
+  cursor: pointer;
+}
+
+#downButton :hover {
+  fill: #FF586C;
+  cursor: pointer;
+}
+
+</style>
 
 <div class="page-header" style="margin-top: 50px;">
   <h3 style="display:inline;">{{ article.Article.article_title }}</h3>
@@ -16,8 +70,26 @@
 {% endif %}
 
 <!--like-->
-<div id="like"></div>
-<script type="text/babel" src="{{ url_for('static', filename='js/like?version=1.js') }}"></script>
+<div class="voteContainer">
+    <button id="upButton" type="button" onclick="upVote()" class="vote">
+        <svg class="upArrow" viewBox="0 0 11.5 6.4" xml:space="preserve">
+            <path d="M11.4,5.4L6,0C5.9-0.1,5.8-0.1,5.8-0.1c-0.1,0-0.2,0-0.2,0.1
+            L0.1,5.4C0,5.6,0,5.7,0.1,5.9l0.4,0.4c0.1,0.1,0.3,0.1,0.4,0l4.8-4.8l4.8,4.8c0.1,0.1,0.3,0.1,0.4,0l0.4-0.4
+            C11.5,5.7,11.5,5.6,11.4,5.4z"/>
+        </svg>
+
+    </button>
+    <h3 id="scoreCounter"></h3>
+    <button id="downButton" type="button" onclick="downVote()" class="vote">
+
+      <svg class="downArrow" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 11.5 6.4" xml:space="preserve">
+        <path d="M0.1,0.9l5.4,5.4c0.1,0.1,0.1,0.1,0.2,0.1c0.1,0,0.2,0,0.2-0.1
+        l5.4-5.4c0.1-0.1,0.1-0.3,0-0.4L11,0c-0.1-0.1-0.3-0.1-0.4,0L5.8,4.8L0.9,0C0.8-0.1,0.6-0.1,0.5,0L0.1,0.4C0,0.6,0,0.7,0.1,0.9z"/>
+      </svg>
+  </button>
+</div>
+
+<script src="{{ url_for('static', filename='js/like?version=1.js') }}"></script>
 
 <!--comment-->
 <div class="comment-forum">

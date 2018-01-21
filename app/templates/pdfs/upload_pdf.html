@@ -15,15 +15,13 @@
     <dl>
         {{ render_field(form.pdf_title, placeholder="Title") }}
         {{ render_field(form.pdf_description, placeholder="Description") }}
+        {{ render_field(form.pdf_isbn, placeholder="ISBN10") }}
     </dl>
-    <div class="form-group">
-      {{ render_field(form.pdf_category, class="form-control", id="category") }}
-    </div>
+    <p>submit pdf file</p>
     <input type="file" id="file" name='file' accept="application/pdf"/>
     <button class="btn btn-sm btn-success" type="submit">Upload</button>
 </form>
 
-<div id="search"></div>
 <script type="text/babel" src="{{ url_for('static', filename='js/search?version=1.js') }}"></script>
 
 {% endblock %}

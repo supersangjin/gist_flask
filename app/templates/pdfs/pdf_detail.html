@@ -65,7 +65,7 @@
 
 	<hr/>
 		<div style="display: inline-block;">
-		<img src="{{ url_for('static', filename='image/book/' + pdf.Book.book_cover) }}" style="width: 30%; float: left; margin-right: 1vw">
+		<img src="{{ url_for('static', filename='image/book/' + pdf.Book.thumbnail) }}" style="width: 30%; float: left; margin-right: 1vw">
 		{{ pdf.Book.book_title }}
 		<br/>
 		{{ pdf.Book.book_author }}
