@@ -93,9 +93,11 @@
 
 <!--comment-->
 <div class="comment-forum">
-<div id="content"></div>
-<input type="hidden" id="url" value="{{ url_for('articles.add_comment', article_id=article.Article.id) }}" />
-<input type="hidden" id="auth" value="{{ current_user.is_authenticated }}" />
-<script type="text/babel" src="{{ url_for('static', filename='js/comment?version=21.js') }}"></script>
+    <div id="content"></div>
+    <input type="hidden" id="addUrl" value="{{ url_for('articles.add_comment', article_id=article.Article.id) }}" />
+    <input type="hidden" id="deleteUrl" value="{{ url_for('articles.delete_comment', article_id=article.Article.id) }}" />
+    <input type="hidden" id="auth" value="{{ current_user.is_authenticated }}" />
+    <input type="hidden" id="currentUserId" value="{{ current_user_id }}" />
+    <script type="text/babel" src="{{ url_for('static', filename='js/comment?version=21.js') }}"></script>
 </div>
 {% endblock %}

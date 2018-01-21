@@ -11,6 +11,7 @@ import jsonpickle
 ARTICLE_LIMIT = 4
 PER_PAGE = 3
 
+
 @articles_blueprint.route('/article', defaults={'page': 1, 'sort':'view'})
 @articles_blueprint.route('/article/<sort>', defaults={'page': 1})
 @articles_blueprint.route('/article/<sort>/<int:page>')
@@ -98,7 +99,7 @@ def article_details(article_id):
             session['article' + article_id] = "visited"
             article_with_user.Article.article_hit += 1
             db.session.commit()
-        return render_template('articles/article_detail.html', article=article_with_user)
+        return render_template('articles/article_detail.html', article=article_with_user, current_user_id=current_user.id)
     else:
         flash('Error! Article does not exist.', 'error')
     return redirect(url_for('articles.index'))
@@ -138,6 +139,39 @@ def add_comment(article_id):
         )
     result_list.reverse()
     return jsonify(result_list)
+
+
+@articles_blueprint.route('/article/<article_id>/comment/delete', methods=['POST'])
+def delete_comment(article_id):
+    if request.method == 'POST':
+        data = request.form.to_dict()
+        comment_id = data['id']
+        # delete comment
+        comment = db.session.query(Comment).filter(Comment.id == comment_id).first()
+
+        if current_user.id == comment.user_id:
+            db.session.delete(comment)
+            db.session.commit()
+
+    all_comments = db.session.query(Comment).filter(Comment.article_id == article_id)
+    result_list = []
+    for comment in all_comments:
+        author = db.session.query(User).filter(User.id == comment.user_id).first()
+        result_list.append(
+            {
+                "id": comment.id,
+                "comment_context": comment.comment_context,
+                "comment_like": comment.comment_like,
+                "comment_creDate": comment.comment_creDate,
+                "author": author.username,
+                "author_id": author.id,
+                "author_thumbnail": "http://127.0.0.1:5000/static/image/user/" + author.thumbnail
+            }
+        )
+    result_list.reverse()
+    return jsonify(result_list)
+
+
 
 
 # helper functions

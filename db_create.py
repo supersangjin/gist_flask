@@ -32,8 +32,8 @@ db.session.commit()
 
 
 # insert book
-book1 = Book(9781328683786, "Tools of Titans", "Timothy Ferriss", "3.jpg", "description 1", 1)
-book2 = Book(9780439064873, "Harry Potter And The Chamber Of Secrets", "J. K. Rowling", "4.jpg", "Harry Potter Great", 2)
+book1 = Book("1328683788", "Tools of Titans", "Timothy Ferriss", "http://books.google.com/books/content?id=gjuvDAEACAAJ&printsec=frontcover&img=1&zoom=1&source=gbs_api", "description 1", 1)
+book2 = Book("0439136369", "Harry Potter And The Chamber Of Secrets", "J. K. Rowling", "http://books.google.com/books/content?id=Jwv5ESq1eLwC&printsec=frontcover&img=1&zoom=1&source=gbs_api", "Harry Potter Great", 2)
 
 db.session.add(book1)
 db.session.add(book2)
@@ -131,19 +131,6 @@ db.session.add(pdf8)
 
 # Commit
 db.session.commit()
-
-# insert comments
-comment1 = Comment("this is one comment", admin_user.id)
-comment1.set_pdf_id(pdf1.id)
-comment2 = Comment("this is second comment", sample_user.id)
-comment2.set_pdf_id(pdf1.id)
-
-comment3 = Comment("this is a **second** comment", sample_user.id)
-comment3.set_video_id(video1.id)
-
-db.session.add(comment1)
-db.session.add(comment2)
-db.session.add(comment3)
 
 # insert chat
 chat1 = Chat("My name is Sangjin", admin_user.id)

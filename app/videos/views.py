@@ -54,7 +54,7 @@ def upload_video():
 def video_details(video_id):
     video_with_user = db.session.query(Video, User, Category, Book).join(User, Book).filter(Video.id == video_id, Category.id == Book.category_id).first()
     if video_with_user is not None:
-        return render_template('videos/video_detail.html', video=video_with_user)
+        return render_template('videos/video_detail.html', video=video_with_user, current_user_id=current_user.id)
     else:
         flash('Error! Video does not exist.', 'error')
     return redirect(url_for('videos.index'))
@@ -69,6 +69,37 @@ def add_comment(video_id):
         new_comment.set_video_id(video_id)
         db.session.add(new_comment)
         db.session.commit()
+    all_comments = db.session.query(Comment).filter(Comment.video_id == video_id)
+    result_list = []
+    for comment in all_comments:
+        author = db.session.query(User).filter(User.id == comment.user_id).first()
+        result_list.append(
+            {
+                "id": comment.id,
+                "comment_context": comment.comment_context,
+                "comment_like": comment.comment_like,
+                "comment_creDate": comment.comment_creDate,
+                "author": author.username,
+                "author_id": author.id,
+                "author_thumbnail": "http://127.0.0.1:5000/static/image/user/" + author.thumbnail
+            }
+        )
+    result_list.reverse()
+    return jsonify(result_list)
+
+
+@videos_blueprint.route('/video/<video_id>/comment/delete', methods=['POST'])
+def delete_comment(video_id):
+    if request.method == 'POST':
+        data = request.form.to_dict()
+        comment_id = data['id']
+        # delete comment
+        comment = db.session.query(Comment).filter(Comment.id == comment_id).first()
+
+        if current_user.id == comment.user_id:
+            db.session.delete(comment)
+            db.session.commit()
+
     all_comments = db.session.query(Comment).filter(Comment.video_id == video_id)
     result_list = []
     for comment in all_comments:

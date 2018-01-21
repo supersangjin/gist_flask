@@ -65,7 +65,7 @@
 
 	<hr/>
 		<div style="display: inline-block;">
-		<img src="{{ url_for('static', filename='image/book/' + pdf.Book.thumbnail) }}" style="width: 30%; float: left; margin-right: 1vw">
+		<img src="{{ pdf.Book.thumbnail }}" style="width: 30%; float: left; margin-right: 1vw">
 		{{ pdf.Book.title }}
 		<br/>
 		{{ pdf.Book.author }}
@@ -73,13 +73,12 @@
 
 	<hr />
 
-	<i class="fas fa-user" style="margin-bottom: 10px;"></i> {{ pdf.Pdf.pdf_hit }} views <br/>
-	<i class="fas fa-comment" style="margin-bottom: 10px;"></i> <a onclick="openComment()">0 comment</a>
-
 	<!--comment-->
 	<div class="comment-post">
 	<div id="content" style="width: 10px;"></div>
-	<input type="hidden" id="url" value="{{ url_for('pdfs.add_comment', pdf_id=pdf.Pdf.id) }}" />
+	<input type="hidden" id="addUrl" value="{{ url_for('pdfs.add_comment', pdf_id=pdf.Pdf.id) }}" />
+	<input type="hidden" id="deleteUrl" value="{{ url_for('pdfs.delete_comment', pdf_id=pdf.Pdf.id) }}" />
+	<input type="hidden" id="currentUserId" value="{{ current_user_id }}" />
 	<input type="hidden" id="auth" value="{{ current_user.is_authenticated }}" />
 	<script type="text/babel" src="{{ url_for('static', filename='js/comment?version=21.js') }}"></script>
 	</div>
@@ -91,7 +90,7 @@
 
 <div class="split right">
   <div class="centered" style="width: 100%; height: 100%; bottom: 0;">
-    <embed src="{{ url_for('static', filename='pdf/' + pdf.Pdf.pdf_filename ) }}" type="application/pdf" style="width: 100%; height: 100%; bottom: 0;"/>
+    <embed src="{{ url_for('static', filename='pdf/' + pdf.Pdf.pdf_filename ) }}" type="application/pdf" style="width: 100%; height: 100%;"/>
   </div>
 </div>
 

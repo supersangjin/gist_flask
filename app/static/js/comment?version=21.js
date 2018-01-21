@@ -1,7 +1,7 @@
 var CommentBox = React.createClass({
         loadCommentsFromServer: function() {
             $.ajax({
-                url: this.props.url,
+                url: this.props.addUrl,
                 dataType: 'json',
                 cache: false,
                 success: function(data) {
@@ -14,21 +14,32 @@ var CommentBox = React.createClass({
         },
         handleCommentSubmit: function(comment) {
             $.ajax({
-                url: this.props.url,
+                url: this.props.addUrl,
+                dataType: 'json',
+                type: 'POST',
+                data: comment,
+                success: function(data) {
+                    this.setState({data: data});
+                    this.loadCommentsFromServer();
+                }.bind(this)
+            });
+        },
+        handleCommentDelete: function(comment) {
+            $.ajax({
+                url: this.props.deleteUrl,
                 dataType: 'json',
                 type: 'POST',
                 data: comment,
                 success: function(data) {
                     this.setState({data: data});
                 }.bind(this)
-            });
+            })
         },
         getInitialState: function() {
             return {data: []};
         },
         componentDidMount: function() {
             this.loadCommentsFromServer();
-            setInterval(this.loadCommentsFromServer, this.props.pollInterval);
         },
         render: function() {
             if (this.props.auth == "False") {
@@ -41,7 +52,7 @@ var CommentBox = React.createClass({
                 return (
                     <div className="commentBox">
                         <CommentForm onCommentSubmit={this.handleCommentSubmit} />
-                        <CommentList data={this.state.data}/>
+                        <CommentList data={this.state.data} onCommentDelete={this.handleCommentDelete} currentUserId={this.props.currentUserId}/>
                     </div>
                 );
             }
@@ -50,9 +61,10 @@ var CommentBox = React.createClass({
 
 var CommentList = React.createClass({
     render: function() {
+        self = this
         var commentNodes = this.props.data.map(function(comment) {
             return (
-                <Comment author={comment.author} key={comment.id} thumbnail={comment.author_thumbnail} author_id={comment.author_id}>
+                <Comment key={comment.id} comment={comment} _delete={self.props.onCommentDelete} currentUserId={self.props.currentUserId}>
                     {comment.comment_context}
                 </Comment>
             );
@@ -105,33 +117,57 @@ var Comment = React.createClass({
         var cleanRawMarkup = DOMPurify.sanitize(rawMarkup);
         return { __html: cleanRawMarkup };
     },
-
+    deleteComment: function() {
+        this.props._delete({
+            id: this.props.comment.id
+        })
+    },
     render: function() {
         var md = new Remarkable();
-        return (
-                <div className="comment markdown-body border">
-                    <div className="post-author">
-                        <img className="post-author-thumbnail" src={this.props.thumbnail}/>
+        if (this.props.currentUserId == this.props.comment.author_id){
+            return (
+                    <div className="comment markdown-body border">
+                        <div className="post-author">
+                            <img className="post-author-thumbnail" src={this.props.comment.author_thumbnail}/>
+                            <div>
+                                <a className="post-author-name" href={'/user_profile/' + this.props.comment.author_id}>{this.props.comment.author}</a>
+                                <br/>
+                                <div className="post-date"> {this.props.comment.comment_creDate} </div>
+                            </div>
+                        </div>
                         <div>
-                            <a className="post-author-name" href={'/user_profile/' + this.props.author_id}>{this.props.author}</a>
-                            <br/>
+                            <span dangerouslySetInnerHTML={this.rawMarkup()} />
+                        </div>
+                        <a onClick={this.deleteComment}>delete</a>
+                    </div>
 
-                            <div className="post-date"> 14 December 2017 </div>
+            );
+        } else {
+            return (
+                    <div className="comment markdown-body border">
+                        <div className="post-author">
+                            <img className="post-author-thumbnail" src={this.props.comment.author_thumbnail}/>
+                            <div>
+                                <a className="post-author-name" href={'/user_profile/' + this.props.comment.author_id}>{this.props.comment.author}</a>
+                                <br/>
+                                <div className="post-date"> {this.props.comment.comment_creDate} </div>
+                            </div>
+                        </div>
+                        <div>
+                            <span dangerouslySetInnerHTML={this.rawMarkup()} />
                         </div>
                     </div>
-                    <div>
-                        <span dangerouslySetInnerHTML={this.rawMarkup()} />
-                    </div>
-                </div>
-        );
+            );
+        }
     }
 });
 
-
-var url = document.getElementById('url').value;
+var addUrl = document.getElementById('addUrl').value;
+var deleteUrl = document.getElementById('deleteUrl').value;
 var auth = document.getElementById('auth').value;
+var currentUserId = document.getElementById('currentUserId').value;
 
 ReactDOM.render(
-    <CommentBox url={url} auth={auth} pollInterval={10000} />,
+    <CommentBox addUrl={addUrl} deleteUrl={deleteUrl} auth={auth} currentUserId={currentUserId} />,
     document.getElementById('content')
 );

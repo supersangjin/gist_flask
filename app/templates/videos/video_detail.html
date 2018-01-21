@@ -56,7 +56,7 @@
 	<img class="post-author-thumbnail" src="{{ url_for('static', filename='image/user/' + video.User.thumbnail) }}">
 	<div>
 		<a href="{{ url_for('users.user_profile', user_id = video.User.id) }}" class="post-author-name">	{{ video.User.username }} </a> <br/>
-		<div class="post-date"> Updated: 14 December 2017 </div>
+		<div class="post-date"> Updated: {{ video.Video.video_creDate }} </div>
 	</div>
 </div>
 
@@ -66,7 +66,7 @@
 
 	<hr/>
 		<div style="display: inline-block;">
-		<img src="{{ url_for('static', filename='image/book/' + video.Book.thumbnail) }}" style="width: 30%; float: left; margin-right: 1vw">
+		<img src="{{ video.Book.thumbnail }}" style="width: 30%; float: left; margin-right: 1vw">
 		{{ video.Book.title }}
 		<br/>
 		{{ video.Book.author }}
@@ -80,9 +80,11 @@
 <!--comment-->
 <div class="comment-post">
 <div id="content"></div>
-<input type="hidden" id="url" value="{{ url_for('videos.add_comment', video_id=video.Video.id) }}" />
-<input type="hidden" id="auth" value="{{ current_user.is_authenticated }}" />
-<script type="text/babel" src="{{ url_for('static', filename='js/comment?version=21.js') }}"></script>
+	<input type="hidden" id="addUrl" value="{{ url_for('videos.add_comment', video_id=video.Video.id) }}" />
+	<input type="hidden" id="deleteUrl" value="{{ url_for('videos.delete_comment', video_id=video.Video.id) }}" />
+	<input type="hidden" id="currentUserId" value="{{ current_user_id }}" />
+	<input type="hidden" id="auth" value="{{ current_user.is_authenticated }}" />
+	<script type="text/babel" src="{{ url_for('static', filename='js/comment?version=21.js') }}"></script>
 </div>
 </div>
 </div>

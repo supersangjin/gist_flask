@@ -105,7 +105,7 @@ Read a summary of a book
 					<a href="{{ url_for('pdfs.pdf_details', pdf_id=pdf.Pdf.id) }}">
 					<div class="list-panel">
 						<center>
-							<img class="list-panel-img" align="middle" src="{{ url_for('static', filename='image/pdf/' + pdf.Pdf.pdf_thumbnail)}}"> 
+							<img class="list-panel-img" align="middle" src="{{ pdf.Book.thumbnail }}">
 						</center>
 						<div class="list-panel-footer">
 							<div class="list-panel-category">
@@ -117,6 +117,9 @@ Read a summary of a book
 							<div class="list-panel-author">
 								<img class="list-panel-author-thumbnail" src="{{ url_for('static', filename='image/user/' + pdf.User.thumbnail) }}" >
 								<a href="{{ url_for('users.user_profile', user_id = pdf.User.id) }}" class="list-panel-author-name">	{{ pdf.User.username }} </a> <br/>
+								<p>{{ pdf.Pdf.pdf_creDate }}</p>
+								<i class="fas fa-user" style="margin-bottom: 10px;"></i> {{ pdf.Pdf.pdf_hit }} views <br/>
+								<i class="fas fa-comment" style="margin-bottom: 10px;"></i> <a onclick="openComment()"> {{ pdf.Pdf.pdf_comment_num }} comment</a>
 							</div>
 						</div>
 					</div>
@@ -132,7 +135,7 @@ Read a summary of a book
 					<a href="{{ url_for('pdfs.pdf_details', pdf_id=pdf.Pdf.id) }}">
 					<div class="list-panel">
 						<center>
-							<img class="list-panel-img" align="middle" src="{{ url_for('static', filename='image/pdf/' + pdf.Pdf.pdf_thumbnail) }}"> 
+							<img class="list-panel-img" align="middle" src="{{ pdf.Book.thumbnail }}">
 						</center>
 						<div class="list-panel-footer">
 							<div class="list-panel-category">
@@ -143,7 +146,10 @@ Read a summary of a book
 							</div>
 							<div class="list-panel-author">
 								<img class="list-panel-author-thumbnail" src="{{ url_for('static', filename='image/user/' + pdf.User.thumbnail) }}" >
-								<a href="{{ url_for('users.user_profile', user_id = pdf.User.id) }}" class="list-panel-author-name">	{{ pdf.User.username }} </a> <br/>
+								<a href="{{ url_for('users.user_profile', user_id = pdf.User.id) }}" class="list-panel-author-name">{{ pdf.User.username }} </a> <br/>
+								<p>{{ pdf.Pdf.pdf_creDate }}</p>
+								<i class="fas fa-user" style="margin-bottom: 10px;"></i> {{ pdf.Pdf.pdf_hit }} views <br/>
+								<i class="fas fa-comment" style="margin-bottom: 10px;"></i> <a onclick="openComment()"> {{ pdf.Pdf.pdf_comment_num }} comment</a>
 							</div>
 						</div>
 					</div>
@@ -179,7 +185,7 @@ Read a summary of a book
 					<a href="{{ url_for('pdfs.pdf_details', pdf_id=pdf.Pdf.id) }}">
 					<div class="list-panel">
 						<center>
-							<img class="list-panel-img" align="middle" src="{{ url_for('static', filename='image/pdf/' + pdf.Pdf.pdf_thumbnail) }}"> 
+							<img class="list-panel-img" align="middle" src="{{ pdf.Book.thumbnail }}">
 						</center>
 						<div class="list-panel-footer">
 							<div class="list-panel-category">
@@ -206,7 +212,7 @@ Read a summary of a book
 					<a href="{{ url_for('pdfs.pdf_details', pdf_id=pdf.Pdf.id) }}">
 					<div class="list-panel">
 						<center>
-							<img class="list-panel-img" align="middle" src="{{ url_for('static', filename='image/pdf/' + pdf.Pdf.pdf_thumbnail) }}"> 
+							<img class="list-panel-img" align="middle" src="{{ pdf.Book.thumbnail }}">
 						</center>
 						<div class="list-panel-footer">
 							<div class="list-panel-category">

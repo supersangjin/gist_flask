@@ -69,7 +69,7 @@ def pdf_details(pdf_id):
             session['pdf' + pdf_id] = "visited"
             pdf_with_user.Pdf.pdf_hit += 1
             db.session.commit()
-        return render_template('pdfs/pdf_detail.html', pdf=pdf_with_user)
+        return render_template('pdfs/pdf_detail.html', pdf=pdf_with_user, current_user_id=current_user.id)
     else:
         flash('Error! File does not exist.', 'error')
     return redirect(url_for('pdfs.index'))
@@ -80,8 +80,15 @@ def add_comment(pdf_id):
     if request.method == 'POST':
         data = request.form.to_dict()
         comment_context = data['comment_context']
+
+        # new comment added
         new_comment = Comment(comment_context, current_user.id)
         new_comment.set_pdf_id(pdf_id)
+
+        # pdf comment num += 1
+        pdf = db.session.query(Pdf).filter(Pdf.id == pdf_id).first()
+        pdf.add_comment()
+
         db.session.add(new_comment)
         db.session.commit()
     all_comments = db.session.query(Comment).filter(Comment.pdf_id == pdf_id)
@@ -101,6 +108,42 @@ def add_comment(pdf_id):
         )
     result_list.reverse()
     return jsonify(result_list)
+
+
+@pdfs_blueprint.route('/pdf/<pdf_id>/comment/delete', methods=['POST'])
+def delete_comment(pdf_id):
+    if request.method == 'POST':
+        data = request.form.to_dict()
+        comment_id = data['id']
+        # delete comment
+        comment = db.session.query(Comment).filter(Comment.id == comment_id).first()
+
+        if current_user.id == comment.user_id:
+            # pdf comment num -= 1
+            pdf = db.session.query(Pdf).filter(Pdf.id == pdf_id).first()
+            pdf.delete_comment()
+
+            db.session.delete(comment)
+            db.session.commit()
+
+    all_comments = db.session.query(Comment).filter(Comment.pdf_id == pdf_id)
+    result_list = []
+    for comment in all_comments:
+        author = db.session.query(User).filter(User.id == comment.user_id).first()
+        result_list.append(
+            {
+                "id": comment.id,
+                "comment_context": comment.comment_context,
+                "comment_like": comment.comment_like,
+                "comment_creDate": comment.comment_creDate,
+                "author": author.username,
+                "author_id": author.id,
+                "author_thumbnail": "http://127.0.0.1:5000/static/image/user/" + author.thumbnail
+            }
+        )
+    result_list.reverse()
+    return jsonify(result_list)
+
 
 
 # helper functions

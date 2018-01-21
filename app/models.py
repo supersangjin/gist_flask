@@ -252,6 +252,8 @@ class Pdf(db.Model):
     pdf_creDate = db.Column(db.DateTime, nullable=True)
     pdf_hit = db.Column(db.Integer)
     pdf_like = db.Column(db.Integer)
+
+    pdf_comment_num = db.Column(db.Integer)
     
     def __init__(self, title, description, filename, thumbnail, user_id, book_id):
         self.pdf_title = title
@@ -263,6 +265,14 @@ class Pdf(db.Model):
         self.pdf_creDate = datetime.now()
         self.pdf_hit = 1
         self.pdf_like = 0
+        self.pdf_comment_num = 0
+
+    def add_comment(self):
+        self.pdf_comment_num += 1
+
+    def delete_comment(self):
+        if self.pdf_comment_num > 0:
+            self.pdf_comment_num -= 1
 
     def __repr__(self):
         return '<id: {}, title: {}, user_id: {}, category_id: {}>'.format(self.id, self.pdf_title, self.user_id, self.category_id)
@@ -289,7 +299,7 @@ class Book(db.Model):
     __tablename__ = "books"
 
     id = db.Column(db.Integer, primary_key=True)
-    isbn = db.Column(db.BigInteger, nullable=False)
+    isbn = db.Column(db.String, nullable=False)
     title = db.Column(db.String, nullable=False)
     author = db.Column(db.String, nullable=False)
     thumbnail = db.Column(db.String, default=None, nullable=True)

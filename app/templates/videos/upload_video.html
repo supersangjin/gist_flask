@@ -2,6 +2,19 @@
 {% from "common/_form_macros.html" import render_field %}
 
 {% block content %}
+<form method="POST" action="https://api.vimeo.com/me/videos" enctype="multipart/form-data">
+    <input type="file" name="file_data" />
+    <button class="btn btn-sm btn-success" type="submit">Upload</button>
+</form>
+
+{% endblock %}
+
+
+<!-- TODO youtube 랑 비슷하게 -->
+
+
+
+<!--
 <h1>Upload new File</h1>
 <form action="{{ url_for('videos.upload_video') }}" method="post" enctype=multipart/form-data>
     {{ form.csrf_token }}
@@ -15,9 +28,4 @@
     <input type="file" id="file" name='file'/>
     <p id="p3">Select a MP4 video file that is 50 MB or less<p>
     <button class="btn btn-sm btn-success" type="submit">Upload</button>
-</form>
-
-{% endblock %}
-
-
-<!-- TODO youtube 랑 비슷하게 -->
+</form>-->

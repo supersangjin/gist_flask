@@ -8,7 +8,7 @@ key1 = "AIzaSyCsTHxXG4ZlMqCEzc3MT8ZG_u48ehLUCxM"
 
 
 def search_isbn(isbn):
-    r = requests.get("https://www.googleapis.com/books/v1/volumes?q=+isbn:0439136369&key=" + key1)
+    r = requests.get("https://www.googleapis.com/books/v1/volumes?q=+isbn:" + isbn + "&key=" + key1)
     rj = r.json()
     print(rj)
     info = rj["items"][0]["volumeInfo"]
