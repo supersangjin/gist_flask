@@ -19,16 +19,6 @@ db.session.add(sample_user)
 # Commit
 db.session.commit()
 
-# insert book
-book1 = Book('Computer Networks', 'Andrew', '1.jpeg')
-book2 = Book('Operating System Concepts', 'Abraham', '2.jpg')
-
-db.session.add(book1)
-db.session.add(book2)
-
-# Commit
-db.session.commit()
-
 # insert category data
 CATEGORY_NAME = ['fiction', 'memoir', 'science', 'history', 'art']
 CATEGORY_ICON = ['book', 'bookmark', 'flask', 'history', 'heart']
@@ -36,6 +26,17 @@ CATEGORY_NUM = len(CATEGORY_NAME)
 
 for idx in range(CATEGORY_NUM):
     db.session.add(Category(CATEGORY_NAME[idx], CATEGORY_ICON[idx]))
+
+# Commit
+db.session.commit()
+
+
+# insert book
+book1 = Book(9781328683786, "Tools of Titans", "Timothy Ferriss", "3.jpg", "description 1", 1)
+book2 = Book(9780439064873, "Harry Potter And The Chamber Of Secrets", "J. K. Rowling", "4.jpg", "Harry Potter Great", 1)
+
+db.session.add(book1)
+db.session.add(book2)
 
 # Commit
 db.session.commit()
@@ -72,14 +73,14 @@ db.session.add(article3)
 db.session.add(article4)
 
 # insert video data
-video1 = Video('Big Bunny 1', '2MB', '2mb.mp4', admin_user.id, 1, book1.id)
-video2 = Video('Big Bunny 2', '5MB', '5mb.mp4', admin_user.id, 2, book1.id)
-video3 = Video('Big Bunny 3', '10MB', '10mb.mp4', admin_user.id, 3, book2.id)
-video4 = Video('Big Bunny is cute', '2MB', '2mb.mp4', sample_user.id, 1, book1.id)
-video5 = Video('Looks like mung chung', '5MB', '5mb.mp4', admin_user.id, 2, book1.id)
-video6 = Video('Hungry', '10MB', '10mb.mp4', admin_user.id, 3, book2.id)
-video7 = Video('Lets john-bur', '2MB', '2mb.mp4', sample_user.id, 1, book1.id)
-video8 = Video('Big Bunny 2', '5MB', '5mb.mp4', admin_user.id, 2, book1.id)
+video1 = Video('Big Bunny 1', '2MB', '2mb.mp4', admin_user.id, 1)
+video2 = Video('Big Bunny 2', '5MB', '5mb.mp4', admin_user.id, 2)
+video3 = Video('Big Bunny 3', '10MB', '10mb.mp4', admin_user.id, 1)
+video4 = Video('Big Bunny is cute', '2MB', '2mb.mp4', sample_user.id, 1)
+video5 = Video('Looks like mung chung', '5MB', '5mb.mp4', admin_user.id, 2)
+video6 = Video('Hungry', '10MB', '10mb.mp4', admin_user.id, 1)
+video7 = Video('Lets john-bur', '2MB', '2mb.mp4', sample_user.id, 1)
+video8 = Video('Big Bunny 2', '5MB', '5mb.mp4', admin_user.id, 2)
 
 db.session.add(video1)
 db.session.add(video2)
@@ -110,15 +111,14 @@ question1.answers = [answer1, answer2]
 db.session.add(question1)
 
 # insert pdfs
-
-pdf1 = Pdf('Hello Operating System', 'The process of the CS330 course is covered.', 'cs330.pdf', '1.jpg', admin_user.id, 1, book2.id)
-pdf2 = Pdf('I hate Inipay', 'Fucking Inipay', 'INIpay.pdf', '2.jpeg', sample_user.id, 2, book1.id)
-pdf3 = Pdf('Cool resume', 'Resume of Sangjin', 'Resume.pdf', '2.jpeg', admin_user.id, 3, book1.id)
-pdf4 = Pdf('This is sample for PDF', 'Resume of Sangjin', 'Resume.pdf', '2.jpeg', sample_user.id, 3, book1.id)
-pdf5 = Pdf('Sublime text, file, edit, selection, find, view, goto.', 'Resume of Sangjin', 'Resume.pdf', '2.jpeg', admin_user.id, 3, book1.id)
-pdf6 = Pdf('siba daeng-daeng-i', 'Resume of Sangjin', 'Resume.pdf', '1.jpg', sample_user.id, 2, book1.id)
-pdf7 = Pdf('head shoulder knee', 'Resume of Sangjin', 'Resume.pdf', '2.jpeg', admin_user.id, 3, book1.id)
-pdf8 = Pdf('Loreal professional paris', 'Resume of Sangjin', 'Resume.pdf', '2.jpeg', admin_user.id, 1, book1.id)
+pdf1 = Pdf('Hello Operating System', 'The process of the CS330 course is covered.', 'cs330.pdf', '1.jpg', admin_user.id, 1)
+pdf2 = Pdf('I hate Inipay', 'Fucking Inipay', 'INIpay.pdf', '2.jpeg', sample_user.id, 2)
+pdf3 = Pdf('Cool resume', 'Resume of Sangjin', 'Resume.pdf', '2.jpeg', admin_user.id, 1)
+pdf4 = Pdf('This is sample for PDF', 'Resume of Sangjin', 'Resume.pdf', '2.jpeg', sample_user.id, 2)
+pdf5 = Pdf('Sublime text, file, edit, selection, find, view, goto.', 'Resume of Sangjin', 'Resume.pdf', '2.jpeg', admin_user.id, 1)
+pdf6 = Pdf('siba daeng-daeng-i', 'Resume of Sangjin', 'Resume.pdf', '1.jpg', sample_user.id, 2)
+pdf7 = Pdf('head shoulder knee', 'Resume of Sangjin', 'Resume.pdf', '2.jpeg', admin_user.id, 1)
+pdf8 = Pdf('Loreal professional paris', 'Resume of Sangjin', 'Resume.pdf', '2.jpeg', admin_user.id, 1)
 
 db.session.add(pdf1)
 db.session.add(pdf2)

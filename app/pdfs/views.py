@@ -7,12 +7,13 @@ from flask_login import login_required, current_user
 from app.models import Pdf, User, Comment, Category, Book
 from .forms import UploadPdfForm
 from . import pdfs_blueprint
+from ..books import googleBook
 
 PDF_LIMIT = 4
 
 @pdfs_blueprint.route('/pdf')
 def index():
-    all_pdfs = db.session.query(Pdf, User, Category, Book).join(User, Category, Book).limit(PDF_LIMIT)
+    all_pdfs = db.session.query(Pdf, User, Book, Category).join(User, Book, Category).limit(PDF_LIMIT)
     return render_template('pdfs/list.html', pdfs=all_pdfs)
 
 
@@ -39,11 +40,22 @@ def upload_pdf():
             if file and allowed_file(file.filename):
                 filename = secure_filename(file.filename)
                 file.save(os.path.join(UPLOAD_FOLDER_PDF, filename))
-                new_pdf = Pdf(title=filename.rsplit('.', 1)[0], filename=filename, user_id=user.id, category_id=form.pdf_category.data)
+
+                # check book if its in our db
+                if db.session.query(Book).filter(Book.isbn == form.pdf_isbn.data).count():
+                    book = db.session.query(Book).filter(Book.isbn == form.pdf_isbn.data).first()
+                else:  # TODO request google book api
+                    book = googleBook.search_isbn(form.pdf_isbn.data)
+
+                new_pdf = Pdf(title=form.pdf_title.data, filename=filename, user_id=user.id, book_id=book.id, description=form.pdf_description.data, thumbnail=book.thumbnail)
                 db.session.add(new_pdf)
                 db.session.commit()
                 flash('New file, {}, uploaded!'.format(new_pdf.pdf_title), 'success')
-                pdf_with_user = db.session.query(Pdf, User).join(User).filter(Pdf.id == new_pdf.id).first()
+                pdf_with_user = db.session.query(Pdf, User, Book, Category)\
+                    .join(User)\
+                    .join(Book)\
+                    .join(Category)\
+                    .filter(Pdf.id == new_pdf.id).first()
                 return render_template('pdfs/pdf_detail.html', pdf=pdf_with_user)
     return render_template('pdfs/upload_pdf.html', form=form)
 
