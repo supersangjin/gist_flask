@@ -24,7 +24,7 @@
 	text-decoration: none !important;
 }
 
-.list-panel-img {
+.list-panel-video {
 	width: 100%;
 	border: none;
 	object-fit: cover;
@@ -76,12 +76,12 @@
 	var cover_ratio = 0.7;
 
 	$(document).ready(function(){
-		var pw = $('.list-panel-img').width();
-		$('.list-panel-img').css({'height':cover_ratio*pw+'px'});
+		var pw = $('.list-panel-video').width();
+		$('.list-panel-video').css({'height':cover_ratio*pw+'px'});
     });
     $( window ).resize(function() {
-  		var pw = $('.list-panel-img').width();
-		$('.list-panel-img').css({'height':cover_ratio*pw+'px'});
+  		var pw = $('.list-panel-video').width();
+		$('.list-panel-video').css({'height':cover_ratio*pw+'px'});
 	});
 </script>
 
@@ -105,7 +105,7 @@ Watch a summary of a book
 					<a href="{{ url_for('videos.video_details', video_id=video.Video.id) }}">
 					<div class="list-panel">
 						<center>
-							<video class="list-panel-img" align="middle" src="{{ url_for('static', filename='vid/' + video.Video.video_filename) }}"></video>
+							<video class="list-panel-video" align="middle" src="{{ url_for('static', filename='vid/' + video.Video.video_filename) }}"></video>
 						</center>
 						<div class="list-panel-footer">
 							<div class="list-panel-category">
@@ -132,7 +132,7 @@ Watch a summary of a book
 					<a href="{{ url_for('videos.video_details', video_id=video.Video.id) }}">
 					<div class="list-panel">
 						<center>
-							<video class="list-panel-img" align="middle" src="{{ url_for('static', filename='vid/' + video.Video.video_filename) }}"></video>
+							<video class="list-panel-video" align="middle" src="{{ url_for('static', filename='vid/' + video.Video.video_filename) }}"></video>
 						</center>
 						<div class="list-panel-footer">
 							<div class="list-panel-category">
@@ -179,7 +179,7 @@ Watch a summary of a book
 					<a href="{{ url_for('videos.video_details', video_id=video.Video.id) }}">
 					<div class="list-panel">
 						<center>
-							<video class="list-panel-img" align="middle" src="{{ url_for('static', filename='vid/' + video.Video.video_filename) }}"></video>
+							<video class="list-panel-video" align="middle" src="{{ url_for('static', filename='vid/' + video.Video.video_filename) }}"></video>
 						</center>
 						<div class="list-panel-footer">
 							<div class="list-panel-category">
@@ -206,7 +206,7 @@ Watch a summary of a book
 					<a href="{{ url_for('videos.video_details', video_id=video.Video.id) }}">
 					<div class="list-panel">
 						<center>
-							<video class="list-panel-img" align="middle" src="{{ url_for('static', filename='vid/' + video.Video.video_filename) }}"></video>
+							<video class="list-panel-video" align="middle" src="{{ url_for('static', filename='vid/' + video.Video.video_filename) }}"></video>
 						</center>
 						<div class="list-panel-footer">
 							<div class="list-panel-category">

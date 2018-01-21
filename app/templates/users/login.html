@@ -3,9 +3,9 @@
 
 {% block content %}
 
-<div class="user-registration">
-  <div class="page-header">
-    <h2>Log In</h2>
+<div class="user-registration user-account-form">
+  <div class="page-header user-account-form-header">
+    <h3>Log in</h3>
   </div>
     <form action="{{ url_for('users.login') }}" method="post" id="loginForm">
     {{ form.csrf_token }}
@@ -13,11 +13,12 @@
       {{ render_field(form.email, placeholder="Email address") }}
       {{ render_field(form.password, placeholder="Password") }}
     </dl>
-    <button class="btn btn-sm btn-success" type="submit">Log In</button>
+    <button class="btn btn-block btn-outline-secondary" type="submit">Log In</button>
   </form>
-  <br>
-  <br>
-  <p><em>Need an account? </em><a href="/register">Signup</a></p>
-  <p><em>Forgot your password? </em><a href="/reset">Reset</a></p>
+  <button class="btn btn-block btn-outline-secondary" onclick="location.href='/register'">Sign Up</button>
+  <div class="user-account-form-footer">
+    <a href="/reset">Forget your password?</a>
+  </div>  
 </div>
+
 {% endblock %}
