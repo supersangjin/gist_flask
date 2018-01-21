@@ -85,7 +85,7 @@ def add_comment(pdf_id):
         new_comment = Comment(comment_context, current_user.id)
         new_comment.set_pdf_id(pdf_id)
 
-        # article comment num += 1
+        # pdf comment num += 1
         pdf = db.session.query(Pdf).filter(Pdf.id == pdf_id).first()
         pdf.add_comment()
 
@@ -119,6 +119,10 @@ def delete_comment(pdf_id):
         comment = db.session.query(Comment).filter(Comment.id == comment_id).first()
 
         if current_user.id == comment.user_id:
+            # pdf comment num -= 1
+            pdf = db.session.query(Pdf).filter(Pdf.id == pdf_id).first()
+            pdf.delete_comment()
+
             db.session.delete(comment)
             db.session.commit()
 

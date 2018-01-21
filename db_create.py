@@ -132,19 +132,6 @@ db.session.add(pdf8)
 # Commit
 db.session.commit()
 
-# insert comments
-comment1 = Comment("this is one comment", admin_user.id)
-comment1.set_pdf_id(pdf1.id)
-comment2 = Comment("this is second comment", sample_user.id)
-comment2.set_pdf_id(pdf1.id)
-
-comment3 = Comment("this is a **second** comment", sample_user.id)
-comment3.set_video_id(video1.id)
-
-db.session.add(comment1)
-db.session.add(comment2)
-db.session.add(comment3)
-
 # insert chat
 chat1 = Chat("My name is Sangjin", admin_user.id)
 chat2 = Chat("Hello. Nice to meet you", sample_user.id)

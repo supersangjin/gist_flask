@@ -132,7 +132,7 @@ var Comment = React.createClass({
                             <div>
                                 <a className="post-author-name" href={'/user_profile/' + this.props.comment.author_id}>{this.props.comment.author}</a>
                                 <br/>
-                                <div className="post-date"> {this.props.creDate} </div>
+                                <div className="post-date"> {this.props.comment.comment_creDate} </div>
                             </div>
                         </div>
                         <div>
@@ -150,7 +150,7 @@ var Comment = React.createClass({
                             <div>
                                 <a className="post-author-name" href={'/user_profile/' + this.props.comment.author_id}>{this.props.comment.author}</a>
                                 <br/>
-                                <div className="post-date"> {this.props.creDate} </div>
+                                <div className="post-date"> {this.props.comment.comment_creDate} </div>
                             </div>
                         </div>
                         <div>
