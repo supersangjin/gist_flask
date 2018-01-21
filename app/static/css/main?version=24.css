@@ -137,6 +137,27 @@ a.articles :hover{
 
 /*------------- comment end -----------------------------------------------*/
 
+
+/*------------- chat -------------------------------------------*/
+
+
+
+.comment-chat .comment {
+    width: 100%;
+    padding: 30px;
+    margin: 0;
+}
+
+.comment-chat textarea {
+    width: 90%;
+    height: 100%;
+    border: solid 1px rgba(178, 179, 153, 0.125);
+    display:block !important;
+    margin-top: 25px;
+}
+
+/*------------- chat end -------------------------------------------*/
+
 .post-title {
   text-align: center;
   font-size: 3rem;

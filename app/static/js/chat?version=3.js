@@ -52,7 +52,7 @@ var CommentList = React.createClass({
     render: function() {
         var commentNodes = this.props.data.map(function(comment) {
             return (
-                <Comment author={comment.author} key={comment.id}>
+                <Comment author={comment.author} key={comment.id} thumbnail={comment.author_thumbnail} author_id={comment.author_id}>
                     {comment.comment_context}
                 </Comment>
             );
@@ -91,7 +91,7 @@ var CommentForm = React.createClass({
                         value={this.state.comment_context}
                         onChange={this.handleTextChange}>
                     </textarea>
-                    <button type="submit" value="Post" className="btn btn-success green">Submit</button>
+                    <button type="submit" value="Post" className="btn btn-sm btn-secondary">Submit</button>
                 </form>
             </div>
         );
@@ -109,13 +109,24 @@ var Comment = React.createClass({
     render: function() {
         var md = new Remarkable();
         return (
-            <div className="comment markdown-body border">
-                <p>answered by {this.props.author}</p>
-                <p><span dangerouslySetInnerHTML={this.rawMarkup()} /></p>
-            </div>
+                <div className="comment markdown-body border">
+                    <div className="post-author">
+                        <img className="post-author-thumbnail" src={this.props.thumbnail}/>
+                        <div>
+                            <a className="post-author-name" href={'/user_profile/' + this.props.author_id}>{this.props.author}</a>
+                            <br/>
+
+                            <div className="post-date"> 14 December 2017 </div>
+                        </div>
+                    </div>
+                    <div>
+                        <span dangerouslySetInnerHTML={this.rawMarkup()} />
+                    </div>
+                </div>
         );
     }
 });
+
 
 
 var url = document.getElementById('url_chat').value;

@@ -1,15 +1,24 @@
-  <div id="chat" class="sidenav">
-  	<header class="clearfix">
-  		Hello
-  	</header>
-    <a href="javascript:void(0)" class="closebtn" onclick="closeChat()" style="font-size: 20px;">&times;</a>
-    
-    <div id="content_chat"></div>
+<div id="chat" class="sidenav" style="box-shadow: 1px 1px 5px lightgrey; border: none;">
+	<div style="
+	position: fixed !important;
+	top: 0 !important;
+	background-color: whitesmoke;
+	height: 58px;
+	width: 100%;"
+	>
+		<a href="javascript:void(0)" class="closebtn" onclick="closeChat()" style="font-size: 30px; color: gray; margin-left: 20px; top: 20px !important;">
+			<i class="fa fa-arrow-left" aria-hidden="true" ></i>
+		</a>
+	</div>
+	
 
-<input type="hidden" id="url_chat" value="{{ url_for('chat.add_chat') }}" />
-<input type="hidden" id="auth_chat" value="{{ current_user.is_authenticated }}" />
-<script type="text/babel" src="{{ url_for('static', filename='js/chat?version=3.js') }}"></script>
-  </div>
+	<div class = "comment-chat" style="margin-top: 58px">
+		<div id="content_chat"></div>
+		<input type="hidden" id="url_chat" value="{{ url_for('chat.add_chat') }}" />
+		<input type="hidden" id="auth_chat" value="{{ current_user.is_authenticated }}" />
+		<script type="text/babel" src="{{ url_for('static', filename='js/chat?version=3.js') }}"></script>
+	</div>
+</div>
 
 
 
