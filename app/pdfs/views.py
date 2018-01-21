@@ -13,7 +13,7 @@ PDF_LIMIT = 4
 
 @pdfs_blueprint.route('/pdf')
 def index():
-    all_pdfs = db.session.query(Pdf, User, Book, Category).join(User, Book, Category).limit(PDF_LIMIT)
+    all_pdfs = db.session.query(Pdf, User, Book, Category).join(User, Book).filter(Category.id == Book.category_id).limit(PDF_LIMIT)
     return render_template('pdfs/list.html', pdfs=all_pdfs)
 
 
@@ -62,7 +62,7 @@ def upload_pdf():
 
 @pdfs_blueprint.route('/pdf/<pdf_id>')
 def pdf_details(pdf_id):
-    pdf_with_user = db.session.query(Pdf, User, Category, Book).join(User, Category, Book).filter(Pdf.id == pdf_id).first()
+    pdf_with_user = db.session.query(Pdf, User, Category, Book).join(User, Book).filter(Pdf.id == pdf_id, Category.id == Book.category_id).first()
     if pdf_with_user is not None:
         visited = session.get('pdf' + pdf_id, '')
         if visited == '':  # 이번 세션동안 방문한적 없음

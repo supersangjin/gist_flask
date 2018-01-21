@@ -85,7 +85,7 @@ a.articles :hover{
 }
 
 .commentForm button {
-    margin-bottom: 20px;
+    margin-bottom: 20px;  
     margin-right: 0 !important;
     margin-left:auto !important;
     display:block !important;
