@@ -32,8 +32,8 @@ db.session.commit()
 
 
 # insert book
-book1 = Book(9781328683786, "Tools of Titans", "Timothy Ferriss", "3.jpg", "description 1", 1)
-book2 = Book(9780439064873, "Harry Potter And The Chamber Of Secrets", "J. K. Rowling", "4.jpg", "Harry Potter Great", 2)
+book1 = Book("1328683788", "Tools of Titans", "Timothy Ferriss", "http://books.google.com/books/content?id=gjuvDAEACAAJ&printsec=frontcover&img=1&zoom=1&source=gbs_api", "description 1", 1)
+book2 = Book("0439136369", "Harry Potter And The Chamber Of Secrets", "J. K. Rowling", "http://books.google.com/books/content?id=Jwv5ESq1eLwC&printsec=frontcover&img=1&zoom=1&source=gbs_api", "Harry Potter Great", 2)
 
 db.session.add(book1)
 db.session.add(book2)
