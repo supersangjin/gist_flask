@@ -1,4 +1,4 @@
-from flask import render_template, Blueprint, request, redirect, url_for, flash
+from flask import render_template, Blueprint, request, redirect, url_for, flash, jsonify
 from app.models import Article, User, Video, Category, Pdf, Book
 from . import utils_blueprint
 from app import db
@@ -32,5 +32,22 @@ def index():
 def search():
     query = request.args.get('query')
     # results = Article.query.whoosh_search(query).all()
-    results = Article.query.filter(Article.article_title.ilike('%{}%'.format(query))).all()
-    return render_template('utils/search.html', articles=results)
+    books = db.session.query(Book).filter(Book.title.ilike('%{}%'.format(query))).all()
+    return render_template('utils/search.html', books=books)
+
+
+@utils_blueprint.route('/search_filter', methods=['POST'])
+def searchFilter():
+    data = request.form.to_dict()
+    all_books = db.session.query(Book).filter(Book.title.ilike('%{}%'.format(data["term"]))).all()
+    result_list = []
+    for book in all_books:
+        result_list.append(
+            {
+                "id": book.id,
+                "title": book.title,
+                "authors": book.author,
+                "thumbnail": book.thumbnail
+            }
+        )
+    return jsonify(result_list)

@@ -174,14 +174,18 @@
         <ul class="navbar-nav mr-auto mt-2 mt-lg-0"></ul>
 
         <!-- Search Bar (highly basic) -->
-        <form class="form-inline my-2 my-lg-0" action="{{ url_for('utils.search') }}" style="text-align:center;">
+        <!--<form class="form-inline my-2 my-lg-0" action="{{ url_for('utils.search') }}" style="text-align:center;">
           <div class="input-group">
             <div class="input-group-addon" style="border-right: 0; background-color: white;">
               <i class="fa fa-search" aria-hidden="true"></i>
             </div>
             <input class="navbar-search form-control mr sm-2" name="query" type="text" placeholder="Explore GIST" aria-label="Search" style="border-left: 0; margin-right: 1vw"/>
           </div>
-        </form>
+        </form>-->
+        <div id="search"></div>
+        <input type="hidden" id="submitUrl" value="{{ url_for('utils.search') }}"/>
+        <input type="hidden" id="searchUrl" value="{{ url_for('utils.searchFilter') }}"/>
+        <script type="text/babel" src="{{ url_for('static', filename='js/search?version=1.js') }}"></script>
 
         <!-- Right account-related menu -->
         <ul class="navbar-nav ml-auto my-2 my-lg-0">

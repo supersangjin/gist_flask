@@ -69,7 +69,11 @@ def pdf_details(pdf_id):
             session['pdf' + pdf_id] = "visited"
             pdf_with_user.Pdf.pdf_hit += 1
             db.session.commit()
-        return render_template('pdfs/pdf_detail.html', pdf=pdf_with_user, current_user_id=current_user.id)
+        if current_user.is_authenticated:
+            id = current_user.id
+        else:
+            id = 0
+        return render_template('pdfs/pdf_detail.html', pdf=pdf_with_user, current_user_id=id)
     else:
         flash('Error! File does not exist.', 'error')
     return redirect(url_for('pdfs.index'))

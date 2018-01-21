@@ -54,7 +54,11 @@ def upload_video():
 def video_details(video_id):
     video_with_user = db.session.query(Video, User, Category, Book).join(User, Book).filter(Video.id == video_id, Category.id == Book.category_id).first()
     if video_with_user is not None:
-        return render_template('videos/video_detail.html', video=video_with_user, current_user_id=current_user.id)
+        if current_user.is_authenticated:
+            id = current_user.id
+        else:
+            id = 0
+        return render_template('videos/video_detail.html', video=video_with_user, current_user_id=id)
     else:
         flash('Error! Video does not exist.', 'error')
     return redirect(url_for('videos.index'))

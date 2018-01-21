@@ -1,28 +1,18 @@
 var FilteredList = React.createClass({
     filterList: function(event){
         if (event.target.value){
-            // TODO get book list
-            let updatedList = [];
-            let self = this;
             $.ajax({
-                url: 'https://www.googleapis.com/books/v1/volumes?key=AIzaSyCZDeUzMo21vkKpPQBAFwSdle6RkkACWKA&fields=items&q=+intitle:' + event.target.value + '&orderBy=relevance',
+                url: this.props.searchUrl,
+                type: 'POST',
                 dataType: 'json',
+                data: {"term": event.target.value},
+                cache: false,
                 success: function(data) {
-                    for (let i = 0; i < data.items.length; i++){
-                        let item = data.items[i];
-                        let book = {
-                            id : item.id,
-                            title : item.volumeInfo.title,
-                            authors : item.volumeInfo.authors,
-                            publisher : item.volumeInfo.publisher,
-                            categories : item.volumeInfo.categories,
-                            thumbnail : item.volumeInfo.imageLinks.thumbnail
-                        };
-                        updatedList.push(book);
-                    }
-                    self.setState({items: updatedList});
-                },
-                type: 'GET'
+                    this.setState({items: data});
+                }.bind(this),
+                error: function(xhr, status, err) {
+                    console.error(this.props.url, status, err.toString());
+                }.bind(this)
             });
         } else {
             this.setState({items: []});
@@ -30,22 +20,21 @@ var FilteredList = React.createClass({
     },
     selectBook: function() {
         this.setState({items: []});
-
     },
     getInitialState: function(){
         return {
             items: []
-        }
+        };
     },
     componentWillMount: function(){
-        this.setState({items: []})
+        this.setState({items: []});
     },
     render: function(){
         return (
             <div className="filter-list">
-                <form>
+                <form action={this.props.submitUrl} >
                     <fieldset className="form-group">
-                        <input type="text" className="form-control form-control-lg" placeholder="Search Book" onChange={this.filterList}/>
+                        <input type="text" name="query" className="form-control form-control-lg" placeholder="Search Book" onChange={this.filterList}/>
                     </fieldset>
                 </form>
                 <List items={this.state.items} selectBook={this.selectBook} />
@@ -72,8 +61,10 @@ var List = React.createClass({
     }
 });
 
+var submitUrl = document.getElementById('submitUrl').value;
+var searchUrl = document.getElementById('searchUrl').value;
 
 ReactDOM.render(
-    <FilteredList />,
+    <FilteredList searchUrl={searchUrl} submitUrl={submitUrl}/>,
     document.getElementById('search')
 );

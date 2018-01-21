@@ -117,6 +117,9 @@ Watch a summary of a book
 							<div class="list-panel-author">
 								<img class="list-panel-author-thumbnail" src="{{ url_for('static', filename='image/user/' + video.User.thumbnail) }}" >
 								<a href="{{ url_for('users.user_profile', user_id = video.User.id) }}" class="list-panel-author-name">	{{ video.User.username }} </a> <br/>
+								<p>{{ video.Video.video_creDate }}</p>
+								<i class="fas fa-user" style="margin-bottom: 10px;"></i> {{ video.Video.video_hit }} views <br/>
+								<i class="fas fa-comment" style="margin-bottom: 10px;"></i> <a onclick="openComment()"> {{ video.Video.video_comment_num }} comment</a>
 							</div>
 						</div>
 					</div>
@@ -144,6 +147,9 @@ Watch a summary of a book
 							<div class="list-panel-author">
 								<img class="list-panel-author-thumbnail" src="{{ url_for('static', filename='image/user/' + video.User.thumbnail) }}" >
 								<a href="{{ url_for('users.user_profile', user_id = video.User.id) }}" class="list-panel-author-name">	{{ video.User.username }} </a> <br/>
+								<p>{{ video.Video.video_creDate }}</p>
+								<i class="fas fa-user" style="margin-bottom: 10px;"></i> {{ video.Video.video_hit }} views <br/>
+								<i class="fas fa-comment" style="margin-bottom: 10px;"></i> <a onclick="openComment()"> {{ video.Video.video_comment_num }} comment</a>
 							</div>
 						</div>
 					</div>
