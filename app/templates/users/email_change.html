@@ -3,19 +3,17 @@
 
 {% block content %}
 
-<div class="user-profile">
-  <div class="page-header">
-    <h2>Email Change</h2>
+<div class="user-registration user-account-form">
+  <div class="page-header user-account-form-header">
+    <h3>Change email</h3>
   </div>
-
-  <p>Current Email: {{ current_user.email }}</p>
-  <p>Please enter your new email:</p>
-  <form action="{{ url_for('users.user_email_change') }}" method="POST">
-  {{ form.csrf_token }}
+    <p> <div style="font-weight: bold"> Current Email </div> {{ current_user.email }} </p>
+    <form action="{{ url_for('users.user_email_change') }}" method="post">
+    {{ form.csrf_token }}
     <dl>
       {{ render_field(form.email, placeholder="Enter New Email Address") }}
     </dl>
-    <button class="btn btn-sm btn-success" type="submit">Update</button>
+    <button class="btn btn-block btn-outline-secondary" type="submit">Update</button>
   </form>
 </div>
 
