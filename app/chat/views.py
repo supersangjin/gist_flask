@@ -24,7 +24,9 @@ def add_chat():
                 "id": chat.id,
                 "comment_context": chat.chat_context,
                 "comment_creDate": chat.chat_creDate,
-                "author": author.username
+                "author": author.username,
+                "author_id": author.id,
+                "author_thumbnail": "http://127.0.0.1:5000/static/image/user/" + author.thumbnail
             }
         )
     return jsonify(result_list)
