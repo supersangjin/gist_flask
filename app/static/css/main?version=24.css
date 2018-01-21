@@ -154,6 +154,7 @@ a.articles :hover{
     border: solid 1px rgba(178, 179, 153, 0.125);
     display:block !important;
     margin-top: 25px;
+    outline: none !important;
 }
 
 /*------------- chat end -------------------------------------------*/
