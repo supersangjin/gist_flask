@@ -161,6 +161,7 @@
 <body>
 
   {% include 'chat/main.html' %}
+  {% include 'common/category.html' %}
 
   <!-- Static navbar -->
   <nav class="navbar fixed-top navbar-expand-lg navbar-light bg-white" style="box-shadow: 1px 1px 5px lightgrey;">
@@ -171,7 +172,11 @@
       <a class="navbar-brand" href="{{ url_for('utils.index') }}">GIST</a>
 
       <div class="collapse navbar-collapse" id="navbarTogglerDemo03">
-        <ul class="navbar-nav mr-auto mt-2 mt-lg-0"></ul>
+        <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
+          <li class="nav-item">
+            <a class="nav-link" onclick="toggleCategory()" style="padding-top: 10px"> Explore </a>
+          </li>
+        </ul>
 
         <!-- Search Bar (highly basic) -->
         <form class="form-inline my-2 my-lg-0" action="{{ url_for('utils.search') }}" style="text-align:center;">
@@ -179,7 +184,7 @@
             <div class="input-group-addon" style="border-right: 0; background-color: white;">
               <i class="fa fa-search" aria-hidden="true"></i>
             </div>
-            <input class="navbar-search form-control mr sm-2" name="query" type="text" placeholder="Explore GIST" aria-label="Search" style="border-left: 0; margin-right: 1vw"/>
+            <input class="navbar-search form-control mr sm-2" name="query" type="text" placeholder="Search" aria-label="Search" style="border-left: 0; margin-right: 1vw"/>
           </div>
         </form>
 
@@ -304,7 +309,16 @@
     }
     function closeChat() {
       document.getElementById("chat").style.width = "0";
-    }  </script>
+    }
+    function toggleCategory() {
+      var cat = document.getElementById("category");
+      if (cat.style.display === "none") {
+        cat.style.display = "block";
+      } else {
+        cat.style.display = "none";
+      }
+    }
+  </script>
 
 
 </body>
