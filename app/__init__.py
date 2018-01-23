@@ -97,6 +97,11 @@ def utility_processor_variable ():
 	TYPE_NAMES = ['overview', 'articles', 'videos', 'forums']
 	TYPE_ICONS = ['home', 'book', 'video', 'comments']
 
-	return dict(category_names = CATEGORY_NAMES, category_icons = CATEGORY_ICONS, type_names = TYPE_NAMES, type_icons = TYPE_ICONS)
+	TYPE = [{'name':'overview', 'icon':'home', 'link':'utils.index'},
+			{'name':'articles', 'icon':'book', 'link':'pdfs.index'},
+			{'name':'videos', 'icon':'video', 'link':'videos.index'},
+			{'name':'forums', 'icon':'comments', 'link':'articles.index'}]
+
+	return dict(category_names = CATEGORY_NAMES, category_icons = CATEGORY_ICONS, type_names = TYPE_NAMES, type_icons = TYPE_ICONS, TYPE = TYPE)
 
 

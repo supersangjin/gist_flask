@@ -45,17 +45,10 @@
   @import url('https://fonts.googleapis.com/css?family=Montserrat:300,400|Nunito:400,700,900|Roboto:400,100,100italic,300,300italic,400italic,500,500italic,700,700italic,900,900italic');
 
 
-    * {
+  * {
     font-family: "Roboto", Arial, sans-serif;
     font-weight: 300;
   }
-
-.thumb-post img {
-  object-fit: cover; /* Do not scale the image */
-  object-position: center; /* Center the image within the element */
-  width: 100%;
-  margin-bottom: 1rem;
-}
 
 .view {
   overflow: hidden;
@@ -141,7 +134,7 @@
   transition: 0.5s; /* 0.5 second transition effect to slide in the sidenav */
 }
 
-.sidebar-type-btn {
+.vertical-type-btn-group button {
   background-color: white;
   color: gray;
   font-size: 9pt;
@@ -150,8 +143,13 @@
   text-align: center;
   border: whitesmoke solid 1px;
 }
-.sidebar-type-btn i {
+.vertical-type-btn-group i {
   font-size: 20pt;
+}
+
+.vertical-type-btn-group {
+  top: 60px;
+  position: fixed;
 }
 
 .navbar {
@@ -166,6 +164,44 @@
   color: gray;
   font-size: 10pt;
   text-align: center;
+
+  
+}
+
+.horizontal-type-btn-group {
+    position: fixed;
+    top: 60px;
+    height: 45px;
+    width: 100%;
+    background-color: white;
+    box-shadow: 1px 1px 5px lightgrey;
+    z-index: 2;
+    padding-left: 20px;
+    padding-right: 20px;
+    text-align: center;
+    display: none;
+  }
+
+.horizontal-type-btn-group .btn-group-box {
+  display: block;
+  margin-top: 11px;
+}
+
+.horizontal-type-btn-group a {
+  font-size: 11pt;
+  color: black !important;
+  text-decoration: none;
+  margin-left: 20px;
+  margin-right: 20px;
+}
+
+@media (max-width: 550px) {
+  .vertical-type-btn-group {
+    display: none;
+  }
+  .horizontal-type-btn-group {
+    display: block;
+  }
 }
 
 
@@ -260,29 +296,25 @@
       <!-- Static navbar end -->
 
 
-  <style type="text/css">
+      <!-- Additional navbar for contents type: horizontal or vertical -->
 
-  </style>
+      <div class="horizontal-type-btn-group">
+        <div class="btn-group-box">
+          {% for type in TYPE %}
+          <a href = '{{ url_for(type.link) }}'>{{ type.name }}</a>
+          {% endfor %}
+        </div>
+      </div>
 
+      <div class="vertical-type-btn-group btn-group-vertical" role="group" aria-label="Basic example">
+        {% for type in TYPE %}
+        <button type="button" class="btn btn-secondary"onclick = "location.href = '{{ url_for(type.link) }}' " >
+          <i class="fa fa-{{ type.icon }}" aria-hidden="true"></i><br/>{{ type.name }}
+        </button>
+        {% endfor %}
+      </div>
 
-  <div class="btn-group-vertical" role="group" aria-label="Basic example" style="top:60px; position: fixed">
-    <button type="button" class="btn btn-secondary sidebar-type-btn"onclick = "location.href = '{{ url_for('utils.index') }}' " >
-      <i class="fa fa-home" aria-hidden="true"></i><br/>
-      Overview
-    </button>
-    <button type="button" class="btn btn-secondary sidebar-type-btn" onclick = "location.href = '{{ url_for('pdfs.index') }}' ">
-      <i class="fa fa-book" aria-hidden="true"></i><br/>
-      Articles
-    </button>
-    <button type="button" class="btn btn-secondary sidebar-type-btn" onclick = "location.href = '{{ url_for('videos.index') }}' ">
-      <i class="fa fa-video" aria-hidden="true"></i><br/>
-      Videos
-    </button>
-    <button type="button" class="btn btn-secondary sidebar-type-btn" onclick = "location.href = '{{ url_for('articles.index', sort='new') }}' ">
-      <i class="fa fa-comments" aria-hidden="true"></i><br/>
-      Forums
-    </button>
-  </div>
+      <!-- Additional navbar for contents type end -->
 
 
   <div class="content-header" style="margin-top: 58px;">
@@ -291,7 +323,7 @@
   </div>
 
   <div class="container">
-    <div class="content" style="margin: 20px; margin-top: 80px;">
+    <div class="content" style="margin: 20px; margin-top: 100px;">
       <!-- flash messages -->
       {% for error_message in get_flashed_messages(category_filter=["error"]) %}
       <div class="alert alert-danger alert-dismissible">{{ error_message }}</div>
