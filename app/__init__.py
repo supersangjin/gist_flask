@@ -70,3 +70,15 @@ def page_not_found(e):
 @app.errorhandler(410)
 def page_not_found(e):
     return render_template('error/410.html'), 410
+
+
+# function for all templates
+@app.context_processor
+def utility_processor():
+	TITLE_LENGTH_LIMIT = 35
+	def format_list_title(title):
+		if len(title) < TITLE_LENGTH_LIMIT :
+			return title
+		else :
+			return title [:TITLE_LENGTH_LIMIT] + "..."
+	return dict(format_list_title = format_list_title)
