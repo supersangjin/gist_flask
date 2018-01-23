@@ -10,7 +10,7 @@ SECRET_KEY = b'\x90zz\xdbXF\x8b\xbb\x1a\xbf\x86\x0fT\xe1\x12\xd3\x99\x17\x92}\xe
 DEBUG = True
 
 # SQLAlchemy
-SQLALCHEMY_DATABASE_URI = 'postgresql://gist_admin:kaistgist@localhost/gist'
+SQLALCHEMY_DATABASE_URI = 'postgres://wlgonjgngrqiuz:62b3dfeba30edbe858e8cb92889d51855630bdd8ff95e505fcc6da08ffaf04e3@ec2-54-163-237-249.compute-1.amazonaws.com:5432/d1q0ptum7cqitl'
 SQLALCHEMY_TRACK_MODIFICATIONS = True
 
 # CSRF protection
