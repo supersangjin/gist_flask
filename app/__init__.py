@@ -6,6 +6,7 @@ from flask_mail import Mail
 from flask_simplemde import SimpleMDE
 from flask_misaka import Misaka
 # from flask_socketio import SocketIO
+import datetime
 
 # config
 app = Flask(__name__, instance_relative_config=True)
@@ -74,11 +75,28 @@ def page_not_found(e):
 
 # function for all templates
 @app.context_processor
-def utility_processor():
-	TITLE_LENGTH_LIMIT = 35
+def utility_processor_function ():
+	
 	def format_list_title(title):
+		TITLE_LENGTH_LIMIT = 35
 		if len(title) < TITLE_LENGTH_LIMIT :
 			return title
 		else :
 			return title [:TITLE_LENGTH_LIMIT] + "..."
-	return dict(format_list_title = format_list_title)
+
+	def format_date(date):
+		return date.strftime('%d %B %Y')
+
+	return dict(format_list_title = format_list_title, format_date = format_date)
+
+@app.context_processor
+def utility_processor_variable ():
+
+	CATEGORY_NAMES = ['career & money', 'personal growth', 'science & tech', 'health & fitness', 'lifestyle', 'entertainment', 'biographies & history', 'fiction']
+	CATEGORY_ICONS = ['money-bill-alt', 'users', 'flask', 'heartbeat', 'utensils', 'gamepad', 'history', 'bookmark']
+	TYPE_NAMES = ['overview', 'articles', 'videos', 'forums']
+	TYPE_ICONS = ['home', 'book', 'video', 'comments']
+
+	return dict(category_names = CATEGORY_NAMES, category_icons = CATEGORY_ICONS, type_names = TYPE_NAMES, type_icons = TYPE_ICONS)
+
+
