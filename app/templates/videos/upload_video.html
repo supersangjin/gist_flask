@@ -2,10 +2,13 @@
 {% from "common/_form_macros.html" import render_field %}
 
 {% block content %}
-<form method="POST" action="https://api.vimeo.com/me/videos" enctype="multipart/form-data">
-    <input type="file" name="file_data" />
+
+<h1>Upload new File</h1>
+<form method="POST" action="{{ upload_link_secure }}" enctype="multipart/form-data">
+    <input type="file" name="file_data">
     <button class="btn btn-sm btn-success" type="submit">Upload</button>
 </form>
+
 
 {% endblock %}
 

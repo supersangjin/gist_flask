@@ -10,9 +10,6 @@
     <div class="form-group">
       {{ render_field(form.article_title, class="title", type="text", id="title", placeholder="Title") }}
     </div>
-    <div class="form-group">
-      {{ render_field(form.article_category, class="form-control", id="category", placeholder="Title") }}
-    </div>
     <textarea name="article_context" id="context" placeholder="Content here ...."></textarea>
       {{ simplemde.load }}
     <button class="btn btn-sm btn-success" name="submit" type="submit">Submit</button>
