@@ -1,6 +1,6 @@
 import os
 from app import db
-from instance.config import ALLOWED_EXTENSIONS, UPLOAD_FOLDER, ACCESS_TOKEN, CLIENT_ID, CLIENT_SECRET
+from instance.config import ALLOWED_EXTENSIONS, UPLOAD_FOLDER
 from flask import request, redirect, url_for, flash, render_template, jsonify, json
 from werkzeug.utils import secure_filename
 from flask_login import login_required, current_user
