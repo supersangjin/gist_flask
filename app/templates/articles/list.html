@@ -106,7 +106,7 @@
       <img class="forum-post-author-thumbnail" src="{{ url_for('static', filename='image/user/' + article.User.thumbnail) }}">
       <div>
         <a href="{{ url_for('users.user_profile', user_id = article.User.id) }}" class="forum-post-author-name">  {{ article.User.username }} </a> <br/>
-      <div class="forum-post-date"> Updated: {{ article.Article.article_creDate }} </div>
+      <div class="forum-post-date"> {{ format_date(article.Article.article_creDate) }} </div>
       </div>
     </div>
     </div>
