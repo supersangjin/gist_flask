@@ -119,6 +119,10 @@ pdf5 = Pdf('Sublime text, file, edit, selection, find, view, goto.', 'Resume of 
 pdf6 = Pdf('siba daeng-daeng-i', 'Resume of Sangjin', 'Resume.pdf', '1.jpg', sample_user.id, 2)
 pdf7 = Pdf('head shoulder knee', 'Resume of Sangjin', 'Resume.pdf', '2.jpeg', admin_user.id, 1)
 pdf8 = Pdf('Loreal professional paris', 'Resume of Sangjin', 'Resume.pdf', '2.jpeg', admin_user.id, 1)
+pdf9 = Pdf('sample1', 'Resume of Sangjin', 'Resume.pdf', '2.jpeg', admin_user.id, 1)
+pdf10 = Pdf('sample2', 'Resume of Sangjin', 'Resume.pdf', '1.jpg', sample_user.id, 2)
+pdf11 = Pdf('sample3', 'Resume of Sangjin', 'Resume.pdf', '2.jpeg', admin_user.id, 1)
+pdf12 = Pdf('sample4', 'Resume of Sangjin', 'Resume.pdf', '2.jpeg', admin_user.id, 1)
 
 db.session.add(pdf1)
 db.session.add(pdf2)
@@ -128,6 +132,10 @@ db.session.add(pdf5)
 db.session.add(pdf6)
 db.session.add(pdf7)
 db.session.add(pdf8)
+db.session.add(pdf9)
+db.session.add(pdf10)
+db.session.add(pdf11)
+db.session.add(pdf12)
 
 # Commit
 db.session.commit()

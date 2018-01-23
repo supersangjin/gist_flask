@@ -36,7 +36,7 @@ var FilteredList = React.createClass({
             <div className="filter-list">
                 <form id="searchFilterForm" action={this.props.submitUrl} autoComplete="off" >
                     <fieldset className="form-group">
-                        <input type="text" name="query" className="form-control form-control-lg" placeholder="Search Book" onChange={this.filterList}/>
+                        <input type="text" name="query" className="search-input form-control form-control-lg" placeholder="Search Book" onChange={this.filterList}/>
                     </fieldset>
                 </form>
                 <List items={this.state.items} selectBook={this.selectBook} />
