@@ -1,0 +1,47 @@
+<style type="text/css">
+.category-panel {
+	display: none;
+	position: fixed;
+	top: 58px;
+	overflow: hidden;
+	width: 100%;
+	height: 100%;
+	background-color: white;
+	overflow: auto;
+	z-index: 1; overflow-x: hidden;
+	text-transform:uppercase;
+}
+
+.block {
+	display: inline-block;
+}
+</style>
+
+{% set category_names=['career & money', 'personal growth', 'science & tech', 'health & fitness', 'lifestyle', 'entertainment', 'biographies & history', 'fiction'] %}
+{% set category_icons=['money-bill-alt', 'users', 'flask', 'heartbeat', 'utensils', 'gamepad', 'history', 'bookmark'] %}
+{% set type_names=['overview', 'articles', 'videos', 'forums'] %}
+{% set type_icons=['home', 'book', 'video', 'comments'] %}
+
+<div id="category" class="category-panel">
+	<div class="container" style=" margin-top: 30px;">
+		<div style="font-weight: bold;"> EXPLORE BY INTERESTS </div>
+		<hr/ style="margin-top: 6px !important;">
+		{% for idx in range (8) %}
+		<div class="block" style="width: 24%; text-align: center;">
+			<i class="fa fa-{{ category_icons[idx] }}" aria-hidden="true" style="font-size: 45pt; color: gray; margin: 10px; margin-top: 30px;"></i><br/>
+			<div style="font-size: 14px;">{{ category_names[idx] }}</div>
+		</div>
+		{% endfor %}
+		<div style="font-weight: bold; margin-top: 10vh;"> BROWSE BY CONTENTS TYPE </div>
+		<hr/ style="margin-top: 6px !important;">
+		{% for idx in range(4) %}
+		<div class="block" style="width: 24%; text-align: center;">
+			<i class="fa fa-{{ type_icons[idx] }}" aria-hidden="true" style="font-size: 45pt; color: gray; margin: 10px; margin-top: 30px;"></i><br/>
+			<div style="font-size: 14px;">{{ type_names[idx] }}</div>
+		</div>
+		{% endfor %}
+	</div>
+</div>
+
+
+

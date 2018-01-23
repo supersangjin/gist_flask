@@ -4,9 +4,9 @@
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="Gist">
-  <meta name="author" content="Gist Team">
-  <title>Gist</title>
+  <meta name="description" content="Readeon">
+  <meta name="author" content="Readeon Team">
+  <title>Readeon</title>
   <!-- styles -->
   <!-- bootstrap4 css -->
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css" integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb" crossorigin="anonymous">
@@ -122,8 +122,8 @@
   border:1px solid #ccc !important;
   border-left: 0 !important;
 
-  min-height: 35px;
-  height: 3.2vw;
+  min-height: 30px;
+  height: 40px !important;
   width: 4vw;
 }
 
@@ -154,6 +154,21 @@
   font-size: 20pt;
 }
 
+.navbar {
+  height: 60px !important;
+  vertical-align: middle !important;
+}
+
+.footer {
+  height: auto;
+  width: 100%;
+  padding: 50px;
+  color: gray;
+  font-size: 10pt;
+  text-align: center;
+}
+
+
 </style>
 
 </head>
@@ -161,6 +176,7 @@
 <body>
 
   {% include 'chat/main.html' %}
+  {% include 'common/category.html' %}
 
   <!-- Static navbar -->
   <nav class="navbar fixed-top navbar-expand-lg navbar-light bg-white" style="box-shadow: 1px 1px 5px lightgrey;">
@@ -168,10 +184,14 @@
       <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo03" aria-controls="navbarTogglerDemo03" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
-      <a class="navbar-brand" href="{{ url_for('utils.index') }}">GIST</a>
+      <a class="navbar-brand" href="{{ url_for('utils.index') }}">Readeon</a>
 
       <div class="collapse navbar-collapse" id="navbarTogglerDemo03">
-        <ul class="navbar-nav mr-auto mt-2 mt-lg-0"></ul>
+        <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
+          <li class="nav-item">
+            <a class="nav-link" onclick="toggleCategory()" style="padding-top: 10px"> Explore </a>
+          </li>
+        </ul>
 
         <!-- Search Bar (highly basic) -->
         <!--<form class="form-inline my-2 my-lg-0" action="{{ url_for('utils.search') }}" style="text-align:center;">
@@ -179,7 +199,7 @@
             <div class="input-group-addon" style="border-right: 0; background-color: white;">
               <i class="fa fa-search" aria-hidden="true"></i>
             </div>
-            <input class="navbar-search form-control mr sm-2" name="query" type="text" placeholder="Explore GIST" aria-label="Search" style="border-left: 0; margin-right: 1vw"/>
+            <input class="navbar-search form-control mr sm-2" name="query" type="text" placeholder="Search" aria-label="Search" style="border-left: 0; margin-right: 1vw"/>
           </div>
         </form>-->
         <div id="search"></div>
@@ -245,7 +265,7 @@
   </style>
 
 
-  <div class="btn-group-vertical" role="group" aria-label="Basic example" style="top:57px; position: fixed">
+  <div class="btn-group-vertical" role="group" aria-label="Basic example" style="top:60px; position: fixed">
     <button type="button" class="btn btn-secondary sidebar-type-btn"onclick = "location.href = '{{ url_for('utils.index') }}' " >
       <i class="fa fa-home" aria-hidden="true"></i><br/>
       Overview
@@ -290,11 +310,14 @@
       {% endblock %}
 
     </div>
+
     <div class="footer">
-      <hr>
-      <p>Gist Team - 2018</p>
+      <hr/>
+      Copyright © 2018 Readon
     </div>
   </div><!-- /.container -->
+
+ 
 
   <!-- scripts -->
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
@@ -308,7 +331,16 @@
     }
     function closeChat() {
       document.getElementById("chat").style.width = "0";
-    }  </script>
+    }
+    function toggleCategory() {
+      var cat = document.getElementById("category");
+      if (cat.style.display === "none") {
+        cat.style.display = "block";
+      } else {
+        cat.style.display = "none";
+      }
+    }
+  </script>
 
 
 </body>
