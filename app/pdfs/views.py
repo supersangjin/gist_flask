@@ -9,7 +9,7 @@ from .forms import UploadPdfForm
 from . import pdfs_blueprint
 from ..books import googleBook
 
-PDF_LIMIT = 4
+PDF_LIMIT = 12
 
 @pdfs_blueprint.route('/pdf')
 def index():
