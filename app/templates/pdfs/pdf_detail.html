@@ -8,7 +8,7 @@
 		height: calc(100%-60px);
 		position: fixed;
 		bottom: 0;
-		z-index: 1;
+		z-index: 20;
 		top: 60px;
 		overflow-x: hidden;
 	}
@@ -25,7 +25,6 @@
 		bottom: 0;
 		background-color: white;
 		padding: 25px;
-		z-index: 1;
 		overflow-x: hidden;
 	}
 
@@ -124,9 +123,12 @@
 			width: 100%;
 			display: block;
 			position: relative;
-			top: 0px;
-			height: calc(100vh - 60px);
+			top: 0px;	
 			z-index: 3
+		}
+
+		.post-split-content-pdf {
+			height: calc(100vh - 60px);
 		}
 	}
 
@@ -140,10 +142,12 @@
 	function closeComment() {
 		document.getElementById("").style.width = "0";
 	}
+}
+
 </script>
 
 <div style="position: static;">
-	<div class="split post-split-content">
+	<div class="split post-split-content post-split-content-pdf">
 		<div class="post-split-box"> <!-- centered"> -->
 			<embed src="{{ url_for('static', filename='pdf/' + pdf.Pdf.pdf_filename ) }}" type="application/pdf"/>
 		</div>
@@ -184,6 +188,9 @@
 				<input type="hidden" id="auth" value="{{ current_user.is_authenticated }}"/>
 				<script type="text/babel" src="{{ url_for('static', filename='js/comment?version=21.js') }}"></script>
 			</div>
+
+			<a href="https://www.google.com"> More Comment </a>
+
 		</div>
 	</div>
 </div>
