@@ -16,28 +16,28 @@
 
 </style>
 
-<h3>Articles</h3>
+<h3 style="text-transform: capitalize;">{{ category.category_name }}</h3>
 
-Read a summary of a book
+Category Description
 
 <hr class="list-divider" align="left"/>
 
 <div class="list-subtitle">
-	<h5>Most Popular Articles</h5>
+	<h5>Most Popular Articles in {{ category.category_name }}</h5>
 </div>
 
-{% set pdfs = popular_pdfs %}
+{% set pdfs = pdf %}
 {% set pdf_carousel_id = "carouselPopularPdf" %}
 {% include 'utils/list_pdf.html'%}
 
 <hr/>
 
 <div class="list-subtitle">
-	<h5>Trending Articles</h5>
+	<h5>Most Popular Videos in {{ category.category_name }}</h5>
 </div>
 
-{% set pdfs = trending_pdfs %}
-{% set pdf_carousel_id = "carouselTrendingPdf" %}
-{% include 'utils/list_pdf.html'%}
+{% set videos = video %}
+{% set video_carousel_id = "carouselPopularVideo" %}
+{% include 'utils/list_video.html'%}
 
 {% endblock %}

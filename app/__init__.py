@@ -92,16 +92,20 @@ def utility_processor_function ():
 @app.context_processor
 def utility_processor_variable ():
 
-	CATEGORY_NAMES = ['career & money', 'personal growth', 'science & tech', 'health & fitness', 'lifestyle', 'entertainment', 'biographies & history', 'fiction']
-	CATEGORY_ICONS = ['money-bill-alt', 'users', 'flask', 'heartbeat', 'utensils', 'gamepad', 'history', 'bookmark']
-	TYPE_NAMES = ['overview', 'articles', 'videos', 'forums']
-	TYPE_ICONS = ['home', 'book', 'video', 'comments']
+	CATEGORY = [{'name':'career & money', 'icon':'money-bill-alt'},
+				{'name':'personal growth', 'icon':'users'},
+				{'name':'science & tech', 'icon':'flask'},
+				{'name':'health & fitness', 'icon':'heartbeat'},
+				{'name':'lifestyle', 'icon':'utensils'},
+				{'name':'entertainment', 'icon':'gamepad'},
+				{'name':'biographies & history', 'icon':'history'},
+				{'name':'fiction', 'icon':'bookmark'}]
 
 	TYPE = [{'name':'overview', 'icon':'home', 'link':'utils.index'},
 			{'name':'articles', 'icon':'book', 'link':'pdfs.index'},
 			{'name':'videos', 'icon':'video', 'link':'videos.index'},
 			{'name':'forums', 'icon':'comments', 'link':'articles.index'}]
 
-	return dict(category_names = CATEGORY_NAMES, category_icons = CATEGORY_ICONS, type_names = TYPE_NAMES, type_icons = TYPE_ICONS, TYPE = TYPE)
+	return dict(CATEGORY = CATEGORY, TYPE = TYPE)
 
 

@@ -14,6 +14,9 @@
 
 .block {
 	display: inline-block;
+	color: gray;
+	width: 24%;
+	text-align: center;
 }
 </style>
 
@@ -21,19 +24,23 @@
 	<div class="container" style=" margin-top: 30px;">
 		<div style="font-weight: bold;"> EXPLORE BY INTERESTS </div>
 		<hr/ style="margin-top: 6px !important;">
-		{% for idx in range (8) %}
-		<div class="block" style="width: 24%; text-align: center;">
-			<i class="fa fa-{{ category_icons[idx] }}" aria-hidden="true" style="font-size: 45pt; color: gray; margin: 10px; margin-top: 30px;"></i><br/>
-			<div style="font-size: 14px;">{{ category_names[idx] }}</div>
-		</div>
+		{% for category in CATEGORY %}
+		<a href="https://www.google.com">
+			<div class="block">
+				<i class="fa fa-{{ category.icon }}" aria-hidden="true" style="font-size: 45pt; margin: 10px; margin-top: 30px;"></i><br/>
+				<div style="font-size: 14px;">{{ category.name }}</div>
+			</div>
+		</a>
 		{% endfor %}
 		<div style="font-weight: bold; margin-top: 10vh;"> BROWSE BY CONTENTS TYPE </div>
 		<hr/ style="margin-top: 6px !important;">
-		{% for idx in range(4) %}
-		<div class="block" style="width: 24%; text-align: center;">
-			<i class="fa fa-{{ type_icons[idx] }}" aria-hidden="true" style="font-size: 45pt; color: gray; margin: 10px; margin-top: 30px;"></i><br/>
-			<div style="font-size: 14px;">{{ type_names[idx] }}</div>
-		</div>
+		{% for type in TYPE %}
+		<a href="https://www.google.com">
+			<div class="block">
+				<i class="fa fa-{{ type.icon }}" aria-hidden="true" style="font-size: 45pt; margin: 10px; margin-top: 30px;"></i><br/>
+				<div style="font-size: 14px;">{{ type.name }}</div>
+			</div>
+		</a>
 		{% endfor %}
 	</div>
 </div>

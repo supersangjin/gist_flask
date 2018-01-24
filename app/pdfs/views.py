@@ -13,9 +13,10 @@ PDF_LIMIT = 12
 
 @pdfs_blueprint.route('/pdf')
 def index():
-    all_pdfs = db.session.query(Pdf, User, Book, Category).join(User, Book).filter(Category.id == Book.category_id).limit(PDF_LIMIT)
-    return render_template('pdfs/list.html', pdfs=all_pdfs)
-
+    popular_pdfs = db.session.query(Pdf, User, Book, Category).join(User, Book).filter(Category.id == Book.category_id).limit(PDF_LIMIT)
+    trending_pdfs = db.session.query(Pdf, User, Book, Category).join(User, Book).filter(Category.id == Book.category_id).order_by(Pdf.id).limit(PDF_LIMIT)
+    
+    return render_template('pdfs/list.html', popular_pdfs=popular_pdfs, trending_pdfs=trending_pdfs)
 
 @pdfs_blueprint.route('/pdf/add', methods=['GET', 'POST'])
 @login_required

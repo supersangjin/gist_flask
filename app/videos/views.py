@@ -13,7 +13,7 @@ VIDEO_LIMIT = 8
 @videos_blueprint.route('/video')
 def index():
     all_videos = db.session.query(Video, User, Category, Book).join(User, Book).filter(Category.id == Book.category_id).limit(VIDEO_LIMIT)
-    return render_template('videos/list.html', videos=all_videos)
+    return render_template('videos/list.html', popular_videos=all_videos, trending_videos=all_videos)
 
 
 @videos_blueprint.route('/video/add', methods=['GET', 'POST'])
