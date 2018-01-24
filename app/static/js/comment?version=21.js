@@ -52,7 +52,8 @@ var CommentBox = React.createClass({
             if (this.props.auth == "False") {
                 return (
                     <div className="commentBox">
-                        <CommentList data={this.state.data}/>
+                        <CommentList data={this.state.data.slice(0, this.state.offset)} />
+                        <button id="button-id" className="btn btn-sm btn-secondary" onClick={this.onClickButton}>More comment</button>
                     </div>
                 );
             } else {
