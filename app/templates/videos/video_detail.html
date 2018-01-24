@@ -2,111 +2,205 @@
 {% block contentHeader %}
 
 <style type="text/css">
+  
+  /* Split the screen */
+  .split {
+    height: calc(100%-60px);
+    position: fixed;
+    bottom: 0;
+    z-index: 20;
+    top: 60px;
+    overflow-x: hidden;
+  }
 
-/* Split the screen in half */
-.split {
-  height: 100%;
-  position: fixed;
-  z-index: 1;
-  top: 0;
-  bottom: 0;
-  overflow-x: hidden;
-}
+  /* Control the info side */
+  .post-split-info {
+    left: 0;
+    width: 350px;
+  }
 
-/* Control the left side */
-.left {
-  left: 0;
-  width: 350px;
-}
+  .post-split-info .post-split-box {
+    width: 100%;
+    height: 100%;
+    bottom: 0;
+    background-color: white;
+    padding: 25px;
+    overflow-x: hidden;
+  }
 
-/* Control the right side */
-.right {
-  right: 0;
-  top: 0;
-  width: calc(100vw - 350px);
-}
+  .post-title {
+    font-size: 18pt;
+    font-weight: bold;
+    text-align: left;
+  }
 
-/* If you want the content centered horizontally and vertically */
-.centered {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  text-align: center;
-}
+  .post-author {
+    margin: auto;
+    margin-top: 10px;
+    margin-bottom: 15px;
+  }
+
+  .post-author-thumbnail {
+    width: 35px;
+    height: 35px;
+    border-radius: 50%;
+    float: left;
+    margin-right: 12px;
+  }
+
+  .post-author-name {
+    color: black !important;
+    text-decoration: none !important;
+    font-weight: bold;
+    font-size: 12pt;
+  }
+
+  .post-date {
+    font-size: 8pt;
+  }
+
+  .post-description {
+    margin-bottom: 20px;
+  }
+
+  .post-book {
+    display: inline-block;
+    width: 100%;
+  }
+
+  .post-book img {
+    width: 30%;
+    float: left;
+    margin-right: 15px
+  }
+
+  .post-book-title {
+    font-size: 12pt;
+    font-style: italic;
+    margin-bottom: 3px;
+  }
+
+  .post-book-author {
+    font-size: 10pt;
+  }
+
+  /* Control the content side */
+  .post-split-content {
+    right: 0;
+    width: calc(100% - 350px);
+  }
+
+  .post-split-content .post-split-box {
+    width: 100%;
+    height: 100%;
+    bottom: 0;
+  }
+
+  /* MERGE: diff from pdf */
+  .post-split-content video {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+  }
+
+  /* If you want the content centered horizontally and vertically */
+  .centered {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+  }
+
+  @media (max-width: 550px) {
+    .post-split-info {
+      width: 100%;
+      display: block;
+      position: static;
+      top: 0px;
+      
+    }
+
+    .post-split-content {
+      width: 100%;
+      display: block;
+      position: relative;
+      top: 0px;
+      z-index: 3
+    }
+
+    /* MERGE: diff from pdf */
+    .post-split-content-vid {
+      height: 56vw; /* 16:9 ratio */
+    }
+  }
 
 </style>
 
-<div style="background-color: white">
+<script type="text/javascript">
+  function openComment() {
+    document.getElementById("").style.width = "500px";
+    document.getElementById("").scrollTop = 999999999;
+  }
+  function closeComment() {
+    document.getElementById("").style.width = "0";
+  }
+}
 
-<div class="split left">
-  <div style="width: 100%; height: 100%; bottom: 0; background-color: white; padding: 2vw; z-index: 1; overflow-x: hidden;">
-  <div>
-        <br/><br/>
-		<a href="{{ url_for('utils.index') }}">Home</a> >
-			<a>{{ video.Category.category_name }}</a>
-	<br/><br/>
-	</div>
+</script>
 
-	<div class="post-title" style="font-size: 18pt; text-align: left; margin-bottom: 0">
-		{{ video.Video.video_title }}
-	</div>
+<div style="position: static;">
+  <div class="split post-split-content post-split-content-vid">
+    <div class="post-split-box">
+        <video autoplay id="my-video" class="video-js" controls preload="auto">
+          <source src="{{ url_for('static', filename='vid/' + video.Video.video_filename) }}" type='video/mp4'>
+            <p class="vjs-no-js">
+              To view this video please enable JavaScript, and consider upgrading to a web browser that
+              <a href="http://videojs.com/html5-video-support/" target="_blank">supports HTML5 video</a>
+            </p>
+          </video>
+    </div>
+  </div>
+  <div class="split post-split-info">
+    <div class="post-split-box">
+      <div>
+        <a>{{ video.Category.category_name }}</a>
+      </div>
+      <div class="post-title">
+        {{ video.Video.video_title }}
+      </div>
+      <div class="post-author">
+        <img class="post-author-thumbnail" src="{{ url_for('static', filename='image/user/' + video.User.thumbnail) }}">
+        <div>
+          <a class="post-author-name" href="{{ url_for('users.user_profile', user_id = video.User.id) }}">  {{ video.User.username }} </a>
+          <div class="post-date"> {{ format_date(video.Video.video_creDate) }} </div>
+        </div>
+      </div>
+      <div class="post-description">
+        {{ video.Video.video_description }}
+      </div>
+      <hr/>
+      <div class="post-book">
+        <img src="{{ video.Book.thumbnail }}">
+        <div>
+          <div class="post-book-title"> {{ video.Book.title }} </div>
+          <div class="post-book-author"> by {{ video.Book.author }} </div>
+        </div>
+      </div>
+      <hr/>
+      <!--comment-->
+      <div class="comment-post">
+        <div id="content" style="width: 10px;"></div>
+        <input type="hidden" id="addUrl" value="{{ url_for('videos.add_comment', video_id=video.Video.id) }}"/>
+        <input type="hidden" id="deleteUrl" value="{{ url_for('videos.delete_comment', video_id=video.Video.id) }}"/>
+        <input type="hidden" id="currentUserId" value="{{ current_user_id }}"/>
+        <input type="hidden" id="auth" value="{{ current_user.is_authenticated }}"/>
+        <script type="text/babel" src="{{ url_for('static', filename='js/comment?version=21.js') }}"></script>
+      </div>
 
-<div class="post-author" style="margin:1vw; margin-bottom: 3vw">
-	<img class="post-author-thumbnail" src="{{ url_for('static', filename='image/user/' + video.User.thumbnail) }}">
-	<div>
-		<a href="{{ url_for('users.user_profile', user_id = video.User.id) }}" class="post-author-name">	{{ video.User.username }} </a> <br/>
-		<div class="post-date"> Updated: {{ video.Video.video_creDate }} </div>
-	</div>
-</div>
+      <a href="https://www.google.com"> More Comment </a>
 
-<div class="post-description">
-	{{ video.Video.video_description }}
-</div>
-
-	<hr/>
-		<div style="display: inline-block;">
-		<img src="{{ video.Book.thumbnail }}" style="width: 30%; float: left; margin-right: 1vw">
-		{{ video.Book.title }}
-		<br/>
-		{{ video.Book.author }}
-		</div>
-
-	<hr />
-
-<!--comment-->
-<div class="comment-post">
-<div id="content"></div>
-	<input type="hidden" id="addUrl" value="{{ url_for('videos.add_comment', video_id=video.Video.id) }}" />
-	<input type="hidden" id="deleteUrl" value="{{ url_for('videos.delete_comment', video_id=video.Video.id) }}" />
-	<input type="hidden" id="currentUserId" value="{{ current_user_id }}" />
-	<input type="hidden" id="auth" value="{{ current_user.is_authenticated }}" />
-	<script type="text/babel" src="{{ url_for('static', filename='js/comment?version=21.js') }}"></script>
-</div>
-</div>
-</div>
-
-<div class="split right">
-  <div class="centered" style="width: 100%; height: 100%; bottom: 0;">
-    <video autoplay id="my-video" class="video-js" controls preload="auto" data-setup="{}" style="width:100%; height:100vh;">
-    	<source src="{{ url_for('static', filename='vid/' + video.Video.video_filename) }}" type='video/mp4'>
-    	<p class="vjs-no-js">
-      	To view this video please enable JavaScript, and consider upgrading to a web browser that
-      	<a href="http://videojs.com/html5-video-support/" target="_blank">supports HTML5 video</a>
-    	</p>
-	</video>
+    </div>
   </div>
 </div>
-
-</div>
-
-<script type="text/javascript">
-	function openComment() {
-      document.getElementById("").style.width = "500px";
-      document.getElementById("").scrollTop = 999999999;
-    }
-    function closeComment() {
-      document.getElementById("").style.width = "0";
-    }
-</script>
 {% endblock %}
