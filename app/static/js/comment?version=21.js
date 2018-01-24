@@ -36,23 +36,32 @@ var CommentBox = React.createClass({
             })
         },
         getInitialState: function() {
-            return {data: []};
+            return {data: [], offset: 5};
         },
         componentDidMount: function() {
             this.loadCommentsFromServer();
+        },
+        onClickButton: function() {
+            var COMMENT_VIEW_LENGTH = 5;
+            this.setState({offset: this.state.offset + COMMENT_VIEW_LENGTH});
+            if (this.state.offset >= this.state.data.length) {
+                document.getElementById("button-id").style.display = "none";
+            }
         },
         render: function() {
             if (this.props.auth == "False") {
                 return (
                     <div className="commentBox">
-                        <CommentList data={this.state.data}/>
+                        <CommentList data={this.state.data.slice(0, this.state.offset)} />
+                        <button id="button-id" className="btn btn-sm btn-secondary" onClick={this.onClickButton}>More comment</button>
                     </div>
                 );
             } else {
                 return (
                     <div className="commentBox">
                         <CommentForm onCommentSubmit={this.handleCommentSubmit} />
-                        <CommentList data={this.state.data} onCommentDelete={this.handleCommentDelete} currentUserId={this.props.currentUserId}/>
+                        <CommentList data={this.state.data.slice(0, this.state.offset)} onCommentDelete={this.handleCommentDelete} currentUserId={this.props.currentUserId}/>
+                        <button id="button-id" className="btn btn-sm btn-secondary" onClick={this.onClickButton}>More comment</button>
                     </div>
                 );
             }
