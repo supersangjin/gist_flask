@@ -317,7 +317,7 @@
 
       <div class="vertical-type-btn-group btn-group-vertical" role="group" aria-label="Basic example">
         {% for type in TYPE %}
-        <button type="button" class="btn btn-secondary"onclick = "location.href = '{{ url_for(type.link) }}' " >
+        <button type="button" class="btn btn-secondary" onclick = "location.href = '{{ url_for(type.link) }}' " >
           <i class="fa fa-{{ type.icon }}" aria-hidden="true"></i><br/>{{ type.name }}
         </button>
         {% endfor %}
