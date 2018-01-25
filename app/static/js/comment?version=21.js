@@ -44,8 +44,8 @@ var CommentBox = React.createClass({
         onClickButton: function() {
             var COMMENT_VIEW_LENGTH = 5;
             this.setState({offset: this.state.offset + COMMENT_VIEW_LENGTH});
-            if (this.state.offset >= this.state.data.length) {
-                document.getElementById("button-id").style.display = "none";
+            if (this.state.offset + 5 >= this.state.data.length) {
+                document.getElementById("btn-comment-load").style.display = "none";
             }
         },
         render: function() {
@@ -61,7 +61,7 @@ var CommentBox = React.createClass({
                     <div className="commentBox">
                         <CommentForm onCommentSubmit={this.handleCommentSubmit} />
                         <CommentList data={this.state.data.slice(0, this.state.offset)} onCommentDelete={this.handleCommentDelete} currentUserId={this.props.currentUserId}/>
-                        <button id="button-id" className="btn btn-sm btn-secondary" onClick={this.onClickButton}>More comment</button>
+                        <button id="btn-comment-load" className="btn btn-sm btn-secondary" onClick={this.onClickButton}>More comment</button>
                     </div>
                 );
             }

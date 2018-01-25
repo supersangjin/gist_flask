@@ -4,8 +4,8 @@ from . import utils_blueprint
 from app import db
 from flask_login import login_required
 
-ARTICLE_LIMIT = 4
-
+ARTICLE_LIMIT = 12
+VIDEO_LIMIT = 8
 
 @utils_blueprint.route('/')
 def index():
@@ -51,3 +51,31 @@ def searchFilter():
             }
         )
     return jsonify(result_list)
+
+@utils_blueprint.route('/category/<category_id>')
+def category(category_id):
+
+    category = db.session.query(Category).filter(Category.id == category_id).first()
+
+    if category is None:
+        flash('Error! Category does not exist.', 'error')
+        return redirect(url_for('utils.index'))
+
+    pdfs_category = db.session.query(Pdf, User, Book, Category)\
+        .join(User, Book, Category)\
+        .filter(Category.id == category_id, Category.id == Book.category_id)\
+        .limit(ARTICLE_LIMIT)
+
+    videos_category = db.session.query(Video, User, Book, Category)\
+        .join(User, Book, Category)\
+        .filter(Category.id == category_id, Category.id == Book.category_id)\
+        .limit(VIDEO_LIMIT)
+
+    return render_template('utils/list_category.html', category=category, pdf=pdfs_category, video=videos_category)
+
+
+
+
+
+
+

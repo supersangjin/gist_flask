@@ -20,16 +20,20 @@ db.session.add(sample_user)
 db.session.commit()
 
 # insert category data
-CATEGORY_NAME = ['fiction', 'memoir', 'science', 'history', 'art']
-CATEGORY_ICON = ['book', 'bookmark', 'flask', 'history', 'heart']
-CATEGORY_NUM = len(CATEGORY_NAME)
+CATEGORY = [{'name':'career & money', 'icon':'money-bill-alt'},
+        {'name':'personal growth', 'icon':'users'},
+        {'name':'science & tech', 'icon':'flask'},
+        {'name':'health & fitness', 'icon':'heartbeat'},
+        {'name':'lifestyle', 'icon':'utensils'},
+        {'name':'entertainment', 'icon':'gamepad'},
+        {'name':'biographies & history', 'icon':'history'},
+        {'name':'fiction', 'icon':'bookmark'}]
 
-for idx in range(CATEGORY_NUM):
-    db.session.add(Category(CATEGORY_NAME[idx], CATEGORY_ICON[idx]))
+for category in CATEGORY:
+    db.session.add(Category(category['name'], category['icon']))
 
 # Commit
 db.session.commit()
-
 
 # insert book
 book1 = Book("1328683788", "Tools of Titans", "Timothy Ferriss", "http://books.google.com/books/content?id=gjuvDAEACAAJ&printsec=frontcover&img=1&zoom=1&source=gbs_api", "description 1", 1)
