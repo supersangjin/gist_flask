@@ -1,22 +1,16 @@
-import os
 from app import db
-from instance.config import ALLOWED_EXTENSIONS, UPLOAD_FOLDER
 from flask import request, redirect, url_for, flash, render_template, jsonify, json
-from werkzeug.utils import secure_filename
 from flask_login import login_required, current_user
 from app.models import Video, User, Comment, Category, Book
 from .forms import UploadVideoForm
 from . import videos_blueprint
-import vimeo
-import xml.dom.minidom
+from ..books import googleBook
 
 VIDEO_LIMIT = 8
 
 
-
 @videos_blueprint.route('/video')
 def index():
-
     all_videos = db.session.query(Video, User, Category, Book).join(User, Book).filter(Category.id == Book.category_id).limit(VIDEO_LIMIT)
     return render_template('videos/list.html', popular_videos=all_videos, trending_videos=all_videos)
 
@@ -28,19 +22,31 @@ def upload_video():
     if not user.email_confirmed:
         flash('Your email address must be confirmed to upload videos.', 'error')
         return redirect(url_for('videos.index'))
+    form = UploadVideoForm(request.form)
+    if request.method == 'POST':
+        if form.validate_on_submit():
+            video_id = form.id.data
+            title = form.title.data
+            description = form.description.data
+            isbn = form.isbn.data
+            duration = form.duration.data
+            thumbnail = form.thumbnail.data
+            html = form.html.data
 
-    v = vimeo.VimeoClient(
-        token=ACCESS_TOKEN,
-        key=CLIENT_ID,
-        secret=CLIENT_SECRET)
+            # check book if its in our db TODO error handling
+            if db.session.query(Book).filter(Book.isbn == isbn).count():
+                book = db.session.query(Book).filter(Book.isbn == isbn).first()
+            else:  # request google book api
+                book = googleBook.search_isbn(form.pdf_isbn.data)
 
-    vid = v.post('/me/videos')
-    parsed = vid.json()
+            # TODO save vid info in database
+            new_video = Video(video_id=video_id, title=title, description=description, duration=duration, thumbnail=thumbnail, html=html, user_id=current_user.id, book_id=book.id)
+            db.session.add(new_video)
+            db.session.commit()
+            flash('New video, {}, uploaded!'.format(new_video.video_title), 'success')
 
-    upload_link_secure = parsed["upload_link_secure"]
-
-    return render_template('videos/upload_video.html', upload_link_secure=upload_link_secure)
-
+            return redirect(url_for('videos.index'))
+    return render_template('videos/upload_video.html', form=form)
 
 
 @videos_blueprint.route('/video/<video_id>')
@@ -114,14 +120,6 @@ def delete_comment(video_id):
         )
     result_list.reverse()
     return jsonify(result_list)
-
-
-# helper functions
-def allowed_file(filename):
-    return '.' in filename and \
-           filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
-
-
 
 
 

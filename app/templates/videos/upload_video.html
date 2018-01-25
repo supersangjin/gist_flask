@@ -3,32 +3,24 @@
 
 {% block content %}
 
-<h1>Upload new File</h1>
-<form method="POST" action="{{ upload_link_secure }}" enctype="multipart/form-data">
-    <input type="file" name="file_data">
-    <button class="btn btn-sm btn-success" type="submit">Upload</button>
-</form>
-
-
-{% endblock %}
-
-
-<!-- TODO youtube 랑 비슷하게 -->
-
-
-
-<!--
-<h1>Upload new File</h1>
-<form action="{{ url_for('videos.upload_video') }}" method="post" enctype=multipart/form-data>
+<h2>Upload Video</h2>
+<form action="{{ url_for('videos.upload_video') }}" method="post" >
     {{ form.csrf_token }}
     <dl>
-        {{ render_field(form.video_title, placeholder="Title") }}
-        {{ render_field(form.video_description, placeholder="Description") }}
+        {{ render_field(form.title, placeholder="Title") }}
+        {{ render_field(form.description, placeholder="Description") }}
+        <a target="_blank" href="https://isbnsearch.org/">Find ISBN10</a>
+        {{ render_field(form.isbn, placeholder="ISBN10") }}
     </dl>
-    <div class="form-group">
-      {{ render_field(form.video_category, class="form-control", id="category") }}
-    </div>
-    <input type="file" id="file" name='file'/>
-    <p id="p3">Select a MP4 video file that is 50 MB or less<p>
-    <button class="btn btn-sm btn-success" type="submit">Upload</button>
-</form>-->
+    <div id="wistia_uploader" style="height:360px;width:640px;"></div>
+    <input type="hidden" name="id" id="video_id" />
+    <input type="hidden" name="duration" id="video_duration" />
+    <input type="hidden" name="thumbnail" id="video_thumbnail" />
+    <input type="hidden" name="html" id="video_html" />
+    <button class="btn btn-sm btn-success" type="submit" id="confirm_upload" style="display: none">Confirm</button>
+</form>
+
+<script src="//fast.wistia.com/assets/external/api.js" async></script>
+<link rel="stylesheet" href="//fast.wistia.com/assets/external/uploader.css" />
+<script src="{{ url_for('static', filename='js/wistia?version=5.js') }}"></script>
+{% endblock %}

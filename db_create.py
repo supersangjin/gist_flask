@@ -1,7 +1,7 @@
-from app import db
 from app.models import *
 
 # drop all of the existing database tables
+db.reflect()
 db.drop_all()
 
 # create the database and the database table
@@ -76,43 +76,6 @@ db.session.add(article2)
 db.session.add(article3)
 db.session.add(article4)
 
-# insert video data
-video1 = Video('Big Bunny 1', '2MB', '2mb.mp4', admin_user.id, 1)
-video2 = Video('Big Bunny 2', '5MB', '5mb.mp4', admin_user.id, 2)
-video3 = Video('Big Bunny 3', '10MB', '10mb.mp4', admin_user.id, 1)
-video4 = Video('Big Bunny is cute', '2MB', '2mb.mp4', sample_user.id, 1)
-video5 = Video('Looks like mung chung', '5MB', '5mb.mp4', admin_user.id, 2)
-video6 = Video('Hungry', '10MB', '10mb.mp4', admin_user.id, 1)
-video7 = Video('Lets john-bur', '2MB', '2mb.mp4', sample_user.id, 1)
-video8 = Video('Big Bunny 2', '5MB', '5mb.mp4', admin_user.id, 2)
-
-db.session.add(video1)
-db.session.add(video2)
-db.session.add(video3)
-db.session.add(video4)
-db.session.add(video5)
-db.session.add(video6)
-db.session.add(video7)
-db.session.add(video8)
-
-# Commit
-db.session.commit()
-
-# insert forum data
-question1 = Question('Build agent ID via TFS sdk',
-                     'I am using the TFS2018 api and I need to get the build agent id for different team projects. '
-                     'How can I get the list of agent queue ids using the TFS sdk?',
-                     admin_user.id)
-
-answer1 = Answer('Using a transaction', question1.id, admin_user.id)
-answer2 = Answer(
-    'Your question is difficult to follow, but I\'ll try: It looks like you are using php to dump values in your form '
-    'via PHP before you load the values later with your include statement.',
-    question1.id, admin_user.id)
-
-question1.answers = [answer1, answer2]
-
-db.session.add(question1)
 
 # insert pdfs
 pdf1 = Pdf('Hello Operating System', 'The process of the CS330 course is covered.', 'cs330.pdf', '1.jpg', admin_user.id, 1)
