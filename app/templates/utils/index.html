@@ -1,158 +1,20 @@
 {% extends "common/layout.html" %}
-{% block content %}
+{% block contentHeader %}
 
-<style type="text/css">
-
-@import url('https://fonts.googleapis.com/css?family=Ubuntu: 400, 500, 700');
-@import url('https://fonts.googleapis.com/css?family=Open+Sans:400,700,800');
-@import url('https://fonts.googleapis.com/css?family=Montserrat:400,700,800');
-
-.white-background {
-	background-color:#ffffff;
-	border:0px solid transparent;
-}
-
-.btn-topic {
-	background-color: white;
-	color: black;
-	border: 0;
-   	
-   	font-size: 4pt;
-   	font-family: 'Open Sans', sans-serif;
-   	font-weight: 700;
-   	
-    width: 10vw;
-    height: 10vw;
-}
-
-.card-text-topic {
-	/* font-size: 1vw; /* TODO: mobile 수준으로 작아지면 다시 커지게; */
-}
-
-.card-text-title {
-	/* font-size: 2vw; */
-}
-
-.card-img-top {
-    width: 100%;
-    height: 20vw;
-    object-fit: cover;
-  }
-
-/* Set width to make card deck cards 100% width */
-
-@media (max-width: 10000px) {
-	.card-img-top {
-		height: 300px;
-	}
-}
-
-@media (max-width: 1200px) {
-	.card-img-top {
-		height: 250px;
-	}
-}
-
-@media (max-width: 992px) { 
-	.card-deck {
-	    display: block;
-	    width: 100%;
-	    margin-bottom: .75rem;
-	    table-layout: fixed;
-	    border-spacing: 1.25rem 0;
-	    align-items: center;
-	}
-	.card-deck .card {
-	    display: block;
-	    margin-bottom: 1rem;
-	    margin-top: 1rem;
-	    vertical-align: top;
-		width: 100%;
-	}
-	.card-img-top {
-		height: 350px;
-	}
-
-	.btn-topic {
-		font-size: 1px;
-	}
-
-	.btn-topic .fas {
-		font-size: 4vw;
-		padding-top: 1.5vw;
-		padding-bottom: 5vw;
-	}
-}
-
-@media (max-width: 768px) {
-	.card-deck .card {
-		width: 100%;
-	}
-}
-
-@media (max-width: 544px) { /* mobile */
-	.card-img-top {
-		height: 60vw;
-	}
-}
-
-</style>
-
-<div class="row" style="margin: 0px !important;">
-  <div class="col-md-12" style="background-color: white;">
-  	<div style="text-align: center; font-family: 'Open Sans', sans-serif; font-weight: 700; font-size: 30px; margin-top: 2vw; margin-bottom: 2vw">
-  		TOPICS
-  	</div>
-  	<hr style="width: 3vw; border: 1px solid; border-color: lightgray; ">
-  	<div class="btn-group-lg btn-category text-center" style="margin-top: 1vw; margin-bottom: 1vw;">
-	  {% for category in categorys %}
-	  <button type="button" class="btn btn-light btn-topic">
-	  	<i class="fas fa-{{category.category_icon}} fa-2x" style="margin-bottom: 10px;"></i></br>{{ category.category_name }}
-	  </button>
-	  {% endfor %}
-	</div>
-  </div>
-</div>
-
-<div class="row">
-
-</div>
-
-<div class="card-deck" style="margin-top: 2vw;">
-  {% for pdf in pdfs %}
-  	<div class="card" style="border: 0;">
-  		<a href="{{ url_for('pdfs.pdf_details', pdf_id=pdf.Pdf.id) }}">
-  		<div class="view hm-zoom">
-			<img class="card-img-top" src="{{ pdf.Book.thumbnail }}" alt="Card image cap" class="img-fluid">
+<div style="position: relative; z-index: 100;">
+	<div style="width: 100%; height: auto; text-align: center; background-image: url('/static/image/template/book.png'); padding: 100px;">
+		<div style="font-size: 50pt; font-weight: bold;">
+			Readeon
 		</div>
-		</a>
-		<div class="card-body">
-			<p class="card-text card-text-topic">{{ pdf.Category.category_name }}</p>
-			<h5 class="card-title card-text-title">{{ pdf.Pdf.pdf_title }}</h5>
-			<p class="card-text text-right"><small class="text-muted">By {{ pdf.User.username }}</small></p>
+		<div style="width: 50%; margin: 0 auto;">
+			Stay informed, discover new passions, feed your curiosity, and never stop learning with access to everything you want to read.
+		</div>
+		<br/>
+		<div style="display: inline-block;">
+			<button type="button" class="btn btn-outline-light">Join</button>
+			<button type="button" class="btn btn-outline-light">Login</button>
 		</div>
 	</div>
-  {% endfor %}
-</div>
-
-<div class="card-deck" style="margin-top: 2vw;">
-  {% for video in videos %}
-  	<div class="card" style="border: 0;">
-  		<a href="{{ url_for('videos.video_details', video_id=video.Video.id) }}">
-  		<div class="view hm-zoom">
-			<video class="card-img-top" alt="Card image cap" class="img-fluid">
-  				<source src="{{ url_for('static', filename='vid/' + video.Video.video_filename) }}" type='video/mp4'>
-  				</source>
-  			</video>
-		</div>
-		</a>
-		<div class="card-body">
-			<p class="card-text">{{ video.Category.category_name }}</p>
-			<h5 class="card-title">{{ video.Video.video_title }}</h5>
-			<p class="card-text text-right"><small class="text-muted">By {{ video.User.username }}</small></p>
-		</div>
-	</div>
-  {% endfor %}
 </div>
 
 {% endblock %}

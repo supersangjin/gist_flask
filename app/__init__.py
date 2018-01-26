@@ -92,14 +92,14 @@ def utility_processor_function ():
 @app.context_processor
 def utility_processor_variable ():
 
-	CATEGORY = [{'name':'career & money', 'icon':'money-bill-alt'},
-				{'name':'personal growth', 'icon':'users'},
-				{'name':'science & tech', 'icon':'flask'},
-				{'name':'health & fitness', 'icon':'heartbeat'},
-				{'name':'lifestyle', 'icon':'utensils'},
-				{'name':'entertainment', 'icon':'gamepad'},
-				{'name':'biographies & history', 'icon':'history'},
-				{'name':'fiction', 'icon':'bookmark'}]
+	CATEGORY = [{'id':'1', 'name':'career & money', 'icon':'money-bill-alt'},
+				{'id':'2', 'name':'personal growth', 'icon':'users'},
+				{'id':'3', 'name':'science & tech', 'icon':'flask'},
+				{'id':'4', 'name':'health & fitness', 'icon':'heartbeat'},
+				{'id':'5', 'name':'lifestyle', 'icon':'utensils'},
+				{'id':'6', 'name':'entertainment', 'icon':'gamepad'},
+				{'id':'7', 'name':'biographies & history', 'icon':'history'},
+				{'id':'8', 'name':'fiction', 'icon':'bookmark'}]
 
 	TYPE = [{'name':'overview', 'icon':'home', 'link':'utils.index'},
 			{'name':'articles', 'icon':'book', 'link':'pdfs.index'},

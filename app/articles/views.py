@@ -98,7 +98,7 @@ def article_details(article_id):
             session['article' + article_id] = "visited"
             article_with_user.Article.article_hit += 1
             db.session.commit()
-        return render_template('articles/article_detail.html', article=article_with_user, current_user_id=current_user.id)
+        return render_template('articles/article_detail.html', article=article_with_user)
     else:
         flash('Error! Article does not exist.', 'error')
     return redirect(url_for('articles.index'))
