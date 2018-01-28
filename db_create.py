@@ -36,9 +36,11 @@ for category in CATEGORY:
 db.session.commit()
 
 # insert book
+book0 = Book("0", "Book not found", "", "http://andrewcmaxwell.com/wp-content/themes/acm_2014/images/book_not_found.png", "invalid isbn", 1)
 book1 = Book("1328683788", "Tools of Titans", "Timothy Ferriss", "http://books.google.com/books/content?id=gjuvDAEACAAJ&printsec=frontcover&img=1&zoom=1&source=gbs_api", "description 1", 1)
-book2 = Book("0439136369", "Harry Potter And The Chamber Of Secrets", "J. K. Rowling", "http://books.google.com/books/content?id=Jwv5ESq1eLwC&printsec=frontcover&img=1&zoom=1&source=gbs_api", "Harry Potter Great", 2)
+book2 = Book("0439136369", "Harry Potter And The Chamber Of Secrets", "J. K. Rowling", "https://images-na.ssl-images-amazon.com/images/I/51NbOxBO%2BBL._SL160_.jpg", "Harry Potter Great", 2)
 
+db.session.add(book0)
 db.session.add(book1)
 db.session.add(book2)
 
@@ -81,14 +83,14 @@ db.session.add(article4)
 pdf1 = Pdf('Hello Operating System', 'The process of the CS330 course is covered.', 'cs330.pdf', '1.jpg', admin_user.id, 1)
 pdf2 = Pdf('I hate Inipay', 'Fucking Inipay', 'INIpay.pdf', '2.jpeg', sample_user.id, 2)
 pdf3 = Pdf('Cool resume', 'Resume of Sangjin', 'Resume.pdf', '2.jpeg', admin_user.id, 1)
-pdf4 = Pdf('This is sample for PDF', 'Resume of Sangjin', 'Resume.pdf', '2.jpeg', sample_user.id, 2)
+pdf4 = Pdf('This is sample for PDF', 'Resume of Sangjin', 'Resume.pdf', '2.jpeg', sample_user.id, 3)
 pdf5 = Pdf('Sublime text, file, edit, selection, find, view, goto.', 'Resume of Sangjin', 'Resume.pdf', '2.jpeg', admin_user.id, 1)
 pdf6 = Pdf('siba daeng-daeng-i', 'Resume of Sangjin', 'Resume.pdf', '1.jpg', sample_user.id, 2)
 pdf7 = Pdf('head shoulder knee', 'Resume of Sangjin', 'Resume.pdf', '2.jpeg', admin_user.id, 1)
-pdf8 = Pdf('Loreal professional paris', 'Resume of Sangjin', 'Resume.pdf', '2.jpeg', admin_user.id, 1)
-pdf9 = Pdf('sample1', 'Resume of Sangjin', 'Resume.pdf', '2.jpeg', admin_user.id, 1)
+pdf8 = Pdf('Loreal professional paris', 'Resume of Sangjin', 'Resume.pdf', '2.jpeg', admin_user.id, 3)
+pdf9 = Pdf('sample1', 'Resume of Sangjin', 'Resume.pdf', '2.jpeg', admin_user.id, 3)
 pdf10 = Pdf('sample2', 'Resume of Sangjin', 'Resume.pdf', '1.jpg', sample_user.id, 2)
-pdf11 = Pdf('sample3', 'Resume of Sangjin', 'Resume.pdf', '2.jpeg', admin_user.id, 1)
+pdf11 = Pdf('sample3', 'Resume of Sangjin', 'Resume.pdf', '2.jpeg', admin_user.id, 3)
 pdf12 = Pdf('sample4', 'Resume of Sangjin', 'Resume.pdf', '2.jpeg', admin_user.id, 1)
 
 db.session.add(pdf1)
