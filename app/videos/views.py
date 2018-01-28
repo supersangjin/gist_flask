@@ -1,14 +1,13 @@
-import os
 from app import db
-from instance.config import ALLOWED_EXTENSIONS, UPLOAD_FOLDER
-from flask import request, redirect, url_for, flash, render_template, jsonify
-from werkzeug.utils import secure_filename
+from flask import request, redirect, url_for, flash, render_template, jsonify, json
 from flask_login import login_required, current_user
 from app.models import Video, User, Comment, Category, Book
 from .forms import UploadVideoForm
 from . import videos_blueprint
+from ..books import googleBook
 
 VIDEO_LIMIT = 8
+
 
 @videos_blueprint.route('/video')
 def index():
@@ -26,27 +25,27 @@ def upload_video():
     form = UploadVideoForm(request.form)
     if request.method == 'POST':
         if form.validate_on_submit():
-            # check if the post request has the file part
-            if 'file' not in request.files:
-                flash('No file part', 'error')
-                return redirect(request.url)
-            file = request.files['file']
-            # if user does not select file, browser also
-            # submit a empty part without filename
-            if file.filename == '':
-                flash('No selected file', 'error')
-                return redirect(request.url)
-            if file and allowed_file(file.filename):
-                filename = secure_filename(file.filename)
-                new_video = Video(title=form.video_title.data, description=form.video_description.data, user_id=user.id,
-                                  filename=filename, category_id=form.video_category.data)
-                db.session.add(new_video)
-                db.session.commit()
-                file.save(os.path.join(UPLOAD_FOLDER, filename))
-                flash('New Video, {}, uploaded!'.format(new_video.video_title), 'success')
-                video_with_user = db.session.query(Video, User, Category).join(User, Category).filter(
-                    Video.id == new_video.id).first()
-                return render_template('videos/video_detail.html', video=video_with_user)
+            video_id = form.id.data
+            title = form.title.data
+            description = form.description.data
+            isbn = form.isbn.data
+            duration = form.duration.data
+            thumbnail = form.thumbnail.data
+            html = form.html.data
+
+            # check book if its in our db TODO error handling
+            if db.session.query(Book).filter(Book.isbn == isbn).count():
+                book = db.session.query(Book).filter(Book.isbn == isbn).first()
+            else:  # request google book api
+                book = googleBook.search_isbn(form.pdf_isbn.data)
+
+            # TODO save vid info in database
+            new_video = Video(video_id=video_id, title=title, description=description, duration=duration, thumbnail=thumbnail, html=html, user_id=current_user.id, book_id=book.id)
+            db.session.add(new_video)
+            db.session.commit()
+            flash('New video, {}, uploaded!'.format(new_video.video_title), 'success')
+
+            return redirect(url_for('videos.index'))
     return render_template('videos/upload_video.html', form=form)
 
 
@@ -123,8 +122,28 @@ def delete_comment(video_id):
     return jsonify(result_list)
 
 
-# helper functions
-def allowed_file(filename):
-    return '.' in filename and \
-           filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
 
+"""form = UploadVideoForm(request.form)
+    if request.method == 'POST':
+        if form.validate_on_submit():
+            # check if the post request has the file part
+            if 'file' not in request.files:
+                flash('No file part', 'error')
+                return redirect(request.url)
+            file = request.files['file']
+            # if user does not select file, browser also
+            # submit a empty part without filename
+            if file.filename == '':
+                flash('No selected file', 'error')
+                return redirect(request.url)
+            if file and allowed_file(file.filename):
+                filename = secure_filename(file.filename)
+                new_video = Video(title=form.video_title.data, description=form.video_description.data, user_id=user.id,
+                                  filename=filename, category_id=form.video_category.data)
+                db.session.add(new_video)
+                db.session.commit()
+                file.save(os.path.join(UPLOAD_FOLDER, filename))
+                flash('New Video, {}, uploaded!'.format(new_video.video_title), 'success')
+                video_with_user = db.session.query(Video, User, Category).join(User, Category).filter(
+                    Video.id == new_video.id).first()
+                return render_template('videos/video_detail.html', video=video_with_user)"""

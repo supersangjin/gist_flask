@@ -1,13 +1,13 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, SelectField
+from wtforms import StringField, SelectField, FloatField
 from wtforms.validators import DataRequired
 
 
 class UploadVideoForm(FlaskForm):
-    video_title = StringField('Video Title', validators=[DataRequired()])
-    video_description = StringField('Video Description', validators=[DataRequired()])
-    video_category = SelectField(
-        'Category',
-        choices=[(1, 'Fiction'), (2, 'Memoir'), (3, 'Science'), (4, 'History'), (5, 'Art')],
-        coerce=int
-    )
+    id = StringField('id', validators=[DataRequired()])
+    title = StringField('Video Title', validators=[DataRequired()])
+    description = StringField('Video Description', validators=[DataRequired()])
+    isbn = StringField('ISBN10', validators=[DataRequired()])
+    duration = StringField('duration', validators=[DataRequired()])
+    thumbnail = StringField('thumbnail', validators=[DataRequired()])
+    html = StringField('html', validators=[DataRequired()])

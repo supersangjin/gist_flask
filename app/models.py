@@ -172,69 +172,35 @@ class Video(db.Model):
     __tablename__ = "videos"
 
     id = db.Column(db.Integer, primary_key=True)
+    video_id = db.Column(db.String, nullable=False)
     video_title = db.Column(db.String, nullable=False)
-    video_description = db.Column(db.String, nullable=False)
-    video_filename = db.Column(db.String, default=None, nullable=True)
+    video_description = db.Column(db.String, nullable=True)
+    video_duration = db.Column(db.Float, nullable=False)
+    video_thumbnail = db.Column(db.String, nullable=False)
+    video_html = db.Column(db.String, nullable=False)
 
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
     book_id = db.Column(db.Integer, db.ForeignKey('books.id'))
 
     video_creDate = db.Column(db.DateTime, nullable=True)
-    video_hit = db.Column(db.Integer)
+    video_view = db.Column(db.Integer)
     video_like = db.Column(db.Integer)
 
-    def __init__(self, title, description, filename, user_id, book_id):
+    def __init__(self, video_id, title, description, duration, thumbnail, html,  user_id, book_id):
+        self.video_id = video_id
         self.video_title = title
         self.video_description = description
-        self.video_filename = filename
+        self.video_duration = duration
+        self.video_thumbnail = thumbnail
+        self.video_html = html
         self.user_id = user_id
-        self.video_creDate = datetime.now()
-        self.video_hit = 1
-        self.video_like = 0
         self.book_id = book_id
+        self.video_creDate = datetime.now()
+        self.video_view = 1
+        self.video_like = 0
 
     def __repr__(self):
         return '<id: {}, title: {}, user_id: {}>'.format(self.id, self.video_title, self.user_id)
-
-
-class Question(db.Model):
-    __tablename__ = "questions"
-
-    id = db.Column(db.Integer, primary_key=True)
-    question_title = db.Column(db.String, nullable=False)
-    question_context = db.Column(db.String, nullable=False)
-    question_length = db.Column(db.Integer)
-
-    user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
-
-    answers = db.relationship('Answer', backref='questions', cascade='all, delete', order_by='Answer.id')
-
-    def __init__(self, title, context, user_id):
-        self.question_title = title
-        self.question_context = context
-        self.question_length = 0
-        self.user_id = user_id
-
-    def __repr__(self):
-        return '<id: {}, title: {}, user_id: {}>'.format(self.id, self.question_title, self.user_id)
-
-
-class Answer(db.Model):
-    __tablename__ = "answers"
-
-    id = db.Column(db.Integer, primary_key=True)
-    answer_context = db.Column(db.String, nullable=False)
-
-    question_id = db.Column(db.Integer, db.ForeignKey('questions.id'))
-    user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
-
-    def __init__(self, context, question_id, user_id):
-        self.answer_context = context
-        self.question_id = question_id
-        self.user_id = user_id
-
-    def __repr__(self):
-        return '<id: {}, question_id: {}, user_id: {}>'.format(self.id, self.question_id, self.user_id)
 
 
 class Pdf(db.Model):
@@ -315,13 +281,6 @@ class Book(db.Model):
         self.description = description
         self.category_id = category_id
 
-
     def __repr__(self):
         return '<id: {}, name: {}>'.format(self.id, self.book_title)
 
-def question_answers_append(question, answer, initiator):
-    """Update some question values when `Question.answers.append` is called."""
-    question.question_length += 1
-
-
-event.listen(Question.answers, 'append', question_answers_append)
