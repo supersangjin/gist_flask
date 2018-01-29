@@ -14,9 +14,13 @@ def search_isbn(isbn):
     if rj["totalItems"] == 0:
         book = db.session.query(Book).filter(Book.id == 1).first()
     else:
-        info = rj["items"][0]["volumeInfo"]
-        book = Book(isbn=isbn, title=info["title"], author=info["authors"][0], description=info["description"],
-                    thumbnail=info["imageLinks"]["thumbnail"], category_id=1)
-        db.session.add(book)
-        db.session.commit()
+        try:
+            info = rj["items"][0]["volumeInfo"]
+            book = Book(isbn=isbn, title=info["title"], author=info["authors"][0], description=info["description"],
+                        thumbnail=info["imageLinks"]["thumbnail"], category_id=1)
+            db.session.add(book)
+            db.session.commit()
+        except FileNotFoundError as e:
+            book = db.session.query(Book).filter(Book.id == 1).first()
+
     return book
