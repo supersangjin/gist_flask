@@ -148,7 +148,7 @@
 		<a href="{{ url_for('videos.video_details', video_id=video.Video.id) }}">
 			<div class="list-panel">
 				<div class="list-panel-header">
-					<video class="list-panel-vid" align="middle" src="{{ url_for('static', filename='vid/' + video.Video.video_filename) }}"></video>
+					<img src="{{ video.Video.video_thumbnail }}">
 					<div class="middle">
 						<div class="text">
 							<i class="fas fa-eye"></i> {{ video.Video.video_hit }}<br/>
