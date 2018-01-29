@@ -37,7 +37,7 @@ def upload_video():
             if db.session.query(Book).filter(Book.isbn == isbn).count():
                 book = db.session.query(Book).filter(Book.isbn == isbn).first()
             else:  # request google book api
-                book = googleBook.search_isbn(form.pdf_isbn.data)
+                book = googleBook.search_isbn(form.isbn.data)
 
             # TODO save vid info in database
             new_video = Video(video_id=video_id, title=title, description=description, duration=duration, thumbnail=thumbnail, html=html, user_id=current_user.id, book_id=book.id)
