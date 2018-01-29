@@ -1,20 +1,62 @@
 {% extends "common/layout.html" %}
 {% block contentHeader %}
 
-<div style="position: relative; z-index: 100;">
-	<div style="width: 100%; height: auto; text-align: center; background-image: url('/static/image/template/book.png'); padding: 100px;">
+<style type="text/css">
+	.list-subtitle {
+		margin-top: 1.75rem;
+		margin-bottom: 1.75rem;
+	}
+
+	.index-box {
+		position: relative;
+		z-index: 100;
+		background-color: white;
+	}
+
+	.index-box-top {
+		width: 100%;
+		height: auto;
+		text-align: center;
+		background-size: cover;
+		background-position: center;
+		background-image: url('/static/image/template/apple.png');
+		padding: 100px;
+		color: white;
+	}
+</style>
+
+<div class="index-box">
+	<div class="index-box-top">
 		<div style="font-size: 50pt; font-weight: bold;">
 			Readeon
 		</div>
 		<div style="width: 50%; margin: 0 auto;">
 			Stay informed, discover new passions, feed your curiosity, and never stop learning with access to everything you want to read.
 		</div>
-		<br/>
-		<div style="display: inline-block;">
-			<button type="button" class="btn btn-outline-light">Join</button>
-			<button type="button" class="btn btn-outline-light">Login</button>
-		</div>
 	</div>
-</div>
 
+
+	<div class="container">
+
+		<div class="list-subtitle">
+			<h5>Top Articles</h5>
+		</div>
+
+		{% set pdfs = pdfs %}
+		{% set pdf_carousel_id = "carouselPopularPdf" %}
+		{% include 'utils/list_pdf.html'%}
+
+		<hr/>
+
+		<div class="list-subtitle">
+			<h5>Top Videos</h5>
+		</div>
+
+		{% set videos = videos %}
+		{% set video_carousel_id = "carouselPopularVideo" %}
+		{% include 'utils/list_video.html'%}
+
+	</div>
+
+</div>
 {% endblock %}
