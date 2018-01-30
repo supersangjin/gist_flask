@@ -97,8 +97,21 @@ a.articles :hover{
 }
 
 
+.btn-more-comment {
+  width: 80vw;
+  margin: auto;
+  background-color: transparent;
+  color: gray;
+  border: none;
+  font-size: 12pt;
+  font-weight: bold;
+}
 
-
+.btn-more-comment:hover {
+  background-color: transparent;
+  cursor: pointer;
+  color: #982828;
+}
 
 
 
@@ -138,6 +151,10 @@ a.articles :hover{
     margin-left:auto !important;
     display:block !important;
     margin-bottom: 20px;
+}
+
+.comment-post .btn-more-comment {
+  width: 300px;
 }
 
 /*------------- comment end -----------------------------------------------*/

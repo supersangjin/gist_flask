@@ -2,6 +2,12 @@
 {% block content %}
 <style>
 
+  .forum-title {
+    font-size: 30pt;
+    font-weight: bold;
+    text-align: center;
+  }
+
   .post-author {
     margin: auto;
     margin-top: 10px;
@@ -27,35 +33,24 @@
     font-size: 8pt;
   }
 
-  .post-description {
-    margin-bottom: 20px;
-  }
-
-  .btn-more-comment {
-    width: 80vw;
-    margin: auto;
-    background-color: transparent;
-    color: gray;
-    border: none;
-    font-size: 12pt;
-    font-weight: bold;
-  }
-
-  .btn-more-comment:hover {
-    background-color: transparent;
-    cursor: pointer;
-    color: #982828;
-  }
-
 </style>
 
-<div class="page-header" style="margin-top: 50px;">
-  <h3 style="display:inline;">{{ article.Article.article_title }}</h3>
-  <p style="display:inline;">&nbsp;&nbsp;by {{ article.User.username }}</p>
+<div class="forum-title"">
+    {{ article.Article.article_title }}
+</div>
+<div class="markdown-body">
+    <div class="post-author">
+        <img class="post-author-thumbnail" src="{{ url_for('static', filename='image/user/' + article.User.thumbnail) }}">
+        <div>
+        <a class="post-author-name" href="{{ url_for('users.user_profile', user_id = article.User.id) }}">  {{ article.User.username }} </a>
+            <div class="post-date"> {{ format_date(article.Article.article_creDate) }} </div>
+        </div>
+    </div>
 </div>
 <article class="markdown-body">
-	{{ article.Article.article_context|markdown }}
+    {{ article.Article.article_context|markdown }}
 </article>
+
 {% if current_user.is_authenticated %}
     {% if current_user.id == article.User.id %}
         <p><a href="{{ url_for('articles.edit_article', article_id=article.Article.id) }}">edit</a></p>
