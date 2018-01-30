@@ -23,9 +23,38 @@
 		padding: 100px;
 		color: white;
 	}
+
+	.index-subtitle {
+		font-size: 40px;
+		font-weight: 900;
+		margin-top: 50px;
+		margin-bottom: 40px;
+		text-align: center;
+	}
+
+	.index-more-btn {
+		margin: auto; margin-top: 40px; margin-bottom: 40px;
+		border-radius: 0px;
+		background-color: #982828 !important;
+		border: none;
+		width: 400px; height: 55px;
+		font-weight: bold;
+		font-size: 16pt;
+		color: white;
+		
+		-webkit-transition-duration: 0.4s; /* Safari */
+    	transition-duration: 0.4s;
+	}
+
+	.index-more-btn:hover {
+		background-color: #6b2c2c !important; /* Green */
+    	cursor: pointer;
+
+	}
 </style>
 
 <div class="index-box">
+
 	<div class="index-box-top">
 		<div style="font-size: 50pt; font-weight: bold;">
 			Readeon
@@ -36,27 +65,36 @@
 	</div>
 
 
+	<div class="index-subtitle">
+		Most Read Articles
+	</div>
 	<div class="container">
-
-		<div class="list-subtitle">
-			<h5>Top Articles</h5>
-		</div>
-
 		{% set pdfs = pdfs %}
 		{% set pdf_carousel_id = "carouselPopularPdf" %}
 		{% include 'utils/list_pdf.html'%}
+	</div>
+	<div style="text-align: center;">
+		<button type="button" class="btn index-more-btn" onclick = "location.href='{{ url_for('pdfs.index') }}'">More About Articles</button>
+	</div>
 
+	<div class="container">
 		<hr/>
-		
-		<div class="list-subtitle">
-			<h5>Top Videos</h5>
-		</div>
+	</div>
 
+	<div class="index-subtitle">
+		Most Wathced Videos
+	</div>
+	<div class="container">
 		{% set videos = videos %}
 		{% set video_carousel_id = "carouselPopularVideo" %}
 		{% include 'utils/list_video.html'%}
-
 	</div>
+	<div style="text-align: center;">
+		<button type="button" class="btn index-more-btn" onclick = "location.href='{{ url_for('videos.index') }}'">More About Videos</button>
+	</div>
+
+
+
 
 </div>
 {% endblock %}
