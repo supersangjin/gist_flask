@@ -101,10 +101,13 @@
     width: 100%;
     height: 100%;
     object-fit: contain;
-    background-color: black;
+    background-color: white;
     position: relative;
     vertical-align: middle;
     margin: auto;
+    z-index: 150;
+    padding-top: 20px;
+    padding-right: 20px;
   }
 
   /* If you want the content centered horizontally and vertically */
@@ -116,7 +119,7 @@
     text-align: center;
   }
 
-  @media (max-width: 550px) {
+  @media (max-width: 1000px) {
     .post-split-info {
       width: 100%;
       display: block;
@@ -136,7 +139,10 @@
     /* MERGE: diff from pdf */
     .post-split-content-vid {
       height: 56vw; /* 16:9 ratio */
+    }
 
+    .post-split-box-vid {
+      padding: 0px;
     }
   }
 
