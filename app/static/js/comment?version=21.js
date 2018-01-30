@@ -53,7 +53,9 @@ var CommentBox = React.createClass({
                 return (
                     <div className="commentBox">
                         <CommentList data={this.state.data.slice(0, this.state.offset)} />
-                        <button id="button-id" className="btn btn-sm btn-secondary" onClick={this.onClickButton}>More comment</button>
+                        <button id="button-id" className="btn btn-sm btn-more-comment" onClick={this.onClickButton}>
+                                More Comment <br/> <i className="fas fa-angle-down"></i>
+                        </button>
                     </div>
                 );
             } else {
@@ -61,7 +63,9 @@ var CommentBox = React.createClass({
                     <div className="commentBox">
                         <CommentForm onCommentSubmit={this.handleCommentSubmit} />
                         <CommentList data={this.state.data.slice(0, this.state.offset)} onCommentDelete={this.handleCommentDelete} currentUserId={this.props.currentUserId}/>
-                        <button id="btn-comment-load" className="btn btn-sm btn-secondary" onClick={this.onClickButton}>More comment</button>
+                        <button id="btn-comment-load" className="btn btn-sm btn-more-comment" onClick={this.onClickButton}>
+                            More Comment <br/> <i className="fas fa-angle-down"></i>
+                        </button>
                     </div>
                 );
             }

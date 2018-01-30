@@ -69,6 +69,7 @@ a.articles :hover{
     margin-top: 10px;
     margin-bottom:30px;
     padding: 30px;
+    text-align: left;
 }
 
 .comment-forum .commentForm {
@@ -78,17 +79,21 @@ a.articles :hover{
     padding: 30px;
 }
 
-.comment-forum textarea {
+.comment-forum .commentForm textarea {
     width: 80vw;
     height: 100%;
     border: solid 1px rgba(178, 179, 153, 0.125);
 }
 
-.commentForm button {
+.comment-forum .commentForm button {
     margin-bottom: 20px;  
     margin-right: 0 !important;
     margin-left:auto !important;
     display:block !important;
+}
+
+.comment-forum .commentBox {
+  text-align: center;
 }
 
 
