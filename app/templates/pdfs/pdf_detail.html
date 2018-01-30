@@ -180,8 +180,9 @@
 					<div class="post-book-author"> by {{ pdf.Book.author }} </div>
 				</div>
 			</div>
-			<hr/>
+			
 			<!--comment-->
+			<!--
 			<div class="comment-post">
 				<div id="content" style="width: 10px;"></div>
 				<input type="hidden" id="addUrl" value="{{ url_for('pdfs.add_comment', pdf_id=pdf.Pdf.id) }}"/>
@@ -190,6 +191,7 @@
 				<input type="hidden" id="auth" value="{{ current_user.is_authenticated }}"/>
 				<script type="text/babel" src="{{ url_for('static', filename='js/comment?version=21.js') }}"></script>
 			</div>
+			-->
 		</div>
 	</div>
 </div>

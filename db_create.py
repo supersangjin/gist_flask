@@ -12,6 +12,7 @@ admin_user = User(username="admin", email='gistkaist@gmail.com', plaintext_passw
 sample_user = User(username="sample_user", email='sample@gmail.com', plaintext_password='sample', role='user')
 sample_user.email_confirmed = True
 sample_user.set_thumbnail("user-sample.jpeg")
+sample_user.set_description("Hello I am sample user hahahahaha")
 
 db.session.add(admin_user)
 db.session.add(sample_user)
