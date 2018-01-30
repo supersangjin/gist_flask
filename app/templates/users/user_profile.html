@@ -10,6 +10,8 @@
   padding-top: 4vh;
   padding-bottom: 4vh;
   color: white;
+  position: relative;
+  z-index: 150;
 }
 
 .user-profile-thumbnail {
@@ -23,58 +25,57 @@
 .user-profile-name {
   font-weight: bold;
   font-size: 20pt;
-  margin-bottom: 1vw;
+  margin-bottom: 5px;
+}
+
+.list-subtitle {
+  margin-top: 1.75rem;
+  margin-bottom: 1.75rem;
 }
 
 </style>
 
-<div class="user-profile" style="background-color: #52627c; height: auto;">
+<div style="background-color: white; z-index: 150; position: relative;">
+<div class="user-profile" style="background-color: #563232; height: auto;">
   <div class="container">
-  <div class="user-profile">
-  <div class="row">
-    <div class="col-sm-1">
-      <img class="user-profile-thumbnail" src="{{ url_for('static', filename='image/user/' + user.thumbnail) }}">
+    <div class="user-profile">
+      <div class="row">
+        <div class="col-sm-1">
+          <img class="user-profile-thumbnail" src="{{ url_for('static', filename='image/user/' + user.thumbnail) }}">
+        </div>
+        <div class="col-sm-11">
+          <div style="margin-left: 50px; color: whitesmoke;">
+            <div class="user-profile-name"> {{ user.username }} </div>
+            {% if user.description %}
+              {{ user.description }}
+            {% endif %}
+          </div>
+        </div>
       </div>
-      <div class="col-sm-11">
-      <div style="margin-left: 10px">
-      <div class="user-profile-name"> {{ user.username }} </div>
-      {% if user.description %}
-        {{ user.description }}
-      {% endif %}
-      </div>
-      </div>
-      </div>
+    </div>
+  </div>
+</div>
+
+<div class="container">
+
+{% if pdfs.count() > 1 %}
+<div class="list-subtitle">
+  <h5>Upload Articles</h5>
+</div>
+{% set pdfs = pdfs %}
+{% set pdf_carousel_id = "carouselPopularPdf" %}
+{% include 'utils/list_pdf.html'%}
+{% endif %}
+
+{% if videos.count() > 1 %}
+<div class="list-subtitle">
+  <h5>Upload Videos</h5>
+</div>
+{% set videos = videos %}
+{% set video_carousel_id = "carouselPopularVideo" %}
+{% include 'utils/list_video.html'%}
+{% endif %}
 
 </div>
 </div>
-
-</div>
-
-{% endblock %}
-
-{% block content %}
-
-<div class="row" style="margin-top: 50px;">
-  <h2>Articles</h2>
-  {% for article in articles %}
-    <h4 style="width:100%">{{ article.article_title }}</h4>
-    <p>조회수 : {{ article.article_hit }} &nbsp;</p>
-    <p>추천수 : {{ article.article_like }}</p>
-    <a class="articles" href="{{ url_for('articles.article_details', article_id=article.id) }}" style="width:100%">
-      <div class="markdown-body border" style="width:100%; margin-top: 10px; margin-bottom:30px; padding: 30px;">
-        {{ article.article_context | truncate | markdown }}
-      </div>
-    </a>
-  {% endfor %}
-  <h2>Videos</h2>
-    {% for video in videos %}
-    <a class="articles" href="{{ url_for('videos.video_details', video_id=video.id) }}" style="width:100%">
-      <div style="width:100%; margin-top: 10px; margin-bottom:100px;">
-        <h4 style="width:100%">{{ video.video_title }}</h4>
-        <p>{{ video.video_description }}</p>
-      </div>
-    </a>
-  {% endfor %}
-</div>
-
 {% endblock %}

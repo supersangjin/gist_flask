@@ -97,8 +97,21 @@ a.articles :hover{
 }
 
 
+.btn-more-comment {
+  width: 80vw;
+  margin: auto;
+  background-color: transparent;
+  color: gray;
+  border: none;
+  font-size: 12pt;
+  font-weight: bold;
+}
 
-
+.btn-more-comment:hover {
+  background-color: transparent;
+  cursor: pointer;
+  color: #982828;
+}
 
 
 
@@ -140,6 +153,10 @@ a.articles :hover{
     margin-bottom: 20px;
 }
 
+.comment-post .btn-more-comment {
+  width: 300px;
+}
+
 /*------------- comment end -----------------------------------------------*/
 
 
@@ -165,57 +182,30 @@ a.articles :hover{
 /*------------- chat end -------------------------------------------*/
 
 
-/*
-.post-title {
-  text-align: center;
-  font-size: 3rem;
-  font-weight: bold;
-}
+  .post-author {
+    margin: auto;
+    margin-top: 10px;
+    margin-bottom: 15px;
+  }
 
-.post-author {
-  margin: auto;
-  margin-top: 4vh;
-  margin-bottom: 4vh;
-}
+  .post-author-thumbnail {
+    width: 35px;
+    height: 35px;
+    border-radius: 50%;
+    float: left;
+    margin-right: 12px;
+  }
 
-.post-author-thumbnail {
-  width: 40px;
-  height: 40px;
-  border-radius: 50%;
-  float: left;
-  margin-right: 1vw;
-}
+  .post-author-name {
+    color: black !important;
+    text-decoration: none !important;
+    font-weight: bold;
+    font-size: 12pt;
+  }
 
-.post-author-name {
-  color: black !important;
-  text-decoration: none !important;
-  font-weight: bold;
-  font-size: 12pt;
-}
-
-.post-date {
-  font-size: 8pt;
-}
-
-.post-description {
-  margin-bottom: 2vw;
-}
-
-.post-comment {
-  margin-left: 10vw;
-  margin-right: 10vw;
-}
-
-.post-file {
-  width: 100%;
-  max-width: 800px;
-  height: 85vh;
-  display: block;
-  margin: auto;
-  margin-top: 4vh;
-  margin-bottom: 4vh;
-}
-*/
+  .post-date {
+    font-size: 8pt;
+  }
 
 /* User account form: Login, Signup */
 

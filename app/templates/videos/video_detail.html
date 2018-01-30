@@ -184,6 +184,8 @@
       <div class="post-description">
         {{ video.Video.video_description }}
       </div>
+      <!--rating star-->
+      {% include 'utils/rating.html'%}
       <hr/>
       <div class="post-book">
         <img src="{{ video.Book.thumbnail }}">
@@ -192,8 +194,9 @@
           <div class="post-book-author"> by {{ video.Book.author }} </div>
         </div>
       </div>
-      <hr/>
+      
       <!--comment-->
+      <!--
       <div class="comment-post">
         <div id="content" style="width: 10px;"></div>
         <input type="hidden" id="addUrl" value="{{ url_for('videos.add_comment', video_id=video.Video.id) }}"/>
@@ -202,6 +205,7 @@
         <input type="hidden" id="auth" value="{{ current_user.is_authenticated }}"/>
         <script type="text/babel" src="{{ url_for('static', filename='js/comment?version=21.js') }}"></script>
       </div>
+      -->
     </div>
   </div>
 </div>
