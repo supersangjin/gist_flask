@@ -3,21 +3,21 @@
 
 {% block content %}
 
-<h2>Upload Video</h2>
-<form action="{{ url_for('videos.upload_video') }}" method="post" >
+<form action="{{ url_for('videos.upload_video') }}" method="post" style="width: 640px; margin: auto;">
     {{ form.csrf_token }}
+    <h2>Upload Video</h2>
     <dl>
         {{ render_field(form.title, placeholder="Title") }}
         {{ render_field(form.description, placeholder="Description") }}
-        <a target="_blank" href="https://isbnsearch.org/">Find ISBN10</a>
         {{ render_field(form.isbn, placeholder="ISBN10") }}
+        <a target="_blank" href="https://isbnsearch.org/">Find ISBN10</a>
     </dl>
     <div id="wistia_uploader" style="height:360px;width:640px;"></div>
     <input type="hidden" name="id" id="video_id" />
     <input type="hidden" name="duration" id="video_duration" />
     <input type="hidden" name="thumbnail" id="video_thumbnail" />
     <input type="hidden" name="html" id="video_html" />
-    <button class="btn btn-sm btn-success" type="submit" id="confirm_upload" style="display: none">Confirm</button>
+    <button class="btn btn-block btn-outline-secondary custom-button" type="submit" id="confirm_upload" style="display: none">Confirm</button>
 </form>
 
 <script src="//fast.wistia.com/assets/external/api.js" async></script>

@@ -20,6 +20,7 @@ db.session.add(sample_user)
 # Commit
 db.session.commit()
 
+
 # insert category data
 CATEGORY = [{'name':'career & money', 'icon':'money-bill-alt'},
         {'name':'personal growth', 'icon':'users'},
@@ -36,6 +37,12 @@ for category in CATEGORY:
 # Commit
 db.session.commit()
 
+book0 = Book("0", "Book not found", "", "https://hoursofidleness.files.wordpress.com/2012/06/gray-card.jpg", "invalid isbn", 1)
+db.session.add(book0)
+db.session.commit()
+
+
+"""
 # insert book
 book0 = Book("0", "Book not found", "", "http://andrewcmaxwell.com/wp-content/themes/acm_2014/images/book_not_found.png", "invalid isbn", 1)
 book1 = Book("1328683788", "Tools of Titans", "Timothy Ferriss", "http://books.google.com/books/content?id=gjuvDAEACAAJ&printsec=frontcover&img=1&zoom=1&source=gbs_api", "description 1", 1)
@@ -120,4 +127,4 @@ db.session.add(chat2)
 db.session.add(chat3)
 
 # Commit
-db.session.commit()
+db.session.commit()"""

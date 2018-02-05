@@ -148,18 +148,6 @@
 
 </style>
 
-<script type="text/javascript">
-  function openComment() {
-    document.getElementById("").style.width = "500px";
-    document.getElementById("").scrollTop = 999999999;
-  }
-  function closeComment() {
-    document.getElementById("").style.width = "0";
-  }
-}
-
-</script>
-
 <div style="position: static;">
   <div class="split post-split-content post-split-content-vid">
     <div class="post-split-box post-split-box-vid">
@@ -184,8 +172,6 @@
       <div class="post-description">
         {{ video.Video.video_description }}
       </div>
-      <!--rating star-->
-      {% include 'utils/rating.html'%}
       <hr/>
       <div class="post-book">
         <img src="{{ video.Book.thumbnail }}">

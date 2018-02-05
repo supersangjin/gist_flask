@@ -9,18 +9,18 @@
         overflow-y: scroll;
     }
 </style>
-<h1>Upload new File</h1>
-<form action="{{ url_for('pdfs.upload_pdf') }}" method="post" enctype=multipart/form-data>
+<form action="{{ url_for('pdfs.upload_pdf') }}" method="post" enctype=multipart/form-data style="width: 640px; margin: auto;">
     {{ form.csrf_token }}
+    <h2>Upload PDF File</h2>
     <dl>
         {{ render_field(form.pdf_title, placeholder="Title") }}
         {{ render_field(form.pdf_description, placeholder="Description") }}
-        <a target="_blank" href="https://isbnsearch.org/">Find ISBN10</a>
         {{ render_field(form.pdf_isbn, placeholder="ISBN10") }}
+        <a target="_blank" href="https://isbnsearch.org/">Find ISBN10</a>
     </dl>
     <p>submit pdf file</p>
     <input type="file" id="file" name='file' accept="application/pdf"/>
-    <button class="btn btn-sm btn-success" type="submit">Upload</button>
+    <button class="btn btn-block btn-outline-secondary custom-button" type="submit">Upload</button>
 </form>
 
 <script type="text/babel" src="{{ url_for('static', filename='js/search?version=1.js') }}"></script>

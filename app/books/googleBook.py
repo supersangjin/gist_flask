@@ -17,7 +17,7 @@ def search_isbn(isbn):
         try:
             info = rj["items"][0]["volumeInfo"]
             book = Book(isbn=isbn, title=info["title"], author=info["authors"][0], description=info["description"],
-                        thumbnail=info["imageLinks"]["thumbnail"], category_id=1)
+                        thumbnail=info["imageLinks"]["thumbnail"], category_id=8)
             db.session.add(book)
             db.session.commit()
         except FileNotFoundError as e:

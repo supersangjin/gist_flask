@@ -6,7 +6,7 @@ _wapiq.push(function(W) {
         projectId: "ucxz9sy1gn",
         theme: 'light_background',
         embedCodeOptions: {
-            playerColor: "56be8e",
+            playerColor: "6b0b0b",
             videoFoam: true
         }
     });

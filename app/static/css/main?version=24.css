@@ -260,3 +260,30 @@ box-shadow:none !important;
 }
 
 input:focus { outline: none; }
+
+.custom-button {
+    margin-top: 30px;
+    color: #6b0b0b !important;
+    border-color: #6b0b0b !important;
+}
+
+.custom-button:hover {
+    color: #fff !important;
+    border-color: #6b0b0b !important;
+    background: #6b0b0b !important;
+    box-shadow: none !important;
+}
+
+.custom-button:active {
+    color: #fff !important;
+    border-color: #6b0b0b !important;
+    background: #6b0b0b !important;
+    box-shadow: none !important;
+}
+
+.custom-button:focus {
+    color: #fff !important;
+    border-color: #6b0b0b !important;
+    background: #6b0b0b !important;
+    box-shadow: none !important;
+}

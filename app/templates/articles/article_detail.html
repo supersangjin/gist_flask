@@ -35,7 +35,7 @@
 
 </style>
 
-<div class="forum-title"">
+<div class="forum-title">
     {{ article.Article.article_title }}
 </div>
 <div class="markdown-body">
@@ -51,15 +51,13 @@
     {{ article.Article.article_context|markdown }}
 </article>
 
+<!--
 {% if current_user.is_authenticated %}
     {% if current_user.id == article.User.id %}
         <p><a href="{{ url_for('articles.edit_article', article_id=article.Article.id) }}">edit</a></p>
         <p><a href="{{ url_for('articles.delete_article', article_id=article.Article.id) }}">delete</a></p>
     {% endif %}
-{% endif %}
-
-<!--rating star-->
-{% include 'utils/rating.html'%}
+{% endif %}-->
 
 <!--comment-->
 <div class="comment-forum">
@@ -68,6 +66,6 @@
     <input type="hidden" id="deleteUrl" value="{{ url_for('articles.delete_comment', article_id=article.Article.id) }}" />
     <input type="hidden" id="auth" value="{{ current_user.is_authenticated }}" />
     <input type="hidden" id="currentUserId" value="{{ current_user_id }}" />
-    <script type="text/babel" src="{{ url_for('static', filename='js/comment?version=21.js') }}"></script>
+    <script type="text/babel" src="{{ url_for('static', filename='js/comment?version=22.js') }}"></script>
 </div>
 {% endblock %}

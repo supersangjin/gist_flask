@@ -134,17 +134,6 @@
 
 </style>
 
-<script type="text/javascript">
-	function openComment() {
-		document.getElementById("").style.width = "500px";
-		document.getElementById("").scrollTop = 999999999;
-	}
-	function closeComment() {
-		document.getElementById("").style.width = "0";
-	}
-
-</script>
-
 <div style="position: static;">
 	<div class="split post-split-content post-split-content-pdf">
 		<div class="post-split-box"> <!-- centered"> -->
@@ -169,8 +158,6 @@
 			<div class="post-description">
 				{{ pdf.Pdf.pdf_description }}
 			</div>
-			<!--rating star-->
-      		{% include 'utils/rating.html'%}
 			<hr/>
 			<div class="post-book">
 				<img src="{{ pdf.Book.thumbnail }}">
